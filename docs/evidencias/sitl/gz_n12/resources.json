@@ -1,0 +1,11 @@
+{
+  "drones": 12,
+  "samples": 189,
+  "rtf_median": 0.555,
+  "rtf_p10": 0.391,
+  "mem_used_peak_mb": 2630,
+  "cpu_peak_pct": 488.1,
+  "cpu_mean_pct": 480.6,
+  "completed": false,
+  "note": "corrida cortada por timeout a ~376 s; el despegue de 12 drones no termin\u00f3"
+}

@@ -1,0 +1,30 @@
+{
+  "n": 3,
+  "ok": 3,
+  "errors": [],
+  "duration_s": 54.3,
+  "drones": [
+    {
+      "drone": 0,
+      "target_alt_m": 5.0,
+      "reached_alt_m": 4.02,
+      "arm_attempts": 1,
+      "landed": true
+    },
+    {
+      "drone": 1,
+      "target_alt_m": 7.0,
+      "reached_alt_m": 6.0,
+      "arm_attempts": 1,
+      "landed": true
+    },
+    {
+      "drone": 2,
+      "target_alt_m": 9.0,
+      "reached_alt_m": 8.01,
+      "arm_attempts": 1,
+      "landed": true
+    }
+  ],
+  "passed": true
+}

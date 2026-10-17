@@ -1,0 +1,15 @@
+{
+  "drones": 1,
+  "samples": 3,
+  "rtf_median": null,
+  "rtf_p10": null,
+  "mem_increase_mb": 209,
+  "cpu_peak_pct": 84.8,
+  "cpu_mean_pct": 73.5,
+  "gpu_peak_pct": 1.0,
+  "gpu_mean_pct": 0.3,
+  "gpu_mem_peak_mb": 453.0,
+  "camera_fps_mean": 19.1,
+  "gpu_adapter": "AMD",
+  "model": "x500_mono_cam"
+}

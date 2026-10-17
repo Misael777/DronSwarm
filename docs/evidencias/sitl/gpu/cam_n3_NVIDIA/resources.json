@@ -1,0 +1,15 @@
+{
+  "drones": 3,
+  "samples": 21,
+  "rtf_median": 0.982,
+  "rtf_p10": 0.964,
+  "mem_increase_mb": 491,
+  "cpu_peak_pct": 229.5,
+  "cpu_mean_pct": 182.5,
+  "gpu_peak_pct": 37.0,
+  "gpu_mean_pct": 4.7,
+  "gpu_mem_peak_mb": 535.0,
+  "camera_fps_mean": 15.1,
+  "gpu_adapter": "NVIDIA",
+  "model": "x500_mono_cam"
+}

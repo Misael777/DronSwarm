@@ -1,0 +1,31 @@
+[project]
+name = "dronswarm"
+version = "0.1.0"
+description = "Drones de bajo costo para minería operados en enjambre"
+requires-python = ">=3.10"
+dependencies = [
+    "numpy>=1.26",
+    "scipy>=1.11",
+    "pandas>=2.1",
+    "matplotlib>=3.8",
+    "pyyaml>=6.0",
+    "openpyxl>=3.1",
+    "pypdf>=4.0",
+    "reportlab>=4.0",
+    "mavsdk-grpc>=3.17",  # API gRPC clásica (el paquete "mavsdk" v4 es otro binding)
+    "pyulog>=1.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0", "ruff>=0.6"]
+
+[tool.ruff]
+line-length = 130
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP"]
+ignore = ["E501", "B905"]
+
+[tool.pytest.ini_options]
+testpaths = ["engineering/tests", "control/tests", "tools/tests"]

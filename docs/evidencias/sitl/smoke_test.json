@@ -1,0 +1,12 @@
+{
+  "url": "udpin://0.0.0.0:14540",
+  "target_alt_m": 10.0,
+  "reached_alt_m": 9.02,
+  "time_to_altitude_s": 50.3,
+  "hold_samples": 487,
+  "hold_max_error_m": 0.17,
+  "battery_remaining_pct": 69.0,
+  "landed_alt_m": 0.03,
+  "disarmed": true,
+  "passed": true
+}

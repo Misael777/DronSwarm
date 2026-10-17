@@ -1,0 +1,10 @@
+{
+  "n": 1,
+  "ok": 0,
+  "errors": [
+    "<AioRpcError of RPC that terminated with:\n\tstatus = StatusCode.UNAVAILABLE\n\tdetails = \"Stream removed (Socket closed)\"\n\tdebug_error_string = \"UNAVAILABLE:Stream removed (Socket closed)\"\n>"
+  ],
+  "duration_s": 62.5,
+  "drones": [],
+  "passed": false
+}

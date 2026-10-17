@@ -1,0 +1,492 @@
+#!/usr/bin/env bash
+# DronSwarm · Consola de pruebas
+#
+#   ./dronswarm.sh              menú interactivo
+#   ./dronswarm.sh demo [N]     demo de formación con ventana (N drones, por defecto 4)
+#   ./dronswarm.sh sih          prueba de vuelo sin gráficos + gráfica
+#   ./dronswarm.sh tests        lint + pruebas automáticas
+#   ./dronswarm.sh estado       diagnóstico del entorno
+#
+# Los resultados de cada corrida quedan en logs/<prueba>-<fecha>/ (carpeta ignorada por git).
+set -uo pipefail
+
+REPO="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+PY="$REPO/.venv/bin/python"
+PX4_DIR="${PX4_DIR:-$HOME/src/PX4-Autopilot}"
+BUILD="$PX4_DIR/build/px4_sitl_default"
+LOGS="$REPO/logs"
+REPORT_URL="https://claude.ai/code/artifact/a7037c35-535a-4140-9774-32aebfa1fe00"
+REALTIME_MAX=6   # drones que este PC simula en tiempo real (medido en S01-05)
+export MESA_D3D12_DEFAULT_ADAPTER_NAME="${MESA_D3D12_DEFAULT_ADAPTER_NAME:-NVIDIA}"   # ADR-009
+
+TITLE="DronSwarm · Consola de pruebas"
+H=22
+W=78
+export NEWT_COLORS='
+root=white,black
+window=white,black
+border=cyan,black
+shadow=black,black
+title=brightcyan,black
+button=black,cyan
+actbutton=white,blue
+compactbutton=white,black
+listbox=white,black
+actlistbox=black,cyan
+actsellistbox=black,cyan
+sellistbox=white,black
+checkbox=white,black
+actcheckbox=black,cyan
+entry=white,black
+label=white,black
+textbox=white,black
+acttextbox=black,cyan
+helpline=black,cyan
+roottext=cyan,black'
+
+B=$'\e[1m'; C=$'\e[36m'; G=$'\e[32m'; R=$'\e[31m'; Y=$'\e[33m'; D=$'\e[2m'; N=$'\e[0m'
+
+# ---------------------------------------------------------------------------
+# Utilidades
+# ---------------------------------------------------------------------------
+
+banner() {
+    clear
+    printf '%s%s' "$C" "$B"
+    cat <<'EOF'
+   ___                 ___
+  |   \ _ _ ___ _ _   / __|_ __ ____ _ _ _ _ __
+  | |) | '_/ _ \ ' \  \__ \ V  V / _` | '_| '  \
+  |___/|_| \___/_||_| |___/\_/\_/\__,_|_| |_|_|_|
+EOF
+    printf '%s%s  Drones de bajo costo para minería · enjambre · 5,000 msnm%s\n\n' "$N" "$D" "$N"
+}
+
+has_whiptail() { command -v whiptail >/dev/null && [[ -t 0 && -t 1 ]]; }
+
+# whiptail escribe la elección en stderr: se intercambian los descriptores
+wt() { whiptail --backtitle "$TITLE" --yes-button "Sí" --no-button "No" --ok-button "Aceptar" --cancel-button "Volver" "$@" 3>&1 1>&2 2>&3; }
+
+msg() { wt --title "$1" --msgbox "$2" "$H" "$W"; }
+
+pause() {
+    echo
+    read -rp "${D}Presiona Enter para volver al menú…${N}" _
+}
+
+new_run_dir() {
+    local d
+    d="$LOGS/$1-$(date +%Y%m%d-%H%M%S)"
+    mkdir -p "$d"
+    echo "$d"
+}
+
+open_in_windows() {
+    if command -v explorer.exe >/dev/null && command -v wslpath >/dev/null; then
+        explorer.exe "$(wslpath -w "$1")" >/dev/null 2>&1 || true
+    else
+        echo "Abrir manualmente: $1"
+    fi
+}
+
+stop_sims() {
+    pkill -x px4 2>/dev/null || true
+    local p
+    for p in $(pgrep -x ruby 2>/dev/null); do
+        grep -q "gz" "/proc/$p/cmdline" 2>/dev/null && kill "$p" 2>/dev/null
+    done
+    sleep 1
+    pkill -9 -x px4 2>/dev/null || true
+    rm -f /tmp/px4_lock-* /tmp/px4-sock-* 2>/dev/null || true
+}
+
+ok()   { printf '  %s✔%s %s\n' "$G" "$N" "$1"; }
+fail() { printf '  %s✘%s %s\n' "$R" "$N" "$1"; }
+
+# Encabezado de una prueba en la terminal
+header() {
+    banner
+    printf '%s▶ %s%s\n' "$B" "$1" "$N"
+    [[ -n "${2:-}" ]] && printf '%s  %s%s\n' "$D" "$2" "$N"
+    printf '%s  Ctrl+C para detener%s\n\n' "$D" "$N"
+}
+
+# Resumen legible de los JSON que dejan las pruebas
+summarize() {
+    "$PY" - "$1" <<'EOF'
+import json, os, sys
+d = sys.argv[1]
+out = []
+def load(name):
+    p = os.path.join(d, name)
+    return json.load(open(p)) if os.path.exists(p) else None
+t = load("takeoff.json")
+if t:
+    out.append(f"Drones que completaron la misión: {t.get('ok')}/{t.get('n')}")
+    if t.get("duration_s"):
+        out.append(f"Duración de la misión: {t['duration_s']} s")
+    for e in t.get("errors", []):
+        out.append(f"Error: {e}")
+s = load("smoke_test.json")
+if s:
+    out.append(f"Altura objetivo: {s['target_alt_m']} m · alcanzada: {s['reached_alt_m']} m")
+    out.append(f"Error máximo en hover: {s['hold_max_error_m']} m")
+    out.append(f"Aterrizó y desarmó: {'sí' if s.get('disarmed') else 'no'}")
+r = load("resources.json")
+if r:
+    rtf = r.get("rtf_median")
+    if rtf is not None:
+        verdict = "tiempo real" if rtf >= 0.95 else ("más lento que el tiempo real" if rtf >= 0.7 else "muy lento: demasiados drones")
+        out.append(f"Velocidad de la simulación: {rtf:.2f} × tiempo real ({verdict})")
+    if r.get("cpu_mean_pct") is not None:
+        out.append(f"CPU media: {r['cpu_mean_pct'] / 100:.1f} núcleos · RAM extra: {r.get('mem_increase_mb')} MB")
+    if r.get("gpu_peak_pct") is not None:
+        out.append(f"GPU ({r.get('gpu_adapter')}): pico {r['gpu_peak_pct']:.0f} % · VRAM {r.get('gpu_mem_peak_mb'):.0f} MB")
+passed = (t or s or {}).get("passed")
+head = "RESULTADO: OK" if passed else ("RESULTADO: FALLÓ" if passed is False else "RESULTADO: sin datos (¿se interrumpió?)")
+print(head + "\n\n" + "\n".join(out) + f"\n\nArchivos: {d}")
+EOF
+}
+
+finish_run() {
+    local dir="$1" rc="$2" text
+    text="$(summarize "$dir" 2>/dev/null || echo "Sin resumen disponible. Archivos: $dir")"
+    echo
+    if [[ "$rc" -eq 0 ]]; then printf '%s%s✔ Terminó correctamente%s\n' "$G" "$B" "$N"; else printf '%s%s✘ Terminó con errores (código %s)%s\n' "$R" "$B" "$rc" "$N"; fi
+    printf '%s\n' "$text" | sed "1s/.*/${B}&${N}/"
+    pause
+}
+
+require_px4() {
+    if [[ ! -x "$BUILD/bin/px4-gz_bridge" ]]; then
+        msg "PX4 no está listo" "PX4 no está compilado con soporte de Gazebo.\n\nEjecuta:\n  bash tools/setup_wsl.sh\no bien:\n  rm -rf $BUILD && make -C $PX4_DIR px4_sitl"
+        return 1
+    fi
+}
+
+choose_drones() {
+    local default="${1:-4}"
+    wt --title "Número de drones" --radiolist \
+        "¿Cuántos drones?\n\nEste PC simula hasta $REALTIME_MAX en tiempo real; más de eso funciona, pero más lento." \
+        "$H" "$W" 6 \
+        1 "1 dron" "$([[ $default == 1 ]] && echo ON || echo OFF)" \
+        2 "2 drones" "$([[ $default == 2 ]] && echo ON || echo OFF)" \
+        3 "3 drones" "$([[ $default == 3 ]] && echo ON || echo OFF)" \
+        4 "4 drones" "$([[ $default == 4 ]] && echo ON || echo OFF)" \
+        6 "6 drones (máximo en tiempo real)" "$([[ $default == 6 ]] && echo ON || echo OFF)" \
+        9 "9 drones (≈ 80 % de velocidad)" "$([[ $default == 9 ]] && echo ON || echo OFF)"
+}
+
+ask_gui() {
+    wt --title "Ventana de Gazebo" --yes-button "Con ventana" --no-button "Sin ventana" \
+        --yesno "¿Abrir la ventana 3D de Gazebo?\n\nCon ventana ves los drones (se abre en Windows).\nSin ventana es más rápido y sirve para medir." 12 "$W"
+}
+
+# ---------------------------------------------------------------------------
+# Acciones
+# ---------------------------------------------------------------------------
+
+act_formation() {
+    require_px4 || return
+    local n="${1:-}" gui=1 dir rc
+    if [[ -z "$n" ]]; then
+        n="$(choose_drones 4)" || return
+        ask_gui || gui=""
+    fi
+    dir="$(new_run_dir formacion)"
+    header "Enjambre en formación · $n drones" "Despegan a 10 m, recorren un cuadrado de 30 m manteniendo la formación y aterrizan (≈ 1.5 min)."
+    GUI="$gui" MISSION=formation bash "$REPO/tools/sitl/run_gz_multi.sh" "$n" "$dir" 2>&1 | grep --line-buffered -vE "Warning|^\s*$|^[{}]|^\s+\""
+    rc=${PIPESTATUS[0]}
+    finish_run "$dir" "$rc"
+}
+
+act_takeoff() {
+    require_px4 || return
+    local n gui=1 dir rc hold
+    n="$(choose_drones 6)" || return
+    ask_gui || gui=""
+    hold="$(wt --title "Tiempo en el aire" --inputbox "Segundos que los drones se quedan en el aire:" 10 "$W" 30)" || return
+    dir="$(new_run_dir despegue)"
+    header "Despegue simultáneo · $n drones" "Cada dron sube a una altura distinta (5, 7, 9… m), espera ${hold} s y aterriza."
+    GUI="$gui" HOLD="$hold" bash "$REPO/tools/sitl/run_gz_multi.sh" "$n" "$dir" 2>&1 | grep --line-buffered -vE "Warning|^\s*$|^[{}]|^\s+\""
+    rc=${PIPESTATUS[0]}
+    finish_run "$dir" "$rc"
+}
+
+act_camera() {
+    require_px4 || return
+    local n dir rc
+    n="$(wt --title "Drones con cámara" --radiolist "¿Cuántos drones con cámara (640×480, 30 Hz)?" 12 "$W" 3 \
+        1 "1 dron" ON 2 "2 drones" OFF 3 "3 drones" OFF)" || return
+    msg "Cómo ver la cámara" "Cuando se abra Gazebo:\n\n  1. Menú ⋮ (arriba a la derecha)\n  2. Buscar 'Image Display' y agregarlo\n  3. Elegir el tópico /camera\n\nLos drones se quedan 60 s en el aire.\nLa cámara usa la GPU NVIDIA."
+    dir="$(new_run_dir camara)"
+    header "Drones con cámara · $n" "Render de la cámara en la GPU NVIDIA."
+    GUI=1 MODEL=x500_mono_cam HOLD=60 bash "$REPO/tools/sitl/run_gz_multi.sh" "$n" "$dir" 2>&1 | grep --line-buffered -vE "Warning|^\s*$|^[{}]|^\s+\""
+    rc=${PIPESTATUS[0]}
+    finish_run "$dir" "$rc"
+}
+
+act_manual() {
+    require_px4 || return
+    msg "Dron manual (consola de PX4)" "Se abre Gazebo con un dron y la consola de PX4 (pxh>).\n\nComandos útiles:\n  commander takeoff     despegar\n  commander land        aterrizar\n  commander status      estado\n  listener vehicle_local_position   posición\n  shutdown              salir y volver al menú"
+    header "Dron manual" "Escribe los comandos en el prompt pxh>"
+    stop_sims
+    (cd "$PX4_DIR" && make px4_sitl gz_x500)
+    stop_sims
+    pause
+}
+
+act_sih() {
+    local dir rc
+    if [[ ! -x "$BUILD/bin/px4" ]]; then require_px4 || return; fi
+    dir="$(new_run_dir sih)"
+    header "Prueba de vuelo sin gráficos (SIH)" "Despegue a 10 m, hover de 10 s, aterrizaje; luego la gráfica del vuelo (≈ 1.5 min)."
+    bash "$REPO/tools/sitl/run_sih.sh" "$dir" 2>&1 | grep --line-buffered -vE "Warning|^\s*$|^[{}]|^\s+\""
+    rc=${PIPESTATUS[0]}
+    if [[ -f "$dir/smoke_test.ulg" ]]; then
+        "$PY" "$REPO/tools/sitl/plot_flight.py" "$dir/smoke_test.ulg" "$dir/vuelo.png" >/dev/null 2>&1 && \
+            printf '\n%sGráfica: %s/vuelo.png%s\n' "$C" "$dir" "$N"
+    fi
+    finish_run "$dir" "$rc"
+    if [[ -f "$dir/vuelo.png" ]] && has_whiptail && wt --title "Gráfica" --yesno "¿Abrir la gráfica del vuelo en Windows?" 8 "$W"; then
+        open_in_windows "$dir/vuelo.png"
+    fi
+}
+
+act_capacity() {
+    require_px4 || return
+    local n dir rc
+    n="$(choose_drones 6)" || return
+    dir="$(new_run_dir capacidad)"
+    header "Capacidad del PC · $n drones" "Mide velocidad de la simulación, CPU, RAM y GPU sin ventana."
+    bash "$REPO/tools/sitl/run_gz_multi.sh" "$n" "$dir" 2>&1 | grep --line-buffered -vE "Warning|^\s*$|^[{}]|^\s+\""
+    rc=${PIPESTATUS[0]}
+    finish_run "$dir" "$rc"
+}
+
+act_tests() {
+    header "Pruebas automáticas" "Lint (ruff) + pruebas (pytest)"
+    local rc=0
+    printf '%sLint%s\n' "$B" "$N"
+    "$REPO/.venv/bin/ruff" check "$REPO" || rc=1
+    printf '\n%sPruebas%s\n' "$B" "$N"
+    (cd "$REPO" && "$REPO/.venv/bin/pytest" -q) || rc=1
+    echo
+    if [[ $rc -eq 0 ]]; then printf '%s%s✔ Todo pasó%s\n' "$G" "$B" "$N"; else printf '%s%s✘ Hay fallas%s\n' "$R" "$B" "$N"; fi
+    pause
+}
+
+act_cad() {
+    local files=() f items=() choice dir rc
+    while IFS= read -r f; do files+=("$f"); done < <(cd "$REPO" && find cad/openscad -name '*.scad' | sort)
+    if [[ ${#files[@]} -eq 0 ]]; then msg "CAD" "No hay piezas en cad/openscad/."; return; fi
+    for f in "${files[@]}"; do items+=("$f" ""); done
+    choice="$(wt --title "CAD · Exportar pieza" --menu "Elige la pieza OpenSCAD a exportar (STL + STEP + FreeCAD):" "$H" "$W" 10 "${items[@]}")" || return
+    header "Exportar pieza CAD" "$choice → STL (impresión/simulación) + STEP (FreeCAD) + .FCStd"
+    (cd "$REPO" && bash tools/cad/export_scad.sh "$choice" --fcstd) 2>&1 | grep -E '^\{|ERROR|error'
+    rc=${PIPESTATUS[0]}
+    local name; name="$(basename "${choice%.scad}")"
+    dir="$REPO/cad/exports"
+    if [[ $rc -eq 0 ]]; then
+        "$PY" "$REPO/tools/cad/render_stl.py" "$dir/$name.stl" "$dir/$name.png" --title "$name" >/dev/null 2>&1
+        printf '\n%s✔ Exportado:%s\n  %s/%s.stl\n  %s/%s.step\n  %s\n' "$G" "$N" "$dir" "$name" "$dir" "$name" "$(ls "$REPO"/cad/freecad/*/"$name".FCStd 2>/dev/null)"
+        pause
+        local opt
+        opt="$(wt --title "Pieza exportada" --menu "¿Qué quieres abrir?" 14 "$W" 3 \
+            imagen "Ver la imagen de la pieza" \
+            carpeta "Abrir la carpeta de FreeCAD en Windows" \
+            nada "Volver al menú")" || return
+        case "$opt" in
+            imagen) open_in_windows "$dir/$name.png" ;;
+            carpeta) open_in_windows "$(dirname "$(ls "$REPO"/cad/freecad/*/"$name".FCStd | head -1)")" ;;
+        esac
+    else
+        printf '\n%s✘ La exportación falló%s\n' "$R" "$N"
+        pause
+    fi
+}
+
+plan_summary() {
+    "$PY" - "$REPO" <<'EOF'
+import sys
+from pathlib import Path
+from openpyxl import load_workbook
+repo = Path(sys.argv[1])
+ws = load_workbook(repo / "docs/plan/DronSwarm_Plan_de_Trabajo.xlsx")["Tareas"]
+sprints, total_h, done_h = {}, 0.0, 0.0
+pending = []
+for r in range(2, ws.max_row + 1):
+    tid, spr, name, hours, state, pct = (ws[f"{c}{r}"].value for c in "ABDIKL")
+    if not tid:
+        continue
+    eff = 1.0 if state == "Hecho" else 0.0 if state in (None, "", "Pendiente") else float(pct or 0)
+    s = sprints.setdefault(spr, [0.0, 0.0])
+    s[0] += hours; s[1] += hours * eff
+    total_h += hours; done_h += hours * eff
+    if state in ("En revisión", "Bloqueado", "En curso"):
+        pending.append(f"  {tid}  {state:<12} {name[:48]}")
+print(f"Avance global: {done_h / total_h:.1%}  ({done_h:.0f} de {total_h:.0f} h)\n")
+print("Sprints con avance:")
+for spr, (h, d) in sprints.items():
+    if d > 0:
+        bar = "█" * round(d / h * 20) + "░" * (20 - round(d / h * 20))
+        print(f"  {spr}  {bar} {d / h:4.0%}")
+print("\nTareas abiertas (en curso, en revisión o bloqueadas):")
+print("\n".join(pending) or "  ninguna")
+EOF
+}
+
+act_plan() {
+    local opt
+    while true; do
+        opt="$(wt --title "Plan de trabajo" --menu "Seguimiento del plan (24 sprints):" "$H" "$W" 6 \
+            ver "Ver el avance" \
+            actualizar "Actualizar el estado de una tarea" \
+            excel "Abrir el Excel en Windows" \
+            informe "Ver el enlace del informe de sprints" \
+            volver "Volver")" || return
+        case "$opt" in
+            ver) wt --title "Avance del plan" --scrolltext --msgbox "$(plan_summary 2>&1)" "$H" "$W" ;;
+            actualizar) plan_update ;;
+            excel) open_in_windows "$REPO/docs/plan/DronSwarm_Plan_de_Trabajo.xlsx" ;;
+            informe) msg "Informe de sprints" "Informe S01-S02 (claude.ai):\n\n$REPORT_URL" ;;
+            volver) return ;;
+        esac
+    done
+}
+
+plan_update() {
+    local tid state hours args
+    msg "Antes de actualizar" "Cierra el Excel si lo tienes abierto: el archivo se regenera\n(el progreso registrado se conserva)."
+    tid="$(wt --title "Actualizar tarea" --inputbox "ID de la tarea (por ejemplo S01-06):" 10 "$W")" || return
+    tid="${tid^^}"
+    state="$(wt --title "Estado de $tid" --menu "Nuevo estado:" 15 "$W" 5 \
+        "Pendiente" "" "En curso" "" "En revisión" "" "Bloqueado" "" "Hecho" "")" || return
+    hours="$(wt --title "Horas reales" --inputbox "Horas reales trabajadas en $tid (vacío = no cambiar):" 10 "$W")" || return
+    args="$tid=$state"
+    [[ -n "$hours" ]] && args="$args:$hours"
+    if out="$("$PY" "$REPO/tools/plan/generar_plan_trabajo.py" --set "$args" 2>&1)"; then
+        msg "Tarea actualizada" "$tid → $state\n\n$(echo "$out" | tail -1)"
+    else
+        msg "No se pudo actualizar" "$out"
+    fi
+}
+
+status_text() {
+    {
+        echo "ENTORNO"
+        [[ -x "$PY" ]] && ok "Entorno Python del repo (.venv)" || fail "Entorno Python: ejecutar tools/setup_wsl.sh"
+        [[ -x "$BUILD/bin/px4" ]] && ok "PX4 $(git -C "$PX4_DIR" describe --tags 2>/dev/null) compilado" || fail "PX4 sin compilar"
+        [[ -x "$BUILD/bin/px4-gz_bridge" ]] && ok "PX4 con soporte de Gazebo" || fail "PX4 sin soporte de Gazebo"
+        local gzv; gzv="$(gz sim --versions 2>/dev/null | head -1)"
+        [[ -n "$gzv" ]] && ok "Gazebo $gzv (Garden)" || fail "Gazebo no instalado"
+        echo
+        echo "GPU"
+        local gpu; gpu="$(nvidia-smi --query-gpu=name,memory.total --format=csv,noheader 2>/dev/null)"
+        [[ -n "$gpu" ]] && ok "NVIDIA: $gpu" || fail "GPU NVIDIA no visible"
+        [[ "$MESA_D3D12_DEFAULT_ADAPTER_NAME" == "NVIDIA" ]] && ok "OpenGL en la NVIDIA (necesario para cámaras)" || fail "OpenGL no forzado a la NVIDIA"
+        [[ -x "$HOME/.venvs/gpu/bin/python" ]] && ok "PyTorch + CUDA en ~/.venvs/gpu" || fail "PyTorch + CUDA no instalado (opcional)"
+        echo
+        echo "CAD"
+        { command -v openscad >/dev/null || [[ -x "$HOME/.local/opt/openscad/AppRun" ]]; } && ok "OpenSCAD" || fail "OpenSCAD no encontrado"
+        { command -v freecadcmd >/dev/null || [[ -x "$HOME/.local/opt/freecad/AppRun" ]]; } && ok "FreeCAD (línea de comandos)" || fail "FreeCAD no encontrado"
+        echo
+        echo "CAPACIDAD MEDIDA (S01-05)"
+        echo "  6 drones en tiempo real · 9 al 80 % · 12 al 55 %"
+        echo
+        echo "PROCESOS"
+        local n; n="$(pgrep -xc px4 2>/dev/null || true)"
+        [[ "${n:-0}" -gt 0 ]] && echo "  ${n} instancia(s) de PX4 corriendo (usa 'Detener simulaciones')" || echo "  Ninguna simulación corriendo"
+    } | sed 's/\x1b\[[0-9;]*m//g'
+}
+
+act_status() {
+    if has_whiptail; then
+        wt --title "Estado del entorno" --scrolltext --msgbox "$(status_text)" "$H" "$W"
+    else
+        banner; status_text; pause
+    fi
+}
+
+act_clean() {
+    stop_sims
+    msg "Listo" "Se detuvieron todas las instancias de PX4 y Gazebo."
+}
+
+act_docs() {
+    local opt
+    opt="$(wt --title "Documentación" --menu "¿Qué abrir?" 16 "$W" 6 \
+        probar "Guía: cómo probar (docs/como-probar.md)" \
+        entorno "Entorno, GPU y problemas conocidos (docs/setup-wsl.md)" \
+        decisiones "Decisiones técnicas (docs/decisiones.md)" \
+        requisitos "Requisitos y targets (docs/requisitos/)" \
+        evidencias "Carpeta de evidencias" \
+        logs "Carpeta con los resultados de esta consola")" || return
+    case "$opt" in
+        probar) wt --title "Cómo probar" --scrolltext --textbox "$REPO/docs/como-probar.md" "$H" "$W" ;;
+        entorno) wt --title "Entorno" --scrolltext --textbox "$REPO/docs/setup-wsl.md" "$H" "$W" ;;
+        decisiones) wt --title "Decisiones" --scrolltext --textbox "$REPO/docs/decisiones.md" "$H" "$W" ;;
+        requisitos) open_in_windows "$REPO/docs/requisitos" ;;
+        evidencias) open_in_windows "$REPO/docs/evidencias" ;;
+        logs) mkdir -p "$LOGS"; open_in_windows "$LOGS" ;;
+    esac
+}
+
+# ---------------------------------------------------------------------------
+# Menú principal
+# ---------------------------------------------------------------------------
+
+main_menu() {
+    local choice
+    while true; do
+        choice="$(wt --title "Menú principal" --cancel-button "Salir" --menu \
+            "Elige qué quieres probar (flechas + Enter):" "$H" "$W" 12 \
+            "1" "Demo: enjambre en formación (con ventana 3D)" \
+            "2" "Despegue simultáneo de varios drones" \
+            "3" "Drones con cámara (usa la GPU)" \
+            "4" "Dron manual con la consola de PX4" \
+            "5" "Prueba de vuelo sin gráficos + gráfica" \
+            "6" "Medir capacidad del PC" \
+            "7" "Pruebas automáticas (lint + tests)" \
+            "8" "CAD: exportar una pieza a STEP / FreeCAD" \
+            "9" "Plan de trabajo: avance y actualizar tareas" \
+            "E" "Estado del entorno" \
+            "D" "Documentación y carpetas" \
+            "X" "Detener simulaciones colgadas")" || break
+        case "$choice" in
+            1) act_formation ;;
+            2) act_takeoff ;;
+            3) act_camera ;;
+            4) act_manual ;;
+            5) act_sih ;;
+            6) act_capacity ;;
+            7) act_tests ;;
+            8) act_cad ;;
+            9) act_plan ;;
+            E) act_status ;;
+            D) act_docs ;;
+            X) act_clean ;;
+        esac
+    done
+    clear
+    printf '%sHasta luego.%s Resultados guardados en %s\n' "$C" "$N" "$LOGS"
+}
+
+# Ctrl+C detiene la prueba en curso pero no cierra la consola
+trap 'printf "\n%sInterrumpido%s\n" "$Y" "$N"' INT
+
+case "${1:-}" in
+    demo) act_formation "${2:-4}" ;;
+    sih) act_sih ;;
+    tests) act_tests ;;
+    estado) banner; status_text ;;
+    -h|--help) sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//' ;;
+    "")
+        if has_whiptail; then
+            main_menu
+        else
+            echo "Instala whiptail (sudo apt install whiptail) para el menú; mientras tanto: ./dronswarm.sh --help"
+        fi
+        ;;
+    *) echo "Opción desconocida: $1"; sed -n '2,10p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
+esac

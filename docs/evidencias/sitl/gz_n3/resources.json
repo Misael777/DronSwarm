@@ -1,0 +1,9 @@
+{
+  "drones": 3,
+  "samples": 20,
+  "rtf_median": 0.985,
+  "rtf_p10": 0.976,
+  "mem_increase_mb": 189,
+  "cpu_peak_pct": 213.1,
+  "cpu_mean_pct": 189.4
+}

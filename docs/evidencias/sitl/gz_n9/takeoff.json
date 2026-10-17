@@ -1,0 +1,72 @@
+{
+  "n": 9,
+  "ok": 9,
+  "errors": [],
+  "duration_s": 74.6,
+  "drones": [
+    {
+      "drone": 0,
+      "target_alt_m": 5.0,
+      "reached_alt_m": 4.0,
+      "arm_attempts": 1,
+      "landed": true
+    },
+    {
+      "drone": 1,
+      "target_alt_m": 7.0,
+      "reached_alt_m": 6.01,
+      "arm_attempts": 1,
+      "landed": true
+    },
+    {
+      "drone": 2,
+      "target_alt_m": 9.0,
+      "reached_alt_m": 8.01,
+      "arm_attempts": 1,
+      "landed": true
+    },
+    {
+      "drone": 3,
+      "target_alt_m": 11.0,
+      "reached_alt_m": 10.0,
+      "arm_attempts": 1,
+      "landed": true
+    },
+    {
+      "drone": 4,
+      "target_alt_m": 13.0,
+      "reached_alt_m": 12.01,
+      "arm_attempts": 1,
+      "landed": true
+    },
+    {
+      "drone": 5,
+      "target_alt_m": 15.0,
+      "reached_alt_m": 14.01,
+      "arm_attempts": 1,
+      "landed": true
+    },
+    {
+      "drone": 6,
+      "target_alt_m": 17.0,
+      "reached_alt_m": 16.01,
+      "arm_attempts": 1,
+      "landed": true
+    },
+    {
+      "drone": 7,
+      "target_alt_m": 19.0,
+      "reached_alt_m": 18.01,
+      "arm_attempts": 1,
+      "landed": true
+    },
+    {
+      "drone": 8,
+      "target_alt_m": 21.0,
+      "reached_alt_m": 20.0,
+      "arm_attempts": 1,
+      "landed": true
+    }
+  ],
+  "passed": true
+}

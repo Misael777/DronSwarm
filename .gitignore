@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Simulación / logs
+*.bag
+*.ulog
+*.log
+simulation/**/build/
+logs/
+
+# Resultados regenerables (los que se versionan van en engineering/data/results/)
+/results/
+
+# CAD temporal
+*.FCBak
+*.fcstd1
+cad/**/temp/
+
+# Unreal / AirSim pesados
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+*.exe
+
+# Excel: archivos de bloqueo de Office
+~$*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+*:Zone.Identifier

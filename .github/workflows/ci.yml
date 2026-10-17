@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - uses: astral-sh/setup-uv@v5
+      - name: Instalar dependencias
+        run: |
+          uv venv .venv
+          uv pip install --python .venv/bin/python -r pyproject.toml --extra dev
+      - name: Lint
+        run: .venv/bin/ruff check .
+      - name: Tests
+        run: .venv/bin/pytest -q
