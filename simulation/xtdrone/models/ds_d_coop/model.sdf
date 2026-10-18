@@ -254,5 +254,16 @@
       <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
       <motorType>velocity</motorType>
     </plugin>
+    <plugin filename="dronswarm-motor-failure-system" name="dronswarm::MotorFailureSystem">
+      <motorConstant>3.369206e-04</motorConstant>
+      <momentConstant>0.04108</momentConstant>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>
+      <rotor link="rotor_0" joint="rotor_0_joint" direction="ccw"/>
+      <rotor link="rotor_1" joint="rotor_1_joint" direction="cw"/>
+      <rotor link="rotor_2" joint="rotor_2_joint" direction="ccw"/>
+      <rotor link="rotor_3" joint="rotor_3_joint" direction="cw"/>
+      <rotor link="rotor_4" joint="rotor_4_joint" direction="ccw"/>
+      <rotor link="rotor_5" joint="rotor_5_joint" direction="cw"/>
+    </plugin>
   </model>
 </sdf>

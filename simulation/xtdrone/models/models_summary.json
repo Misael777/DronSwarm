@@ -5,7 +5,8 @@
     "rotors": 4,
     "leg_height_m": 0.16,
     "payload_kg": 0.0,
-    "wheelbase_m": 0.672
+    "wheelbase_m": 0.672,
+    "radius_m": 0.552
   },
   "DS-D": {
     "model": "ds_d",
@@ -13,7 +14,8 @@
     "rotors": 6,
     "leg_height_m": 0.42,
     "payload_kg": 5.0,
-    "wheelbase_m": 1.453
+    "wheelbase_m": 1.453,
+    "radius_m": 1.057
   },
   "DS-H": {
     "model": "ds_h",
@@ -21,6 +23,7 @@
     "rotors": 8,
     "leg_height_m": 0.52,
     "payload_kg": 10.0,
-    "wheelbase_m": 2.19
+    "wheelbase_m": 2.19,
+    "radius_m": 1.476
   }
 }

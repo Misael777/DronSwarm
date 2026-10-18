@@ -1,0 +1,16 @@
+{
+  "origin_latlon": [
+    -9.53,
+    -77.05
+  ],
+  "obstacles": [
+    {
+      "name": "torre_iluminacion",
+      "x": 0.0,
+      "y": 40.0,
+      "radius": 1.0,
+      "height": 25.0
+    }
+  ],
+  "wind_ms": 4.0
+}

@@ -13,6 +13,7 @@ Salidas:
     simulation/xtdrone/models/mine_tunnel/    túnel de concreto
     simulation/xtdrone/worlds/mine.sdf        mundo "default" de PX4 con todo lo anterior, viento y coordenadas andinas
     simulation/xtdrone/worlds/mine_layout.json  puntos de interés para las misiones
+    simulation/xtdrone/worlds/swarm.sdf       S06: campo plano con torre de iluminación y monitor de separación
 """
 
 import argparse
@@ -228,12 +229,54 @@ def delivery_scene(wind: float, wind_dir: float, scale: float, payload_kg: float
     return {"payload_kg": payload_kg, "rope_m": rope, "box": [a, b, c]}
 
 
+TOWER = {"name": "torre_iluminacion", "x": 0.0, "y": 40.0, "radius": 1.0, "height": 25.0}
+
+
+def monitor_plugin(obstacles: list[dict]) -> str:
+    """Monitor de separación (simulation/plugins/safety): radios de colisión de cada tipo de dron y obstáculos."""
+    summary = json.loads((MODELS / "models_summary.json").read_text())
+    vehicles = "".join(f'\n      <vehicle prefix="{v["model"]}" radius="{v["radius_m"]}"/>' for v in summary.values())
+    vehicles += '\n      <vehicle prefix="x500" radius="0.38"/>'
+    obst = "".join(f'\n      <obstacle name="{o["name"]}" x="{o["x"]}" y="{o["y"]}" radius="{o["radius"]}" height="{o["height"]}"/>'
+                   for o in obstacles)
+    return f"""
+    <plugin filename="dronswarm-swarm-monitor-system" name="dronswarm::SwarmMonitorSystem">{vehicles}{obst}
+    </plugin>"""
+
+
+def swarm_scene(wind: float, wind_dir_deg: float, scale: float) -> dict:
+    """S06 · Campo de pruebas del enjambre: suelo plano a 4,300 msnm, una torre de iluminación en la ruta y el monitor."""
+    t = TOWER
+    static_model(t["name"], f"""
+    <link name="mast">
+      <pose>0 0 {t["height"] / 2} 0 0 0</pose>
+      <collision name="c"><geometry><cylinder><radius>{t["radius"]}</radius><length>{t["height"]}</length></cylinder></geometry></collision>
+      <visual name="v"><geometry><cylinder><radius>{t["radius"]}</radius><length>{t["height"]}</length></cylinder></geometry>
+        {gen_sdf.material((0.75, 0.75, 0.72))}</visual>
+    </link>
+    <link name="lamps">
+      <pose>0 0 {t["height"] + 0.6} 0 0 0</pose>
+      <visual name="v"><geometry><box><size>4 1.2 1.2</size></box></geometry>{gen_sdf.material((0.95, 0.85, 0.2))}</visual>
+    </link>""")
+    src = world(wind, wind_dir_deg, scale, monitor_plugin([t]) + f"""
+    <include><uri>model://{t["name"]}</uri><pose>{t["x"]} {t["y"]} 0 0 0 0</pose></include>""")
+    src = src.replace("".join(f"\n    <include><uri>model://{m}</uri></include>"
+                              for m in ("mine_terrain", "mine_conveyor", "mine_tailings", "mine_tunnel")), "")
+    ground = re.search(r'<model name="ground_plane">.*?</model>',
+                       (gen_sdf.PX4_DIR / "Tools/simulation/gz/worlds/default.sdf").read_text(), flags=re.S).group(0)
+    src = src.replace("  </world>", f"    {ground}\n  </world>")
+    (WORLDS / "swarm.sdf").write_text(src)
+    m = re.search(r"<latitude_deg>(.*?)</latitude_deg>.*?<longitude_deg>(.*?)</longitude_deg>", src, flags=re.S)
+    return {"origin_latlon": [float(m.group(1)), float(m.group(2))], "obstacles": [t], "wind_ms": wind}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--wind", type=float, default=0.0, help="viento medio [m/s] (con ráfagas de ±25 %)")
     ap.add_argument("--wind-dir", type=float, default=270.0, help="de dónde sopla [°], 270 = del oeste")
     ap.add_argument("--wind-scale", type=float, default=0.04,
                     help="factor de fuerza de WindEffects; 0.04 ≈ arrastre ½ρV²·CdA de DS-I/DS-D a 4,500 msnm")
+    ap.add_argument("--swarm-wind", type=float, default=4.0, help="viento del campo de pruebas del enjambre [m/s]")
     a = ap.parse_args()
 
     MODELS.mkdir(parents=True, exist_ok=True)
@@ -258,6 +301,8 @@ def main():
     layout["delivery"] = delivery_scene(a.wind, a.wind_dir, a.wind_scale)
     layout["delivery"]["target"] = [PIT_CENTER[0], PIT_CENTER[1], -BENCH_H * BENCHES]   # fondo del tajo
     (WORLDS / "mine_layout.json").write_text(json.dumps(layout, indent=2, ensure_ascii=False) + "\n")
+    swarm = swarm_scene(a.swarm_wind, a.wind_dir, a.wind_scale)
+    (WORLDS / "swarm_layout.json").write_text(json.dumps(swarm, indent=2, ensure_ascii=False) + "\n")
     print(json.dumps({k: layout[k] for k in ("pit", "conveyor", "wind_ms")}, indent=2, ensure_ascii=False))
 
 

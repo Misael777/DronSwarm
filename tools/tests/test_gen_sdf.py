@@ -31,6 +31,10 @@ def test_model_matches_sizing(vehicle, tmp_path):
     af = gen_sdf.airframe(vehicle, design, info["model"], 22000)
     assert f"CA_ROTOR_COUNT {n}" in af
     assert len(re.findall(r"CA_ROTOR\d+_KM -", af)) == n // 2                   # mitad de los rotores gira al revés
+    # S06-04: falla física de motor disponible en todos; manejo de motor caído en los de 6 y 8 rotores
+    assert sdf.count('<rotor link="rotor_') == n and "dronswarm::MotorFailureSystem" in sdf
+    assert ("CA_FAILURE_MODE 1" in af and "MC_AIRMODE 1" in af) == (n >= 6)
+    assert info["radius_m"] == pytest.approx(design["wheelbase_m"] / 2 + design["prop_diameter_in"] * 0.0254 / 2, abs=1e-3)
     if shutil.which("gz"):
         f = tmp_path / "model.sdf"
         f.write_text(sdf)

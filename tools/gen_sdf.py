@@ -137,6 +137,16 @@ def build(vehicle: str, design: dict, with_payload: bool = True, name_suffix: st
       <motorType>velocity</motorType>
     </plugin>""")
 
+    # Falla física de motor a pedido (simulation/plugins/safety): anula empuje y par del rotor elegido
+    rotor_tags = "".join(f'\n      <rotor link="rotor_{k}" joint="rotor_{k}_joint" direction="{"ccw" if k % 2 == 0 else "cw"}"/>'
+                         for k in range(n))
+    plugins.append(f"""
+    <plugin filename="dronswarm-motor-failure-system" name="dronswarm::MotorFailureSystem">
+      <motorConstant>{sdf['motorConstant']:.6e}</motorConstant>
+      <momentConstant>{sdf['momentConstant']:.5f}</momentConstant>
+      <rotorVelocitySlowdownSim>10</rotorVelocitySlowdownSim>{rotor_tags}
+    </plugin>""")
+
     payload = ""
     if has_payload:
         a, b, c = payload_box
@@ -176,7 +186,8 @@ def build(vehicle: str, design: dict, with_payload: bool = True, name_suffix: st
 </sdf>
 """
     info = {"model": name, "mass_kg": round(mass_total, 3), "rotors": n, "leg_height_m": leg_h,
-            "payload_kg": payload_kg if has_payload else 0.0, "wheelbase_m": design["wheelbase_m"]}
+            "payload_kg": payload_kg if has_payload else 0.0, "wheelbase_m": design["wheelbase_m"],
+            "radius_m": round(design["wheelbase_m"] / 2 + prop_r, 3)}      # punta de hélice: radio de colisión
     return text, info
 
 
@@ -216,7 +227,12 @@ def airframe(vehicle: str, design: dict, model_name: str, af_id: int) -> str:
     lines += ["", f"param set-default MPC_THR_HOVER {min(0.8, max(0.3, hover / w_max)):.2f}"]
     if n >= 6:   # drones grandes: más lentos en giro, ganancias de actitud más suaves
         lines += ["param set-default MPC_TILTMAX_AIR 30", "param set-default MPC_ACC_HOR 2.0",
-                  "param set-default MPC_XY_VEL_MAX 8"]
+                  "param set-default MPC_XY_VEL_MAX 8",
+                  # Motor caído (S06-04): con telemetría de ESC, PX4 retira el motor de la asignación y aterriza.
+                  # En el DS-D (6 motores) además hace falta airmode de roll/pitch; sin él la asignación sacrifica
+                  # el empuje para buscar cabeceo y el dron cae (verificado en SITL).
+                  "param set-default CA_FAILURE_MODE 1", "param set-default COM_ACT_FAIL_ACT 2",
+                  "param set-default FD_ACT_EN 1", "param set-default MC_AIRMODE 1"]
     return "\n".join(lines) + "\n"
 
 

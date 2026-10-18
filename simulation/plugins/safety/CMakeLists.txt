@@ -1,0 +1,27 @@
+cmake_minimum_required(VERSION 3.16)
+project(dronswarm_safety_systems LANGUAGES CXX)
+
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if(NOT CMAKE_BUILD_TYPE)
+  set(CMAKE_BUILD_TYPE Release)
+endif()
+
+find_package(gz-sim7 REQUIRED)
+find_package(gz-plugin2 REQUIRED COMPONENTS register)
+find_package(gz-transport12 REQUIRED)
+
+# Falla física de un motor (sistema de modelo) y monitor de separación del enjambre (sistema de mundo)
+foreach(sys motor-failure swarm-monitor)
+  string(REPLACE "-" ";" parts ${sys})
+  set(src "")
+  foreach(p ${parts})
+    string(SUBSTRING ${p} 0 1 first)
+    string(TOUPPER ${first} first)
+    string(SUBSTRING ${p} 1 -1 rest)
+    string(APPEND src "${first}${rest}")
+  endforeach()
+  add_library(dronswarm-${sys}-system SHARED ${src}System.cc)
+  target_link_libraries(dronswarm-${sys}-system
+    PRIVATE gz-sim7::gz-sim7 gz-plugin2::register gz-transport12::gz-transport12)
+endforeach()

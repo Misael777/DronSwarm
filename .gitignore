@@ -12,6 +12,7 @@ venv/
 *.bag
 *.ulog
 *.ulg
+monitor.csv
 *.log
 simulation/**/build/
 logs/

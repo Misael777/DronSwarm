@@ -9,6 +9,9 @@
 #   GUI=1 MODEL=ds_d bash tools/sitl/run_gz_multi.sh 1          # nuestro DS-D (con su caja de 5 kg)
 #   GUI=1 MODELS=ds_i,ds_i,ds_d,ds_h MISSION=formation bash tools/sitl/run_gz_multi.sh   # enjambre mixto
 #   GUI=1 SCENE=coop bash tools/sitl/run_gz_multi.sh            # 3 DS-D levantan juntos una caja de 10 kg
+#   GUI=1 SCENE=swarm bash tools/sitl/run_gz_multi.sh 6         # S06: enjambre de 6 DS-I (formación, cruce, torre)
+#   SCENE=swarm MODEL=ds_d MISSION=fault MISSION_ARGS="--case motor" bash tools/sitl/run_gz_multi.sh 1   # fallas
+#   SPACING=12 SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i MISSION=sector bash tools/sitl/run_gz_multi.sh  # HU-08
 #
 # GPU: en laptops híbridas OpenGL usa por defecto la GPU integrada. Este script fuerza la NVIDIA
 # (MESA_D3D12_DEFAULT_ADAPTER_NAME=NVIDIA); para probar otra: GPU_ADAPTER=AMD bash ...
@@ -38,8 +41,11 @@ stop_px4() {
 }
 stop_px4
 # Servidores de Gazebo que hayan quedado de corridas interrumpidas: dos mundos "default" mezclan los tópicos
-for p in $(pgrep -x ruby 2>/dev/null); do grep -q "gz" "/proc/$p/cmdline" 2>/dev/null && kill "$p" 2>/dev/null; done
-sleep 1
+# (un servidor viejo con el mismo mundo "default" comparte /world/default/clock con el nuevo: PX4 ve saltos de tiempo)
+stale_gz() { for p in $(pgrep -x ruby 2>/dev/null); do grep -q "gz" "/proc/$p/cmdline" 2>/dev/null && echo "$p"; done; }
+for p in $(stale_gz); do kill "$p" 2>/dev/null; done
+sleep 2
+for p in $(stale_gz); do kill -9 "$p" 2>/dev/null; done
 
 [[ -x "$BUILD/bin/px4-gz_bridge" ]] || { echo "PX4 sin soporte de Gazebo: rm -rf $BUILD && make -C $PX4_DIR px4_sitl" >&2; exit 1; }
 # shellcheck disable=SC1091
@@ -48,6 +54,11 @@ set +u; . "$BUILD/rootfs/gz_env.sh"; set -u   # GZ_SIM_RESOURCE_PATH, PX4_GZ_WOR
 # Modelos y airframes propios (DS-I, DS-D, DS-H generados por tools/gen_sdf.py)
 export GZ_SIM_RESOURCE_PATH="$REPO/simulation/xtdrone/models:${GZ_SIM_RESOURCE_PATH:-}"
 cp -f "$REPO"/simulation/px4/airframes/*_gz_* "$BUILD/etc/init.d-posix/airframes/" 2>/dev/null || true
+# Plugins propios de seguridad: falla física de motor (en cada modelo DS) y monitor de separación (mundo swarm)
+SAFETY="$REPO/simulation/plugins/safety"
+[[ -f "$SAFETY/build/libdronswarm-motor-failure-system.so" ]] || \
+    { cmake -S "$SAFETY" -B "$SAFETY/build" >/dev/null && cmake --build "$SAFETY/build" -j >/dev/null; }
+export GZ_SIM_SYSTEM_PLUGIN_PATH="$SAFETY/build:${GZ_SIM_SYSTEM_PLUGIN_PATH:-}"
 
 # Carga útil: se genera una variante del x500 con una caja de PAYLOAD_KG kg fija bajo el cuerpo
 if [[ -n "${PAYLOAD_KG:-}" ]]; then
@@ -95,6 +106,12 @@ base_mem="$(mem_used_mb)"
 WORLD_FILE="${WORLD_FILE:-$PX4_GZ_WORLDS/$WORLD.sdf}"
 if [[ "${SCENE:-}" == "mine" ]]; then                    # mundo de mina (tools/gen_world.py): tajo, faja, relavera, viento
     WORLD_FILE="$REPO/simulation/xtdrone/worlds/mine.sdf"
+fi
+if [[ "${SCENE:-}" == "swarm" ]]; then                   # S06: campo plano con torre de iluminación y monitor de separación
+    WORLD_FILE="$REPO/simulation/xtdrone/worlds/swarm.sdf"
+    export DRONSWARM_MONITOR_CSV="$OUT/monitor.csv"
+    [[ "$MODEL" == "x500" ]] && export MODEL="ds_i"
+    export MISSION="${MISSION:-swarm}"
 fi
 if [[ "${SCENE:-}" == "delivery" ]]; then                # mina + DS-D con gancho y caja de 5 kg que se suelta en destino
     WORLD_FILE="$REPO/simulation/xtdrone/worlds/mine_delivery.sdf"
@@ -161,9 +178,10 @@ except FileNotFoundError:
 print(f"{max(3.0, info['wheelbase_m'] + 1.5):.2f} {info['leg_height_m'] + 0.05:.2f}" if info else "3.0 0.0")
 PYEOF
 )
+    [[ -n "${SPACING:-}" ]] && width="$SPACING"          # separación fija entre bases (p. ej. 12 m para la HU-08)
     if [[ $i -gt 0 ]]; then y_pos="$(echo "$y_pos + ($prev_width + $width) / 2" | bc -l)"; fi
     prev_width="$width"
-    pose="0,$(printf '%.2f' "$y_pos"),$leg_h"
+    pose="${SPAWN_X:-0},$(printf '%.2f' "$y_pos"),$leg_h"          # SPAWN_X: mover la fila de bases al este/oeste
     [[ -n "${POSE_LIST[$i]:-}" ]] && pose="${POSE_LIST[$i]}"
     autostart=()
     ls "$BUILD/etc/init.d-posix/airframes/"*"_gz_$m" >/dev/null 2>&1 || autostart=(PX4_SYS_AUTOSTART=4001)
@@ -229,7 +247,23 @@ mission_script="$REPO/tools/sitl/multi_takeoff.py"
 [[ "${MISSION:-}" == "coop" ]] && mission_script="$REPO/tools/sitl/demo_coop_lift.py"
 [[ "${MISSION:-}" == "inspection" ]] && mission_script="$REPO/control/missions/inspection.py"
 [[ "${MISSION:-}" == "release" ]] && mission_script="$REPO/control/missions/delivery.py"
-"$PY" "$mission_script" --n "$N" --hold "${HOLD:-15}" --out "$OUT/takeoff.json" || status=$?
+[[ "${MISSION:-}" == "swarm" ]] && mission_script="$REPO/control/swarm/sitl_swarm.py"
+[[ "${MISSION:-}" == "fault" ]] && mission_script="$REPO/simulation/xtdrone/scripts/fault_injection.py"
+[[ "${MISSION:-}" == "sector" ]] && mission_script="$REPO/control/missions/sector_survey.py"
+# MISSION_ARGS: opciones extra de la misión, p. ej. MISSION_ARGS="--loss 0.3 --drop-out 2:40"
+# shellcheck disable=SC2086
+"$PY" "$mission_script" --n "$N" --hold "${HOLD:-15}" --out "$OUT/takeoff.json" ${MISSION_ARGS:-} || status=$?
+
+# Métricas de seguridad con la posición real (monitor del mundo swarm)
+if [[ -s "$OUT/monitor.csv" ]]; then
+    (cd "$REPO" && "$PY" -m control.swarm.analyze_monitor "$OUT/monitor.csv" --out "$OUT/seguridad.json" \
+        --png "$OUT/trayectorias.png" > /dev/null 2>&1) && "$PY" - "$OUT/seguridad.json" <<'EOF2'
+import json, sys
+d = json.load(open(sys.argv[1]))
+print(f"Seguridad (posición real): separación mínima {d['min_separation_m']} m, colisiones {d['collisions']}, "
+      f"torre a {d['min_obstacle_clearance_m']} m")
+EOF2
+fi
 
 # Logs de vuelo de cada dron (PX4 los cierra al desarmar)
 for ((i = 0; i < N; i++)); do
