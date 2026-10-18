@@ -1,0 +1,95 @@
+# Casos de diseño y requisitos de DS-I y DS-D.
+# Fuente: docs/requisitos/PRD.md, targets.md e historias-usuario.md (S02).
+# ESTADO: SUPUESTOS pendientes de aprobación en el Gate G0 (S02-06). Si cambian, volver a correr:
+#   .venv/bin/python -m engineering.sizing
+
+environment:
+  thrust_case:         # empuje: lo peor es aire caliente en altura (menor densidad)
+    altitude_m: 5000
+    temperature_c: 15
+  endurance_case:      # autonomía medida en la mina (target "≥ 35 min a 4,500 msnm")
+    altitude_m: 4500
+    temperature_c: 0
+  cold_case:           # batería: madrugada en altura
+    temperature_c: -15
+  sea_level:           # referencia para comparar con las fichas DJI
+    altitude_m: 0
+    temperature_c: 15
+
+vehicles:
+  DS-I:
+    description: Dron de inspección (quad X)
+    rotors: 4
+    payload_kg: 0.0               # la cámara va en la masa fija (equipo)
+    hover_endurance_min: 35       # target a 4,500 msnm (HU-01)
+    hover_throttle_range: [0.40, 0.65]   # fracción de empuje máximo en hover a 4,500 msnm
+    endurance_basis: eol          # "eol" = batería al final de su vida; "new" = batería nueva
+    prop_diameter_in: [10, 11, 12, 13, 14, 15, 16, 17, 18]
+    cells_series: [4, 6]
+    fixed_equipment:              # masa [kg] y costo estimado [US$] (hoja BOM_Costos del Excel)
+      flight_controller: {mass: 0.045, cost: 95}
+      gnss_compass: {mass: 0.035, cost: 25}
+      rtk_module: {mass: 0.040, cost: 140}
+      companion_computer: {mass: 0.050, cost: 80}
+      power_pcb: {mass: 0.030, cost: 15}
+      rc_receiver: {mass: 0.005, cost: 15}
+      mesh_radio: {mass: 0.030, cost: 45}
+      camera_gimbal: {mass: 0.300, cost: 180}
+      wiring_misc: {mass: 0.080, cost: 26}
+      ip54_housing: {mass: 0.120, cost: 21}
+      landing_gear: {mass: 0.060, cost: 12}
+  DS-D:
+    description: Dron de delivery (hexa, tolera un motor caído)
+    rotors: 6
+    payload_kg: 5.0               # target a 4,500 msnm (HU-06)
+    hover_endurance_min: 25       # con carga máxima, a 4,500 msnm
+    delivery_distance_km: 3.0     # ida con carga, vuelta sin carga, 20 % de reserva (HU-06)
+    cruise_speed_ms: 10.0
+    hover_throttle_range: [0.40, 0.65]
+    endurance_basis: eol
+    prop_diameter_in: [18, 20, 22, 24, 26, 28, 30]
+    cells_series: [12]
+    fixed_equipment:
+      flight_controller: {mass: 0.045, cost: 95}
+      gnss_compass: {mass: 0.035, cost: 25}
+      rtk_module: {mass: 0.040, cost: 140}
+      companion_computer: {mass: 0.050, cost: 80}
+      power_pcb: {mass: 0.060, cost: 15}
+      rc_receiver: {mass: 0.005, cost: 15}
+      mesh_radio: {mass: 0.030, cost: 45}
+      fpv_camera: {mass: 0.030, cost: 25}
+      release_mechanism: {mass: 0.150, cost: 20}
+      wiring_misc: {mass: 0.200, cost: 26}
+      ip54_housing: {mass: 0.200, cost: 21}
+      landing_gear: {mass: 0.250, cost: 12}
+
+  DS-H:
+    description: Dron de carga pesada (octo, 10 kg; pedido del usuario el 2026-10-17)
+    rotors: 8
+    payload_kg: 10.0
+    hover_endurance_min: 15
+    endurance_basis: new
+    delivery_distance_km: 3.0
+    cruise_speed_ms: 8.0
+    hover_throttle_range: [0.40, 0.65]
+    prop_diameter_in: [22, 24, 26, 28, 30, 32]
+    cells_series: [12]
+    fixed_equipment:
+      flight_controller: {mass: 0.045, cost: 95}
+      gnss_compass: {mass: 0.035, cost: 25}
+      rtk_module: {mass: 0.040, cost: 140}
+      companion_computer: {mass: 0.050, cost: 80}
+      power_pcb: {mass: 0.080, cost: 20}
+      rc_receiver: {mass: 0.005, cost: 15}
+      mesh_radio: {mass: 0.030, cost: 45}
+      fpv_camera: {mass: 0.030, cost: 25}
+      release_mechanism: {mass: 0.250, cost: 30}
+      wiring_misc: {mass: 0.300, cost: 35}
+      ip54_housing: {mass: 0.250, cost: 25}
+      landing_gear: {mass: 0.400, cost: 20}
+
+# Área de arrastre del cuerpo para el vuelo en crucero (área frontal × Cd) [m²]
+drag_area_m2:
+  DS-I: 0.030
+  DS-D: 0.120
+  DS-H: 0.180

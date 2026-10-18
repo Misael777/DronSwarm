@@ -1,0 +1,35 @@
+{
+  "cd0_scale": 2.171,
+  "cases": [
+    {
+      "name": "DJI Matrice 4E",
+      "role": "calibración",
+      "spec_hover_min": 42.0,
+      "uncalibrated_min": 47.0,
+      "predicted_min": 42.0,
+      "error_pct": -0.0,
+      "hover_power_w": 135,
+      "w_per_kg": 110.8,
+      "figure_of_merit": 0.57,
+      "motor_efficiency": 0.835,
+      "source": "Ficha M4E: 1,219 g, hélice 10.8\", batería 4S 99.5 Wh, hover 42 min sin viento a nivel del mar",
+      "pitch_ratio_assumed": 0.5,
+      "avionics_w_assumed": 15.0
+    },
+    {
+      "name": "DJI Matrice 400 (con H30T)",
+      "role": "validación",
+      "spec_hover_min": 53.0,
+      "uncalibrated_min": 50.5,
+      "predicted_min": 45.9,
+      "error_pct": -13.4,
+      "hover_power_w": 1213,
+      "w_per_kg": 113.7,
+      "figure_of_merit": 0.643,
+      "motor_efficiency": 0.863,
+      "source": "Ficha M400: 10,670 g con H30T, hélice 25\", batería 13S 977 Wh, hover 53 min sin viento a nivel del mar",
+      "pitch_ratio_assumed": 0.4,
+      "avionics_w_assumed": 60.0
+    }
+  ]
+}

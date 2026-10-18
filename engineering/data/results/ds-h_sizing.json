@@ -1,0 +1,144 @@
+{
+  "scenario": "A",
+  "description": "10 kg, ≥ 15 min en hover con batería nueva + entrega de 3 km",
+  "vehicle": "DS-H",
+  "rotors": 8,
+  "prop": "30x10.5\"",
+  "prop_diameter_in": 30.0,
+  "pitch_ratio": 0.35,
+  "battery": "12S8P P42A",
+  "kv": 120,
+  "motor_p_max_w": 2064,
+  "motor_i_max_a": 47.8,
+  "esc_current_a": 62.1,
+  "mtow_kg": 30.262,
+  "masses": {
+    "equipo fijo": 1.515,
+    "carga útil": 10.0,
+    "batería": 7.556,
+    "motores": 4.129,
+    "hélices": 0.864,
+    "ESC": 0.33,
+    "brazos": 1.85,
+    "soportes de motor": 0.12,
+    "placas centrales": 3.808,
+    "piezas impresas y tornillería": 0.09
+  },
+  "costs": {
+    "equipo fijo": 555,
+    "batería": 399.0,
+    "motores": 642.0,
+    "hélices": 180.0,
+    "ESC": 173.9,
+    "brazos": 210.3,
+    "placas centrales": 486.0,
+    "piezas impresas y tornillería": 21.0
+  },
+  "bom_cost_usd": 2667.3,
+  "wheelbase_m": 2.19,
+  "arm": {
+    "tube": "Ø30×2 mm",
+    "length_m": 0.821,
+    "stress_margin": 2.79,
+    "deflection_pct": 1.38,
+    "f_natural_hz": 15.0,
+    "f_1p_hz": 43.6,
+    "f_2p_hz": 87.2
+  },
+  "checks": {
+    "TWR ≥ 2.0 a 5,000 msnm y 15 °C": {
+      "value": 2.14,
+      "ok": true
+    },
+    "Autonomía en hover ≥ 15 min (batería nueva, 4,500 msnm, 0 °C)": {
+      "value": 16.4,
+      "ok": true
+    },
+    "Empuje de hover entre 40% y 65% del máximo (4,500 msnm)": {
+      "value": 0.43,
+      "ok": true
+    },
+    "Corriente de batería dentro del límite de las celdas": {
+      "value": 359.4,
+      "limit": 360.0,
+      "ok": true
+    },
+    "Brazos: resistencia (FS 2.5), deflexión y frecuencias": {
+      "value": "Ø30×2 mm",
+      "ok": true
+    },
+    "Motor caído: 6 rotores sostienen ≥ 1.1 × peso": {
+      "value": 1.61,
+      "ok": true
+    },
+    "Entrega 3 km + regreso con 20 % de reserva (batería nueva)": {
+      "value": "+39% de margen",
+      "ok": true
+    }
+  },
+  "performance": {
+    "endurance_dji_style_min": 25.3,
+    "hover_power_w_4500m": 4229,
+    "hover_power_w_5000m_hot": 4524,
+    "hover_rpm": 2615,
+    "hover_current_a": 102.2,
+    "hover_motor_efficiency": 0.868,
+    "figure_of_merit": 0.637,
+    "endurance_new_min": 16.4,
+    "endurance_eol_min": 12.6,
+    "endurance_cold_min": 14.8,
+    "max_thrust_total_kgf_5000m": 64.85,
+    "max_thrust_limit": "voltaje",
+    "battery_energy_wh": 1451.5,
+    "delivery_mission": {
+      "segments": [
+        {
+          "name": "ascenso 30 m",
+          "time_s": 15,
+          "power_w": 4863
+        },
+        {
+          "name": "ida con carga",
+          "time_s": 375,
+          "power_w": 3589
+        },
+        {
+          "name": "entrega (hover)",
+          "time_s": 60,
+          "power_w": 4229
+        },
+        {
+          "name": "vuelta vacío",
+          "time_s": 375,
+          "power_w": 2011
+        },
+        {
+          "name": "descenso y aterrizaje",
+          "time_s": 30,
+          "power_w": 2460
+        }
+      ],
+      "energy_wh": 694.5437159105862,
+      "required_wh": 833.4524590927034,
+      "available_wh": 1157.4420479999999,
+      "margin": 0.38873193710411713
+    }
+  },
+  "inertia": {
+    "mass_kg": 30.262059074021916,
+    "cg_m": [
+      -0.0,
+      -0.0,
+      -0.0847
+    ],
+    "ixx": 4.256260010834213,
+    "iyy": 4.329896709473015,
+    "izz": 7.671443189776601
+  },
+  "sdf": {
+    "motorConstant": 0.0004945669842144391,
+    "momentConstant": 0.04260316642276136,
+    "maxRotVelocity": 425.9056571349392,
+    "note": "valores a 4,500 msnm"
+  }
+}

@@ -226,6 +226,160 @@ act_camera() {
     finish_run "$dir" "$rc"
 }
 
+act_delivery() {
+    require_px4 || return
+    local kg gui=1 base load rc1 rc2
+    kg="$(wt --title "Entrega con carga" --radiolist \
+        "Peso de la caja de carga.\n\nVista previa con el x500 de PX4 (2 kg, empuje máx. ≈ 3.5 kg): la caja va fija; el dron de carga real (5 kg) y el mecanismo que la suelta llegan en S05/S08.\n\nSe hacen 2 vuelos (sin y con carga) para comparar el empuje (≈ 3.5 min)." \
+        "$H" "$W" 3 0.3 "0.3 kg" OFF 0.5 "0.5 kg (recomendado)" ON 0.8 "0.8 kg (cerca del límite)" OFF)" || return
+    ask_gui || gui=""
+    base="$(new_run_dir entrega-sin-carga)"
+    header "Entrega · vuelo 1 de 2: sin carga" "Vuela 60 m, baja a 3 m, entrega, vuelve y aterriza."
+    GUI="$gui" MISSION=delivery bash "$REPO/tools/sitl/run_gz_multi.sh" 1 "$base" 2>&1 | grep --line-buffered -vE "Warning|^\s*$|^[{}]|^\s+\""
+    rc1=${PIPESTATUS[0]}
+    load="$(new_run_dir entrega-${kg}kg)"
+    header "Entrega · vuelo 2 de 2: con ${kg} kg" "La caja naranja va fija bajo el dron."
+    GUI="$gui" MISSION=delivery PAYLOAD_KG="$kg" bash "$REPO/tools/sitl/run_gz_multi.sh" 1 "$load" 2>&1 | grep --line-buffered -vE "Warning|^\s*$|^[{}]|^\s+\""
+    rc2=${PIPESTATUS[0]}
+    echo
+    "$PY" - "$base/drone_0.ulg" "$load/drone_0.ulg" "$kg" "$REPO/tools/sitl" <<'EOF2'
+import sys
+sys.path.insert(0, sys.argv[4])
+from flight_stats import stats
+try:
+    a, b = stats(sys.argv[1]), stats(sys.argv[2])
+except Exception as e:
+    print(f"No se pudo comparar: {e}"); raise SystemExit
+kg = sys.argv[3]
+row = lambda name, x, y: print(f"  {name:<34}{x:>12}{y:>14}")
+print(f"\033[1mCOMPARACIÓN\033[0m\n")
+row("", "Sin carga", f"Con {kg} kg")
+row("Empuje en vuelo estacionario", f"{a['hover_thrust']:.0%}", f"{b['hover_thrust']:.0%}")
+row("Margen de empuje restante", f"{a['thrust_margin']:.0%}", f"{b['thrust_margin']:.0%}")
+row("Pico de empuje", f"{a['peak_thrust']:.0%}", f"{b['peak_thrust']:.0%}")
+print()
+if b["peak_thrust"] >= 0.97:
+    print("  ⚠ Con carga los motores llegan al tope: sin margen para viento o maniobras.")
+print("  Nuestros drones se diseñan con empuje ≥ 2× el peso a 5,000 msnm (S04).")
+EOF2
+    [[ $rc1 -eq 0 && $rc2 -eq 0 ]] && printf '\n%s✔ Ambos vuelos completaron la entrega%s\n' "$G" "$N" || printf '\n%s✘ Algún vuelo falló (ver %s y %s)%s\n' "$R" "$base" "$load" "$N"
+    pause
+}
+
+act_engineering() {
+    local opt="" tmp
+    while true; do
+        opt="$(wt --title "Ingeniería · S03 y S04" --default-item "${opt:-informe}" --menu "Cálculos de diseño de DS-I y DS-D:" "$H" "$W" 8 \
+            informe "Leer el informe de diseño preliminar (S04)" \
+            autonomia "Autonomía según altitud (hover y volando)" \
+            validacion "Validación del modelo contra DJI (S03-07)" \
+            requisitos "Ver los requisitos usados (design_cases.yaml)" \
+            recalcular "Recalcular el dimensionamiento (≈ 2.5 min)" \
+            tests "Pruebas de ingeniería" \
+            carpeta "Abrir la carpeta de resultados en Windows" \
+            volver "Volver")" || return
+        case "$opt" in
+            informe)
+                wt --title "Informe de diseño preliminar" --scrolltext --textbox "$REPO/docs/ingenieria/diseno_preliminar.md" "$H" 110 ;;
+            autonomia)
+                tmp="$(mktemp)"
+                (cd "$REPO" && "$PY" -m engineering.endurance_table) > "$tmp" 2>&1
+                wt --title "Autonomía según altitud" --scrolltext --textbox "$tmp" "$H" "$W"
+                rm -f "$tmp" ;;
+            validacion)
+                tmp="$(mktemp)"
+                (cd "$REPO" && "$PY" - <<'EOF2'
+import json
+from engineering.validation import calibrate
+r = calibrate()
+print("Calibración con el DJI M4E y verificación con el DJI M400")
+print("(fichas técnicas en docs/referencias/dji/)\n")
+print(f"{'Dron':30s}{'Rol':14s}{'Ficha':>8s}{'Modelo':>9s}{'Error':>8s}")
+for c in r["cases"]:
+    print(f"{c['name']:30s}{c['role']:14s}{c['spec_hover_min']:>6.0f} m{c['predicted_min']:>7.1f} m{c['error_pct']:>+7.1f}%")
+print(f"\nFactor de calibración: {r['cd0_scale']}")
+print("Criterio: error < 10 % en el M400. Estado: NO cumplido (-13 %).")
+print("El error es conservador: el modelo predice MENOS autonomía que la real,")
+print("así que los diseños salen algo más grandes de lo necesario, nunca más débiles.")
+print("Validación definitiva: banco de empuje en S10.")
+EOF2
+                ) > "$tmp" 2>&1
+                wt --title "Validación del modelo" --scrolltext --textbox "$tmp" "$H" "$W"
+                rm -f "$tmp" ;;
+            requisitos)
+                wt --title "Requisitos usados (editar en VS Code y recalcular)" --scrolltext --textbox "$REPO/engineering/config/design_cases.yaml" "$H" "$W" ;;
+            recalcular)
+                header "Recalcular el dimensionamiento" "Calibra el modelo, barre ~1,800 combinaciones por escenario y regenera el informe."
+                (cd "$REPO" && "$PY" -m engineering.sizing)
+                pause ;;
+            tests)
+                header "Pruebas de ingeniería"
+                (cd "$REPO" && "$REPO/.venv/bin/pytest" -q engineering/tests)
+                pause ;;
+            carpeta) open_in_windows "$REPO/engineering/data/results" ;;
+            volver) return ;;
+        esac
+    done
+}
+
+run_ours() {   # $1 = título, $2 = descripción, resto = variables de entorno para run_gz_multi.sh
+    local title="$1" desc="$2" gui=1 dir rc
+    shift 2
+    require_px4 || return
+    ask_gui || gui=""
+    dir="$(new_run_dir "nuestros")"
+    header "$title" "$desc"
+    env GUI="$gui" "$@" bash "$REPO/tools/sitl/run_gz_multi.sh" 1 "$dir" 2>&1 | grep --line-buffered -vE "Warning|^\s*$|^[{}]|^\s+\""
+    rc=${PIPESTATUS[0]}
+    finish_run "$dir" "$rc"
+}
+
+act_ours() {
+    local opt=""
+    if [[ ! -f "$REPO/simulation/xtdrone/models/ds_i/model.sdf" ]]; then
+        msg "Faltan los modelos" "Genera primero los modelos desde el dimensionamiento:\n\n  .venv/bin/python tools/gen_sdf.py\n  .venv/bin/python tools/gen_coop.py"
+        return
+    fi
+    while true; do
+        opt="$(wt --title "Nuestros drones (S05)" --default-item "${opt:-tamanos}" --menu \
+            "Modelos generados desde el dimensionamiento del S04 (peso, inercias, motores a 4,500 msnm):" "$H" "$W" 10 \
+            inspeccion "Mina: inspección del tajo (grilla fotogramétrica + órbita de talud)" \
+            entrega "Mina: entrega al fondo del tajo con liberación de la caja" \
+            viento "Mina: DS-I resistiendo viento de 8 m/s con ráfagas" \
+            tamanos "Los 3 tamaños lado a lado: DS-I, DS-D y DS-H" \
+            dsd "DS-D: entrega con su caja de 5 kg" \
+            dsh "DS-H: entrega con su caja de 10 kg (8 motores)" \
+            mixto "Enjambre mixto en formación (2 DS-I + DS-D + DS-H)" \
+            coop "Carga cooperativa: 3 DS-D levantan una caja de 10 kg" \
+            dsi "DS-I solo: despegue y aterrizaje" \
+            volver "Volver")" || return
+        case "$opt" in
+            inspeccion) run_ours "Inspección del tajo" "DS-I: 5 líneas a 109 m (GSD 3 cm/px, 55 fotos) y una órbita dentro del tajo (≈ 7 min)." \
+                            SCENE=mine MODEL=ds_i MISSION=inspection
+                        [[ -f "$(ls -td "$LOGS"/nuestros-* | head -1)/inspeccion.png" ]] && wt --title "Recorrido" --yesno "¿Abrir el mapa del recorrido y las fotos en Windows?" 8 "$W" \
+                            && open_in_windows "$(ls -td "$LOGS"/nuestros-* | head -1)/inspeccion.png" ;;
+            entrega) run_ours "Entrega con liberación" "DS-D lleva una caja de 5 kg colgada al fondo del tajo (170 m, −60 m), la apoya, la suelta y vuelve (≈ 4 min)." \
+                         SCENE=delivery ;;
+            viento) run_ours "Viento en la mina" "DS-I se mantiene en el aire 30 s con viento de 8 m/s del oeste y ráfagas." \
+                        SCENE=mine MODEL=ds_i HOLD=30 ;;
+            tamanos) run_ours "Los 3 tamaños" "DS-I (2.7 kg), DS-D (15.6 kg con 5 kg) y DS-H (30 kg con 10 kg) suben a la vez." \
+                         MODELS=ds_i,ds_d,ds_h HOLD=30 ;;
+            dsd) run_ours "DS-D con 5 kg" "Vuela 60 m, baja a 3 m, entrega, vuelve y aterriza." MODEL=ds_d MISSION=delivery ;;
+            dsh) run_ours "DS-H con 10 kg" "Vuela 60 m, baja a 3 m, entrega, vuelve y aterriza." MODEL=ds_h MISSION=delivery ;;
+            mixto) run_ours "Enjambre mixto" "Recorren juntos un cuadrado de 30 m." MODELS=ds_i,ds_i,ds_d,ds_h MISSION=formation ;;
+            coop)
+                msg "Carga cooperativa" "3 DS-D (sin caja propia) levantan juntos una caja de 10 kg colgada de cuerdas de 3.2 m, la trasladan 15 m y aterrizan (≈ 2.5 min).\n\nLas cuerdas se ven como líneas negras en la ventana de Gazebo.\n\nVista previa: cada dron usa su control PX4 normal, así que la carga no se reparte en partes iguales (eso es control cooperativo, v2)."
+                run_ours "Carga cooperativa (10 kg)" "Despegue → subida conjunta → traslado → aterrizaje." SCENE=coop ;;
+            dsi) run_ours "DS-I" "Despegue, hover y aterrizaje." MODEL=ds_i ;;
+            volver) return ;;
+        esac
+    done
+}
+
+act_stories() {
+    wt --title "Historias de usuario (borrador para el Gate G0)" --scrolltext --textbox "$REPO/docs/requisitos/historias-usuario.md" "$H" "$W"
+}
+
 act_manual() {
     require_px4 || return
     msg "Dron manual (consola de PX4)" "Se abre Gazebo con un dron y la consola de PX4 (pxh>).\n\nComandos útiles:\n  commander takeoff     despegar\n  commander land        aterrizar\n  commander status      estado\n  listener vehicle_local_position   posición\n  shutdown              salir y volver al menú"
@@ -437,32 +591,40 @@ act_docs() {
 # ---------------------------------------------------------------------------
 
 main_menu() {
-    local choice
+    local choice=""
     while true; do
-        choice="$(wt --title "Menú principal" --cancel-button "Salir" --menu \
-            "Elige qué quieres probar (flechas + Enter):" "$H" "$W" 12 \
-            "1" "Demo: enjambre en formación (con ventana 3D)" \
+        choice="$(wt --title "Menú principal" --cancel-button "Salir" --default-item "${choice:-N}" --menu \
+            "Elige qué quieres probar (flechas + Enter):" 26 "$W" 16 \
+            "N" "Nuestros drones: DS-I, DS-D, DS-H y carga cooperativa (S05)" \
+            "1" "Demo: enjambre en formación con x500 (con ventana 3D)" \
             "2" "Despegue simultáneo de varios drones" \
             "3" "Drones con cámara (usa la GPU)" \
+            "C" "Demo: entrega con carga (compara empuje sin/con carga)" \
             "4" "Dron manual con la consola de PX4" \
             "5" "Prueba de vuelo sin gráficos + gráfica" \
             "6" "Medir capacidad del PC" \
             "7" "Pruebas automáticas (lint + tests)" \
             "8" "CAD: exportar una pieza a STEP / FreeCAD" \
             "9" "Plan de trabajo: avance y actualizar tareas" \
+            "H" "Historias de usuario (para revisar)" \
+            "I" "Ingeniería: informe, autonomía, validación (S03-S04)" \
             "E" "Estado del entorno" \
             "D" "Documentación y carpetas" \
             "X" "Detener simulaciones colgadas")" || break
         case "$choice" in
+            N) act_ours ;;
             1) act_formation ;;
             2) act_takeoff ;;
             3) act_camera ;;
+            C) act_delivery ;;
             4) act_manual ;;
             5) act_sih ;;
             6) act_capacity ;;
             7) act_tests ;;
             8) act_cad ;;
             9) act_plan ;;
+            H) act_stories ;;
+            I) act_engineering ;;
             E) act_status ;;
             D) act_docs ;;
             X) act_clean ;;

@@ -1,0 +1,72 @@
+{
+  "pit": {
+    "center": [
+      170.0,
+      0.0
+    ],
+    "bottom_z": -60.0,
+    "benches": 6,
+    "bench_h_m": 10.0,
+    "face_angle_deg": 65.0,
+    "berm_m": 8.0,
+    "aspect": 0.78,
+    "vertices": 25921,
+    "triangles": 51200,
+    "x_range": [
+      -130.0,
+      350.0
+    ],
+    "pit_depth_m": 60.0,
+    "pit_top_radius_m": 98.0291286259936
+  },
+  "conveyor": {
+    "start": [
+      120.0,
+      90.0
+    ],
+    "end": [
+      -60.0,
+      90.0
+    ],
+    "height_m": 3.0,
+    "length_m": 180.0,
+    "idlers": 60
+  },
+  "tailings": {
+    "center": [
+      -150.0,
+      -130.0
+    ],
+    "radius_m": 50.0
+  },
+  "tunnel": {
+    "center": [
+      -80.0,
+      -40.0
+    ],
+    "length_m": 40.0,
+    "inner_m": 6.0
+  },
+  "base": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "wind_ms": 8.0,
+  "wind_from_deg": 270.0,
+  "location": "referencial: Andes peruanos, 4,300 msnm",
+  "delivery": {
+    "payload_kg": 5.0,
+    "rope_m": 0.5,
+    "box": [
+      0.3,
+      0.24,
+      0.22
+    ],
+    "target": [
+      170.0,
+      0.0,
+      -60.0
+    ]
+  }
+}

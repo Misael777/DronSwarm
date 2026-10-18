@@ -186,6 +186,9 @@ SPRINTS = [
         ("Informe de diseño preliminar autogenerado",
          "Informe generado desde Python con especificaciones, márgenes y comparación con los targets.",
          "docs/ingenieria/diseno_preliminar.md", "Alta", 4, "S04-06"),
+        ("Dimensionar DS-H (carga pesada, 10 kg, octo)",
+         "Pedido del usuario (2026-10-17): un solo dron que lleve 10 kg a 4,500 msnm; 8 rotores con tolerancia a motor caído.",
+         "engineering/data/results/ds-h_sizing.json", "Media", 6, "S04-02"),
     ]),
     dict(id="S05", phase="F3", name="Modelos de simulación y misiones individuales",
          goal="DS-I y DS-D vuelan en XTDrone, en un mundo minero, con física de altura.", gate=None, tasks=[
@@ -207,6 +210,9 @@ SPRINTS = [
         ("Pipeline de logs ulog → métricas",
          "pyulog + pandas: corriente, empuje, throttle y tiempo de vuelo comparados con el cálculo.",
          "tools/extract_xtdrone_logs.py", "Alta", 8, "S05-04"),
+        ("Carga cooperativa: 3 DS-D levantan una caja de 10 kg",
+         "Pedido del usuario. Plugin de cuerdas propio (resorte-amortiguador que solo tira) y misión de subida conjunta, traslado y aterrizaje. Reparto de carga real (control cooperativo) queda para v2.",
+         "simulation/plugins/tether/, tools/gen_coop.py, tools/sitl/demo_coop_lift.py", "Media", 16, "S05-01"),
     ]),
     dict(id="S06", phase="F3", name="Enjambre, fallos y cierre del ciclo (PDR)",
          goal="Enjambre de 6-9 drones simulado con fallos; spec v1 congelada.", gate="G1", tasks=[

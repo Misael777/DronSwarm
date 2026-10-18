@@ -1,0 +1,28 @@
+{
+  "models": [
+    "ds_d_coop",
+    "ds_d_coop",
+    "ds_d_coop"
+  ],
+  "poses": [
+    [
+      0.0,
+      2.0,
+      0.47
+    ],
+    [
+      -1.732,
+      -1.0,
+      0.47
+    ],
+    [
+      1.732,
+      -1.0,
+      0.47
+    ]
+  ],
+  "payload_kg": 10.0,
+  "rope_m": 3.2,
+  "radius_m": 2.0,
+  "load_per_drone_kg": 3.33
+}

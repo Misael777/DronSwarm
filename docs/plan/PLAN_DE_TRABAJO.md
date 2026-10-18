@@ -63,15 +63,15 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 ## Resumen del plan
 
 - 24 sprints de 14 días: 19/10/2026 → 19/09/2027.
-- 149 tareas técnicas, 1262 h estimadas (capacidad supuesta: 80 h/sprint).
+- 151 tareas técnicas, 1284 h estimadas (capacidad supuesta: 80 h/sprint).
 
 | Sprint | Fechas | Fase | Nombre | Horas | Gate |
 |---|---|---|---|---|---|
 | S01 | 19/10–01/11/26 | F0 - Fundaciones | Fundaciones del repositorio y entorno | 47 |  |
 | S02 | 02/11–15/11/26 | F1 - Requisitos, targets y negocio | Requisitos cuantificados, targets y costo objetivo | 38 | G0 |
 | S03 | 16/11–29/11/26 | F2 - Ingeniería de cálculo | Librería de cálculo de ingeniería (núcleo) | 55 |  |
-| S04 | 30/11–13/12/26 | F2 - Ingeniería de cálculo | Dimensionamiento y optimización de costo | 54 |  |
-| S05 | 14/12–27/12/26 | F3 - Simulación y validación virtual | Modelos de simulación y misiones individuales | 56 |  |
+| S04 | 30/11–13/12/26 | F2 - Ingeniería de cálculo | Dimensionamiento y optimización de costo | 60 |  |
+| S05 | 14/12–27/12/26 | F3 - Simulación y validación virtual | Modelos de simulación y misiones individuales | 72 |  |
 | S06 | 28/12–10/01/27 | F3 - Simulación y validación virtual | Enjambre, fallos y cierre del ciclo (PDR) | 59 | G1 |
 | S07 | 11/01–24/01/27 | F4 - Diseño mecánico (OpenSCAD + FreeCAD) | Frame del dron de inspección (DS-I) | 54 |  |
 | S08 | 25/01–07/02/27 | F4 - Diseño mecánico (OpenSCAD + FreeCAD) | Frame del dron de delivery (DS-D) y mecanismos | 56 |  |
@@ -162,6 +162,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | S04-05 | Inercias y centro de gravedad preliminares | Modelo de masas puntuales → Ixx, Iyy, Izz y CG para el SDF. | `engineering/inertia.py` | Media | 6 | S04-03, S04-04 |
 | S04-06 | Análisis estructural preliminar de brazos | Viga en voladizo, flexión, FS 2-3, frecuencia natural alejada de la frecuencia de paso de pala. | `engineering/structures.py` | Alta | 8 | S04-03 |
 | S04-07 | Informe de diseño preliminar autogenerado | Informe generado desde Python con especificaciones, márgenes y comparación con los targets. | `docs/ingenieria/diseno_preliminar.md` | Alta | 4 | S04-06 |
+| S04-08 | Dimensionar DS-H (carga pesada, 10 kg, octo) | Pedido del usuario (2026-10-17): un solo dron que lleve 10 kg a 4,500 msnm; 8 rotores con tolerancia a motor caído. | `engineering/data/results/ds-h_sizing.json` | Media | 6 | S04-02 |
 
 ### S05 · Modelos de simulación y misiones individuales
 
@@ -175,6 +176,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | S05-04 | Misión de inspección autónoma | Grilla fotogramétrica + órbita de talud vía MAVSDK con cámara simulada. | `control/missions/inspection.py` | Alta | 10 | S05-02 |
 | S05-05 | Misión de delivery con carga | Punto a punto, carga de 5 kg, liberación en destino y retorno. | `control/missions/delivery.py` | Alta | 8 | S05-02 |
 | S05-06 | Pipeline de logs ulog → métricas | pyulog + pandas: corriente, empuje, throttle y tiempo de vuelo comparados con el cálculo. | `tools/extract_xtdrone_logs.py` | Alta | 8 | S05-04 |
+| S05-07 | Carga cooperativa: 3 DS-D levantan una caja de 10 kg | Pedido del usuario. Plugin de cuerdas propio (resorte-amortiguador que solo tira) y misión de subida conjunta, traslado y aterrizaje. Reparto de carga real (control cooperativo) queda para v2. | `simulation/plugins/tether/, tools/gen_coop.py, tools/sitl/demo_coop_lift.py` | Media | 16 | S05-01 |
 
 ### S06 · Enjambre, fallos y cierre del ciclo (PDR) · Gate G1
 

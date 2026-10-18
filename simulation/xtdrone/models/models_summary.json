@@ -1,0 +1,26 @@
+{
+  "DS-I": {
+    "model": "ds_i",
+    "mass_kg": 2.695,
+    "rotors": 4,
+    "leg_height_m": 0.16,
+    "payload_kg": 0.0,
+    "wheelbase_m": 0.672
+  },
+  "DS-D": {
+    "model": "ds_d",
+    "mass_kg": 15.61,
+    "rotors": 6,
+    "leg_height_m": 0.42,
+    "payload_kg": 5.0,
+    "wheelbase_m": 1.453
+  },
+  "DS-H": {
+    "model": "ds_h",
+    "mass_kg": 30.262,
+    "rotors": 8,
+    "leg_height_m": 0.52,
+    "payload_kg": 10.0,
+    "wheelbase_m": 2.19
+  }
+}

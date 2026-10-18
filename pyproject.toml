@@ -29,3 +29,4 @@ ignore = ["E501", "B905"]
 
 [tool.pytest.ini_options]
 testpaths = ["engineering/tests", "control/tests", "tools/tests"]
+pythonpath = ["."]

@@ -11,6 +11,7 @@ venv/
 # Simulación / logs
 *.bag
 *.ulog
+*.ulg
 *.log
 simulation/**/build/
 logs/

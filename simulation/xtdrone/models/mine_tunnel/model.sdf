@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Generado por tools/gen_world.py -->
+<sdf version="1.9">
+  <model name="mine_tunnel">
+    <static>true</static>
+    <link name="roof"><pose>-80.0 -40.0 6.3 0 0 0</pose><collision name="roof_c"><geometry><box><size>40.0 7.2 0.6</size></box></geometry></collision><visual name="roof_v"><geometry><box><size>40.0 7.2 0.6</size></box></geometry><material><ambient>0.65 0.65 0.65 1.0</ambient><diffuse>0.65 0.65 0.65 1.0</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual></link>
+    <link name="wall_l"><pose>-80.0 -36.7 3.0 0 0 0</pose><collision name="wall_l_c"><geometry><box><size>40.0 0.6 6.0</size></box></geometry></collision><visual name="wall_l_v"><geometry><box><size>40.0 0.6 6.0</size></box></geometry><material><ambient>0.65 0.65 0.65 1.0</ambient><diffuse>0.65 0.65 0.65 1.0</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual></link>
+    <link name="wall_r"><pose>-80.0 -43.3 3.0 0 0 0</pose><collision name="wall_r_c"><geometry><box><size>40.0 0.6 6.0</size></box></geometry></collision><visual name="wall_r_v"><geometry><box><size>40.0 0.6 6.0</size></box></geometry><material><ambient>0.65 0.65 0.65 1.0</ambient><diffuse>0.65 0.65 0.65 1.0</diffuse><specular>0.1 0.1 0.1 1</specular></material></visual></link>
+  </model>
+</sdf>

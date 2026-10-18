@@ -1,0 +1,103 @@
+{
+  "scenario": "D",
+  "description": "C sin RTK ni computadora a bordo (versión base; RTK opcional)",
+  "vehicle": "DS-I",
+  "rotors": 4,
+  "prop": "17x7.7\"",
+  "prop_diameter_in": 17.0,
+  "pitch_ratio": 0.45000000000000007,
+  "battery": "6S2P 50S",
+  "kv": 278,
+  "motor_p_max_w": 296,
+  "motor_i_max_a": 13.7,
+  "esc_current_a": 17.8,
+  "mtow_kg": 2.695,
+  "masses": {
+    "equipo fijo": 0.705,
+    "carga útil": 0.0,
+    "batería": 0.998,
+    "motores": 0.296,
+    "hélices": 0.139,
+    "ESC": 0.059,
+    "brazos": 0.096,
+    "soportes de motor": 0.06,
+    "placas centrales": 0.253,
+    "piezas impresas y tornillería": 0.09
+  },
+  "costs": {
+    "equipo fijo": 434,
+    "batería": 69.0,
+    "motores": 73.4,
+    "hélices": 28.9,
+    "ESC": 24.9,
+    "brazos": 24.2,
+    "placas centrales": 59.3,
+    "piezas impresas y tornillería": 21.0
+  },
+  "bom_cost_usd": 734.7,
+  "wheelbase_m": 0.672,
+  "arm": {
+    "tube": "Ø20×1 mm",
+    "length_m": 0.252,
+    "stress_margin": 15.23,
+    "deflection_pct": 0.15,
+    "f_natural_hz": 79.0,
+    "f_1p_hz": 52.1,
+    "f_2p_hz": 104.2
+  },
+  "checks": {
+    "TWR ≥ 2.0 a 5,000 msnm y 15 °C": {
+      "value": 2.09,
+      "ok": true
+    },
+    "Autonomía en hover ≥ 30 min (batería nueva, 4,500 msnm, 0 °C)": {
+      "value": 31.3,
+      "ok": true
+    },
+    "Empuje de hover entre 40% y 65% del máximo (4,500 msnm)": {
+      "value": 0.44,
+      "ok": true
+    },
+    "Corriente de batería dentro del límite de las celdas": {
+      "value": 48.3,
+      "limit": 50.0,
+      "ok": true
+    },
+    "Brazos: resistencia (FS 2.5), deflexión y frecuencias": {
+      "value": "Ø20×1 mm",
+      "ok": true
+    }
+  },
+  "performance": {
+    "endurance_dji_style_min": 47.4,
+    "hover_power_w_4500m": 330,
+    "hover_power_w_5000m_hot": 352,
+    "hover_rpm": 3126,
+    "hover_current_a": 15.8,
+    "hover_motor_efficiency": 0.844,
+    "figure_of_merit": 0.588,
+    "endurance_new_min": 31.3,
+    "endurance_eol_min": 24.1,
+    "endurance_cold_min": 28.3,
+    "max_thrust_total_kgf_5000m": 5.64,
+    "max_thrust_limit": "voltaje",
+    "battery_energy_wh": 216.0
+  },
+  "inertia": {
+    "mass_kg": 2.694548918998164,
+    "cg_m": [
+      -0.0,
+      -0.0,
+      -0.005
+    ],
+    "ixx": 0.0376918487640056,
+    "iyy": 0.03860624680407684,
+    "izz": 0.07210576708147144
+  },
+  "sdf": {
+    "motorConstant": 6.163590194932996e-05,
+    "momentConstant": 0.02875744565471732,
+    "maxRotVelocity": 503.2504345541385,
+    "note": "valores a 4,500 msnm"
+  }
+}

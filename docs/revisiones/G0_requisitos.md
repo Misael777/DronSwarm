@@ -29,5 +29,20 @@ PRD v1.0, targets y costo objetivo aprobados; trazabilidad completa.
 | 6 | ¿Tamaño del equipo? | Necesario para validar 80 h por sprint |
 | 7 | ADR-001 (licencia) y ADR-002 (stack de simulación) | Aprobar las propuestas en `docs/decisiones.md` |
 
+## Decisiones nuevas tras el dimensionamiento (S03-S04, 2026-10-17)
+
+El dimensionamiento ([diseno_preliminar.md](../ingenieria/diseno_preliminar.md)) mostró que **los requisitos de autonomía del PRD no tienen solución**: se pedía la autonomía a 4,500 msnm con la batería al final de su vida, ≈ 1.6 veces más exigente que como la mide DJI.
+
+| # | Pregunta | Recomendación |
+|---|---|---|
+| 8 | ¿La autonomía se mide con batería nueva o al final de su vida? | Nueva, a 4,500 msnm, 0 °C, aterrizando con 10 % (la vida útil la cubre el factor de batería) |
+| 9 | DS-I: ¿≥ 30 min (mínimo) en vez de 35? | Sí, escenario D: hélice 17", 6S2P, 2.70 kg, BOM ≈ US$735 (≈ 47 min medido como DJI) |
+| 10 | DS-D: ¿≥ 20 min en hover con 5 kg en vez de 25? | Sí, escenario C: hélice 26", 12S5P, 15.6 kg, BOM ≈ US$1,627; la entrega de 3 km sobra (+114 %) |
+| 11 | Precio objetivo DS-I | Con el equipo del PRD el BOM no baja de ≈ US$735 (sin RTK/computadora): subir el precio objetivo a ≈ US$1,800 o abaratar la cámara |
+| 12 | MTOW DS-I ≤ 2.5 kg | El diseño recomendado pesa 2.70 kg: aceptar ≤ 3 kg (verificar la categoría MTC por peso en S22) |
+
+| 13 | ¿Se agrega el DS-H (un dron para 10 kg) al portafolio? | Pedido del usuario. Factible: octo, hélice 30", 12S8P, 30.3 kg, BOM ≈ US$2,667, 16 min con 10 kg a 4,500 msnm. Es grande (2.2 m entre motores) |
+| 14 | ¿La carga cooperativa (varios drones, una carga) es requisito? | Demo funcionando en simulación (3 DS-D, 10 kg). Recomendado: capacidad de v2, porque repartir la carga en partes iguales requiere control cooperativo |
+
 ## Resultado
 _(Completar en la revisión: Aprobado / Aprobado con observaciones / Rechazado, fecha y cambios pedidos. Luego tag git `req-v1.0`.)_
