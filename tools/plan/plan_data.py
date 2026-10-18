@@ -226,11 +226,11 @@ SPRINTS = [
          "Entre drones y contra obstáculos (campos potenciales u ORCA); 0 colisiones en 20 corridas.",
          "control/swarm/avoidance.py", "Alta", 12, "S06-01"),
         ("Inyección de fallos y failsafes",
-         "Motor caído (DS-D), pérdida de GNSS, batería baja, pérdida de enlace → RTL o aterrizaje seguro.",
+         "Motor caído (DS-D), pérdida de GNSS, batería baja, pérdida de enlace y geocerca → RTL o aterrizaje seguro. Falla física de motor con plugin propio (simulation/plugins/safety).",
          "simulation/xtdrone/scripts/fault_injection.py", "Alta", 10, "S05-05"),
         ("Cerrar ciclo cálculo ↔ simulación",
          "Desviación < 10 % entre modelo y simulación; congelar spec v1 (envolvente de masa, empuje y energía).",
-         "docs/ingenieria/diseno_preliminar.md (v1)", "Alta", 6, "S06-04"),
+         "docs/ingenieria/spec_v1.md (engineering/spec_v1.py)", "Alta", 6, "S06-04"),
         ("Evidencia de historias de usuario simuladas",
          "Videos y métricas por historia, para clientes e inversionistas.",
          "docs/evidencias/simulacion/", "Media", 4, "S06-05"),
@@ -766,6 +766,10 @@ PROJECT_BUDGET = [
 ]
 
 RISKS = [
+    ("Motor caído en DS-D sin telemetría de ESC: PX4 no se entera y el dron cae (verificado en SITL, S06)",
+     3, 5, "ESC con telemetría de corriente + CA_FAILURE_MODE=1 + MC_AIRMODE=1 (ya en los airframes); ensayo en banco y vuelo atado S10-S12", "S08"),
+    ("Pérdida de GNSS en el tajo (paredes, multitrayecto): sin posición, el viento lo arrastra y se vuelca al aterrizar (SITL, S06)",
+     3, 4, "Flujo óptico + telémetro para sostener posición sin GNSS en la selección de componentes; ensayo en el tajo S14", "S08"),
     ("Pérdida de empuje en altura (aire ≈ 40 % menos denso a 5,000 msnm) → drones subdimensionados",
      4, 5, "Diseñar a 5,000 msnm desde S03; TWR ≥ 2 en altura; validar en S15", "S04"),
     ("El motor propio no alcanza el costo o la eficiencia del COTS",

@@ -23,6 +23,10 @@ bash tools/sitl/run_sih.sh                              # prueba de humo PX4 SIT
 bash tools/sitl/run_sih_multi.sh 6                      # 6 drones + medición de recursos
 bash tools/sitl/run_gz_multi.sh 6                       # 6 drones en Gazebo (máx. ~6 en tiempo real)
 MODEL=x500_mono_cam bash tools/sitl/run_gz_multi.sh 3   # con cámara (OpenGL en la NVIDIA, ADR-009)
+SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i bash tools/sitl/run_gz_multi.sh   # enjambre S06 + monitor de colisiones
+SCENE=swarm MODEL=ds_d MISSION=fault MISSION_ARGS="--case motor" bash tools/sitl/run_gz_multi.sh 1   # fallas: motor|gps|battery|link
+.venv/bin/python -m control.swarm.campaign --runs 200 --out <dir>   # Monte Carlo del enjambre (simulador cinemático)
+.venv/bin/python -m engineering.spec_v1                 # spec v1 (docs/ingenieria/spec_v1.md)
 ~/.venvs/gpu/bin/python                                 # PyTorch + CUDA (RTX 3050 Ti, 4 GB)
 bash tools/cad/export_scad.sh <pieza.scad> [--fcstd]    # OpenSCAD → STL + STEP
 ```

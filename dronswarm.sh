@@ -334,15 +334,31 @@ run_ours() {   # $1 = título, $2 = descripción, resto = variables de entorno p
     finish_run "$dir" "$rc"
 }
 
+show_swarm_plot() {
+    local last
+    last="$(ls -td "$LOGS"/nuestros-* 2>/dev/null | head -1)"
+    [[ -f "$last/trayectorias.png" ]] && wt --title "Trayectorias" --yesno "¿Abrir la vista en planta de las trayectorias (posición real)?" 8 "$W" \
+        && open_in_windows "$last/trayectorias.png"
+}
+
 act_ours() {
-    local opt=""
+    local opt="" last
     if [[ ! -f "$REPO/simulation/xtdrone/models/ds_i/model.sdf" ]]; then
         msg "Faltan los modelos" "Genera primero los modelos desde el dimensionamiento:\n\n  .venv/bin/python tools/gen_sdf.py\n  .venv/bin/python tools/gen_coop.py"
         return
     fi
     while true; do
-        opt="$(wt --title "Nuestros drones (S05)" --default-item "${opt:-tamanos}" --menu \
-            "Modelos generados desde el dimensionamiento del S04 (peso, inercias, motores a 4,500 msnm):" "$H" "$W" 10 \
+        opt="$(wt --title "Nuestros drones (S05-S06)" --default-item "${opt:-enjambre}" --menu \
+            "Modelos generados desde el dimensionamiento del S04 (peso, inercias, motores a 4,500 msnm):" "$H" "$W" 18 \
+            enjambre "Enjambre de 6 DS-I: formación en V, torre, círculo, cruce y regreso (S06)" \
+            enjambre_radio "Enjambre con radio mala: 30 % de pérdida y un dron que se queda sin radio" \
+            sectores "HU-08: 6 drones levantan un área por sectores y 'abortar todo'" \
+            montecarlo "Simulador rápido sin Gazebo: 50 corridas del enjambre (≈ 1 min)" \
+            falla_motor "Falla: DS-D pierde un motor en vuelo" \
+            falla_gps "Falla: pérdida de GNSS" \
+            falla_bateria "Falla: batería crítica → retorno a casa" \
+            falla_enlace "Falla: pérdida de enlace con la estación → retorno a casa" \
+            geocerca "HU-10: geocerca (misión rechazada, el dron no la cruza)" \
             inspeccion "Mina: inspección del tajo (grilla fotogramétrica + órbita de talud)" \
             entrega "Mina: entrega al fondo del tajo con liberación de la caja" \
             viento "Mina: DS-I resistiendo viento de 8 m/s con ráfagas" \
@@ -371,6 +387,31 @@ act_ours() {
                 msg "Carga cooperativa" "3 DS-D (sin caja propia) levantan juntos una caja de 10 kg colgada de cuerdas de 3.2 m, la trasladan 15 m y aterrizan (≈ 2.5 min).\n\nLas cuerdas se ven como líneas negras en la ventana de Gazebo.\n\nVista previa: cada dron usa su control PX4 normal, así que la carga no se reparte en partes iguales (eso es control cooperativo, v2)."
                 run_ours "Carga cooperativa (10 kg)" "Despegue → subida conjunta → traslado → aterrizaje." SCENE=coop ;;
             dsi) run_ours "DS-I" "Despegue, hover y aterrizaje." MODEL=ds_i ;;
+            enjambre) run_ours "Enjambre de 6 DS-I" "Consenso + evitación + radio simulada. Forman en V, pasan una torre de iluminación, hacen un círculo, cruzan todos por el centro y vuelven en línea (≈ 5 min)." \
+                          SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i
+                      show_swarm_plot ;;
+            enjambre_radio) run_ours "Enjambre con radio mala" "30 % de paquetes perdidos y el dron 2 se queda sin radio a los 40 s: se detiene, sube 8 m y los demás lo esquivan (≈ 5 min)." \
+                                SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i MISSION_ARGS="--loss 0.3 --drop-out 2:40"
+                            show_swarm_plot ;;
+            sectores) run_ours "Levantamiento por sectores (HU-08)" "Área de 240 × 180 m en 6 sectores, cada dron en su capa de altura (30-80 m). A los 90 s: abortar todo → los 6 vuelven a casa. Criterio: nunca a menos de 10 m entre drones (≈ 6 min)." \
+                          SPACING=12 SPAWN_X=-20 SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i MISSION=sector
+                      last="$(ls -td "$LOGS"/nuestros-* | head -1)"
+                      [[ -f "$last/sectores.png" ]] && wt --title "Sectores" --yesno "¿Abrir el mapa de sectores y recorridos?" 8 "$W" \
+                          && open_in_windows "$last/sectores.png" ;;
+            geocerca) run_ours "Geocerca (HU-10)" "Geocerca de 70 × 70 m: una misión que la cruza debe ser rechazada y una orden de salir debe terminar en retorno a casa." \
+                          SCENE=swarm MODEL=ds_i MISSION=fault MISSION_ARGS="--case geofence" ;;
+            montecarlo)
+                header "Simulador rápido del enjambre" "50 corridas con viento, ruido de GNSS y radio simulada; cuenta colisiones con la posición real."
+                (cd "$REPO" && "$PY" -m control.swarm.sim_kinematic --runs 50)
+                pause ;;
+            falla_motor) run_ours "Falla de motor" "DS-D (6 motores) a 20 m y 50 m al este: se apaga un motor; 15 s después se ordena aterrizar." \
+                             SCENE=swarm MODEL=ds_d MISSION=fault MISSION_ARGS="--case motor" ;;
+            falla_gps) run_ours "Pérdida de GNSS" "DS-I a 20 m y 50 m al este: se pierde el GNSS; PX4 debe aterrizar sin alejarse." \
+                           SCENE=swarm MODEL=ds_i MISSION=fault MISSION_ARGS="--case gps" ;;
+            falla_bateria) run_ours "Batería crítica" "DS-I a 50 m de casa: la batería cae a 6 %; PX4 debe volver y aterrizar en casa." \
+                               SCENE=swarm MODEL=ds_i MISSION=fault MISSION_ARGS="--case battery" ;;
+            falla_enlace) run_ours "Pérdida de enlace" "DS-I a 50 m de casa: se corta el enlace con la estación; PX4 debe volver solo." \
+                              SCENE=swarm MODEL=ds_i MISSION=fault MISSION_ARGS="--case link" ;;
             volver) return ;;
         esac
     done
@@ -595,7 +636,7 @@ main_menu() {
     while true; do
         choice="$(wt --title "Menú principal" --cancel-button "Salir" --default-item "${choice:-N}" --menu \
             "Elige qué quieres probar (flechas + Enter):" 26 "$W" 16 \
-            "N" "Nuestros drones: DS-I, DS-D, DS-H y carga cooperativa (S05)" \
+            "N" "Nuestros drones: enjambre, fallas, mina y carga cooperativa (S05-S06)" \
             "1" "Demo: enjambre en formación con x500 (con ventana 3D)" \
             "2" "Despegue simultáneo de varios drones" \
             "3" "Drones con cámara (usa la GPU)" \

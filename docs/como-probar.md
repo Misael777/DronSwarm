@@ -13,7 +13,19 @@ cd ~/DronSwarm
 ```
 Menú con todo lo de abajo (flechas + Enter, Esc para volver). Cada prueba muestra su avance, un resumen al final y guarda los resultados en `logs/<prueba>-<fecha>/`. Atajos sin menú: `./dronswarm.sh demo 4`, `./dronswarm.sh sih`, `./dronswarm.sh tests`, `./dronswarm.sh estado`.
 
-Lo más nuevo está en **N · Nuestros drones (S05)**: los modelos reales de DS-I, DS-D y DS-H, el enjambre mixto y la carga cooperativa de 10 kg. A mano:
+Lo más nuevo está en **N · Nuestros drones (S05-S06)**: el enjambre de 6 drones con formación, evitación y radio
+simulada; las fallas en vuelo (motor, GNSS, batería, enlace); los modelos reales de DS-I, DS-D y DS-H; la mina y la
+carga cooperativa de 10 kg. A mano:
+
+```bash
+GUI=1 SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i bash tools/sitl/run_gz_multi.sh       # enjambre S06 (≈ 5 min)
+MISSION_ARGS="--loss 0.3 --drop-out 2:40" SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i bash tools/sitl/run_gz_multi.sh
+GUI=1 SCENE=swarm MODEL=ds_d MISSION=fault MISSION_ARGS="--case motor" bash tools/sitl/run_gz_multi.sh 1   # motor | gps | battery | link
+.venv/bin/python -m control.swarm.sim_kinematic --runs 50          # simulador rápido sin Gazebo (≈ 1 min)
+.venv/bin/python -m control.swarm.campaign --runs 200 --out /tmp/campana   # campaña Monte Carlo completa (≈ 20 min)
+```
+Cada corrida del mundo `swarm` deja `seguridad.json` (separación mínima y colisiones con la posición **real** de
+Gazebo) y `trayectorias.png` (vista en planta).
 
 ```bash
 GUI=1 MODELS=ds_i,ds_d,ds_h HOLD=30 bash tools/sitl/run_gz_multi.sh          # los 3 tamaños lado a lado
@@ -37,7 +49,7 @@ Los pasos siguientes son los mismos comandos de antes, por si prefieres correrlo
 ```bash
 .venv/bin/ruff check . && .venv/bin/pytest -q
 ```
-Esperado: `All checks passed!` y `7 passed`.
+Esperado: `All checks passed!` y todas las pruebas en verde (`passed`).
 
 ## 2. Demo visual: enjambre en formación (≈ 1.5 min)
 

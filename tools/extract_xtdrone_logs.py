@@ -36,8 +36,14 @@ def topic(ulog: ULog, name: str):
 def hover_metrics(path: Path, n_rotors: int) -> dict:
     u = ULog(str(path))
     pos, out = topic(u, "vehicle_local_position"), topic(u, "actuator_outputs")
-    alt, vz = -pos["z"], pos["vz"]
-    stable = (alt > 2.0) & (np.abs(vz) < 0.3) & (np.hypot(pos["vx"], pos["vy"]) < 0.5)
+    vz = pos["vz"]
+    land = topic(ulog=u, name="vehicle_land_detected")
+    if land is not None:                     # en el aire según PX4 (la base puede estar arriba del dron: fondo del tajo)
+        k = np.clip(np.searchsorted(land["timestamp"], pos["timestamp"]) - 1, 0, len(land["timestamp"]) - 1)
+        flying = ~land["landed"][k].astype(bool) & ~land["maybe_landed"][k].astype(bool) & (np.abs(pos["z"]) > 2.0)
+    else:
+        flying = -pos["z"] > 2.0
+    stable = flying & (np.abs(vz) < 0.3) & (np.hypot(pos["vx"], pos["vy"]) < 0.5)
     idx = np.clip(np.searchsorted(pos["timestamp"], out["timestamp"]) - 1, 0, len(stable) - 1)
     sel = stable[idx]
     if not sel.any():
