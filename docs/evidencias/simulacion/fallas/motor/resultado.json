@@ -1,0 +1,50 @@
+{
+  "case": "motor",
+  "model": "ds_d",
+  "params": {
+    "SYS_FAILURE_EN": 1,
+    "CA_FAILURE_MODE": 1,
+    "COM_ACT_FAIL_ACT": 2,
+    "FD_ACT_EN": 1
+  },
+  "motor_off": 0,
+  "detection": true,
+  "autonomous_land": true,
+  "ground_truth": true,
+  "final_xy_m": [
+    50.1,
+    -0.1
+  ],
+  "final_z_m": 0.42,
+  "dist_to_home_m": 50.1,
+  "dist_from_fault_point_m": 0.0,
+  "touchdown_vz_m_s": 0.77,
+  "altitude_loss_10s_m": 6.8,
+  "min_z_m": 0.42,
+  "px4_modes": [
+    [
+      1.0,
+      "HOLD"
+    ],
+    [
+      11.2,
+      "TAKEOFF"
+    ],
+    [
+      17.3,
+      "HOLD"
+    ],
+    [
+      57.2,
+      "LAND"
+    ],
+    [
+      80.6,
+      "HOLD"
+    ]
+  ],
+  "max_tilt_deg": 11.4,
+  "passed": true,
+  "n": 1,
+  "ok": 1
+}

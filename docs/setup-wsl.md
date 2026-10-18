@@ -46,6 +46,9 @@ Después: `cd ~/src/PX4-Autopilot && make px4_sitl gz_x500` abre Gazebo con un d
 | `setup_wsl.sh` termina con "ninja: no work to do" y PX4 no tiene `gz_bridge` | El build se configuró antes de instalar Gazebo | `rm -rf build/px4_sitl_default && make px4_sitl` (≈ 3 min) |
 | PX4 no coloca el dron en Gazebo ("Service call timed out") | Sin `PX4_GZ_WORLD` PX4 no arranca el servidor de Gazebo | `run_gz_multi.sh` arranca el servidor, espera el reloj del mundo y conecta PX4 con `PX4_GZ_STANDALONE=1` |
 | Al fallar, PX4 mata la terminal que lo lanzó | Comparte el grupo de procesos | Lanzar con `setsid` |
+| Motor caído: PX4 no lo detecta en SITL y el dron cae (S06) | El puente de Gazebo no reporta corriente ni motor en `esc_status`; el detector de PX4 necesita ambos | Parche `simulation/px4/patches/0001-gz-esc-telemetria.patch` (lo aplica `setup_wsl.sh`; a mano: `git -C ~/src/PX4-Autopilot apply <parche> && make px4_sitl`) |
+| Saltos de tiempo y "Yaw estimate error" en PX4 | Un servidor de Gazebo de una corrida anterior seguía vivo con el mismo mundo `default` (mismo reloj) | `run_gz_multi.sh` mata los servidores viejos, con SIGKILL si no responden |
+| Un script que espera "a que no haya simulaciones" espera para siempre | `pgrep -f` también ve la línea de comandos del shell que lo contiene | Patrón anclado: `pgrep -f "^bash .*run_gz_multi\.sh"` |
 | Docker no responde en WSL | La integración de Docker Desktop con esta distro está desactivada | Activarla en Docker Desktop → Settings → Resources → WSL integration (opcional) |
 
 ## Capacidad del PC para simular el enjambre (S01-05, 2026-10-17)

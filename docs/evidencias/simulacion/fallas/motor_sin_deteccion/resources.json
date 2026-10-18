@@ -1,0 +1,14 @@
+{
+  "drones": 1,
+  "samples": 45,
+  "rtf_median": 0.984,
+  "rtf_p10": 0.975,
+  "mem_increase_mb": 178,
+  "cpu_peak_pct": 104.1,
+  "cpu_mean_pct": 99.5,
+  "gpu_peak_pct": 8.0,
+  "gpu_mean_pct": 1.9,
+  "gpu_mem_peak_mb": 449.0,
+  "gpu_adapter": "NVIDIA",
+  "model": "ds_d"
+}

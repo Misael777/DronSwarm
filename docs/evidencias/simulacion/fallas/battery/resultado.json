@@ -1,0 +1,53 @@
+{
+  "case": "battery",
+  "model": "ds_i",
+  "params": {
+    "SYS_FAILURE_EN": 1,
+    "COM_LOW_BAT_ACT": 3,
+    "SIM_BAT_DRAIN": 40.0,
+    "BAT_LOW_THR": 0.35,
+    "BAT_CRIT_THR": 0.25,
+    "BAT_EMERGEN_THR": 0.1
+  },
+  "ground_truth": true,
+  "final_xy_m": [
+    -0.1,
+    0.0
+  ],
+  "final_z_m": 0.16,
+  "dist_to_home_m": 0.1,
+  "dist_from_fault_point_m": 50.3,
+  "touchdown_vz_m_s": 0.7,
+  "altitude_loss_10s_m": 0.0,
+  "min_z_m": 0.16,
+  "px4_modes": [
+    [
+      1.0,
+      "HOLD"
+    ],
+    [
+      11.3,
+      "TAKEOFF"
+    ],
+    [
+      17.4,
+      "HOLD"
+    ],
+    [
+      73.5,
+      "RETURN_TO_LAUNCH"
+    ],
+    [
+      122.4,
+      "LAND"
+    ],
+    [
+      124.4,
+      "HOLD"
+    ]
+  ],
+  "max_tilt_deg": 20.2,
+  "passed": true,
+  "n": 1,
+  "ok": 1
+}

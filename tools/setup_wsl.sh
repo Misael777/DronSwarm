@@ -44,6 +44,14 @@ log "Dependencias de PX4 (incluye Gazebo Garden (gz-sim 7))"
 bash "$PX4_DIR/Tools/setup/ubuntu.sh" --no-nuttx
 
 log "Compilando PX4 SITL"
+# Parches de DronSwarm sobre PX4 (simulation/px4/patches): p. ej. ESC con telemetría en el puente de Gazebo, sin el
+# cual el detector de motor caído de PX4 no funciona en SITL. Idempotente: si ya está aplicado, no hace nada.
+for p in "$(dirname "$0")"/../simulation/px4/patches/*.patch; do
+    [[ -f "$p" ]] || continue
+    if git -C "$PX4_DIR" apply --check "$p" 2>/dev/null; then
+        log "Aplicando $(basename "$p")"; git -C "$PX4_DIR" apply "$p"
+    fi
+done
 make -C "$PX4_DIR" px4_sitl
 
 # --- 3. ROS 2 Humble (opcional) ----------------------------------------------

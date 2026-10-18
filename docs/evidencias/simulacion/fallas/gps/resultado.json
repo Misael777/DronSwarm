@@ -1,0 +1,45 @@
+{
+  "case": "gps",
+  "model": "ds_i",
+  "params": {
+    "SYS_FAILURE_EN": 1
+  },
+  "ground_truth": true,
+  "final_xy_m": [
+    109.6,
+    3.7
+  ],
+  "final_z_m": 0.09,
+  "dist_to_home_m": 109.7,
+  "dist_from_fault_point_m": 59.7,
+  "touchdown_vz_m_s": 0.81,
+  "altitude_loss_10s_m": 4.0,
+  "min_z_m": 0.08,
+  "px4_modes": [
+    [
+      1.0,
+      "HOLD"
+    ],
+    [
+      11.2,
+      "TAKEOFF"
+    ],
+    [
+      17.3,
+      "HOLD"
+    ],
+    [
+      56.4,
+      "LAND"
+    ],
+    [
+      86.0,
+      "HOLD"
+    ]
+  ],
+  "max_tilt_deg": 95.5,
+  "passed": false,
+  "n": 1,
+  "ok": 0,
+  "note": "Sin GNSS PX4 desciende sin control horizontal (modo LAND sin posición): el viento de 4 m/s lo arrastró 59.7 m y al tocar suelo con velocidad lateral se volcó (95.5° según el log; el valor original de 195.7° venía de sumar ángulos de Euler y se corrigió con el cuaternión). Mitigación: flujo óptico + telémetro."
+}

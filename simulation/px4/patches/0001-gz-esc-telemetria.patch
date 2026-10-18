@@ -1,0 +1,22 @@
+--- a/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.cpp	2026-10-18 08:45:54.157245315 -0500
++++ b/src/modules/simulation/gz_bridge/GZMixingInterfaceESC.cpp	2026-10-18 08:45:54.182196210 -0500
+@@ -33,6 +33,8 @@
+ 
+ #include "GZMixingInterfaceESC.hpp"
+ 
++#include <uORB/topics/actuator_motors.h>
++
+ bool GZMixingInterfaceESC::init(const std::string &model_name)
+ {
+ 
+@@ -112,6 +114,10 @@
+ 	for (int i = 0; i < actuators.velocity_size(); i++) {
+ 		esc_status.esc[i].timestamp = hrt_absolute_time();
+ 		esc_status.esc[i].esc_rpm = actuators.velocity(i);
++		// DronSwarm: ESC con telemetría (motor asignado + corriente), como un ESC DShot/BLHeli32 real. Sin esto el
++		// detector de fallas de PX4 nunca valida los ESC en SITL y CA_FAILURE_MODE no puede retirar un motor caído.
++		esc_status.esc[i].actuator_function = actuator_motors_s::ACTUATOR_FUNCTION_MOTOR1 + i;
++		esc_status.esc[i].esc_current = actuators.velocity(i) > 0 ? 10.f : 0.f;
+ 		esc_status.esc_online_flags |= 1 << i;
+ 
+ 		if (actuators.velocity(i) > 0) {
