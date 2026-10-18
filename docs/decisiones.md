@@ -125,3 +125,29 @@ Laptop híbrida AMD integrada + NVIDIA RTX 3050 Ti (4 GB). OpenGL en WSL usa por
 - OpenGL siempre en la NVIDIA: `MESA_D3D12_DEFAULT_ADAPTER_NAME=NVIDIA` (en `~/.bashrc`, `setup_wsl.sh` y `run_gz_multi.sh`).
 - Cómputo CUDA (PyTorch cu124) en un entorno aparte, `~/.venvs/gpu`, para no inflar el entorno del repo; se integra al repo cuando empiece la visión artificial.
 - La física de la simulación sigue en CPU; la GPU es para sensores, visión, procesamiento fotogramétrico y render.
+
+## ADR-010 · Arquitectura del enjambre
+- Estado: **Propuesta** (S06, para aprobar en el Gate G1)
+
+### Contexto
+El enjambre debe mantener formaciones, esquivar drones y obstáculos y tolerar una radio imperfecta en minas a cielo
+abierto, con un control que pase sin cambios de la simulación al dron real (ADR-005).
+
+### Decisión
+- **Consenso distribuido** como control de formación: cada dron conoce la ruta de la misión, cargada antes del vuelo, y
+  corrige su puesto con los estados de sus vecinos recibidos por radio. El líder-seguidor queda solo como alternativa,
+  porque todo depende de un dron y su error de formación fue ~70 % mayor en la campaña Monte Carlo.
+- **Evitación reactiva** sobre la orden de velocidad: repulsión por cercanía, predicción del acercamiento a 5 s con sesgo a
+  la derecha (rotonda espontánea) y campo de guiado alrededor de obstáculos (sin mínimos locales).
+- **Protocolo de pérdida de radio entre drones**, conocido por todos de antemano: el dron sin noticias por 0.8 s frena
+  y sube 8 m a una capa reservada, y los demás esquivan su última posición conocida durante 20 s. Después actúa el
+  failsafe de PX4 (RTL por pérdida de enlace).
+- La estación de tierra solo secuencia las fases de la misión; no es parte del lazo de control.
+- La seguridad se juzga con un árbitro independiente: en simulación, el monitor del mundo con la posición real de
+  Gazebo (`simulation/plugins/safety`); en campo, RTK y logs.
+
+### Consecuencias
+- Mismo código en el simulador cinemático (Monte Carlo), en SITL (MAVSDK offboard) y, más adelante, en la computadora a bordo.
+- Los parámetros están dimensionados para DS-I (3 m entre centros). Los enjambres mixtos con DS-D o DS-H necesitan
+  márgenes según el tamaño de cada dron (pendiente, v2).
+- La radio real debe sostener 10 Hz por dron con latencia p95 < 100 ms. Se verifica en campo en el S14.

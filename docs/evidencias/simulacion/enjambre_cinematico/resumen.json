@@ -1,0 +1,146 @@
+{
+  "consenso_nominal": {
+    "runs": 200,
+    "completed": 200,
+    "runs_with_collision": 0,
+    "collisions_total": 0,
+    "min_separation_m": {
+      "min": 1.92,
+      "p5": 2.25,
+      "median": 2.52
+    },
+    "min_obstacle_clearance_m": 2.67,
+    "formation_error_p95_m_median": 2.36,
+    "duration_s_median": 65.7,
+    "packet_loss_pct_mean": 0.0,
+    "latency_ms_p95_mean": 32.0
+  },
+  "consenso_perdida_30": {
+    "runs": 200,
+    "completed": 200,
+    "runs_with_collision": 0,
+    "collisions_total": 0,
+    "min_separation_m": {
+      "min": 1.86,
+      "p5": 2.17,
+      "median": 2.48
+    },
+    "min_obstacle_clearance_m": 2.72,
+    "formation_error_p95_m_median": 2.36,
+    "duration_s_median": 65.7,
+    "packet_loss_pct_mean": 30.0,
+    "latency_ms_p95_mean": 32.0
+  },
+  "consenso_perdida_50": {
+    "runs": 200,
+    "completed": 200,
+    "runs_with_collision": 0,
+    "collisions_total": 0,
+    "min_separation_m": {
+      "min": 1.77,
+      "p5": 2.12,
+      "median": 2.47
+    },
+    "min_obstacle_clearance_m": 2.64,
+    "formation_error_p95_m_median": 2.37,
+    "duration_s_median": 65.9,
+    "packet_loss_pct_mean": 50.0,
+    "latency_ms_p95_mean": 32.0
+  },
+  "consenso_viento_8": {
+    "runs": 200,
+    "completed": 200,
+    "runs_with_collision": 0,
+    "collisions_total": 0,
+    "min_separation_m": {
+      "min": 2.02,
+      "p5": 2.29,
+      "median": 2.5
+    },
+    "min_obstacle_clearance_m": 0.98,
+    "formation_error_p95_m_median": 2.5,
+    "duration_s_median": 75.0,
+    "packet_loss_pct_mean": 0.0,
+    "latency_ms_p95_mean": 31.9
+  },
+  "consenso_wifi_24": {
+    "runs": 200,
+    "completed": 200,
+    "runs_with_collision": 0,
+    "collisions_total": 0,
+    "min_separation_m": {
+      "min": 1.92,
+      "p5": 2.25,
+      "median": 2.52
+    },
+    "min_obstacle_clearance_m": 2.67,
+    "formation_error_p95_m_median": 2.36,
+    "duration_s_median": 65.7,
+    "packet_loss_pct_mean": 0.0,
+    "latency_ms_p95_mean": 9.1
+  },
+  "caida_radio_en_transito": {
+    "runs": 200,
+    "completed": 200,
+    "runs_with_collision": 0,
+    "collisions_total": 0,
+    "min_separation_m": {
+      "min": 1.43,
+      "p5": 2.09,
+      "median": 2.55
+    },
+    "min_obstacle_clearance_m": 2.67,
+    "formation_error_p95_m_median": 2.35,
+    "duration_s_median": 66.7,
+    "packet_loss_pct_mean": 23.5,
+    "latency_ms_p95_mean": 32.0
+  },
+  "caida_radio_en_cruce": {
+    "runs": 200,
+    "completed": 200,
+    "runs_with_collision": 0,
+    "collisions_total": 0,
+    "min_separation_m": {
+      "min": 2.12,
+      "p5": 2.27,
+      "median": 2.57
+    },
+    "min_obstacle_clearance_m": 2.67,
+    "formation_error_p95_m_median": 2.35,
+    "duration_s_median": 78.8,
+    "packet_loss_pct_mean": 18.5,
+    "latency_ms_p95_mean": 31.9
+  },
+  "lider_seguidor_nominal": {
+    "runs": 200,
+    "completed": 200,
+    "runs_with_collision": 0,
+    "collisions_total": 0,
+    "min_separation_m": {
+      "min": 1.31,
+      "p5": 1.79,
+      "median": 2.37
+    },
+    "min_obstacle_clearance_m": 2.66,
+    "formation_error_p95_m_median": 4.05,
+    "duration_s_median": 79.9,
+    "packet_loss_pct_mean": 0.0,
+    "latency_ms_p95_mean": 31.9
+  },
+  "sin_evitacion": {
+    "runs": 200,
+    "completed": 200,
+    "runs_with_collision": 200,
+    "collisions_total": 3004,
+    "min_separation_m": {
+      "min": 0.01,
+      "p5": 0.03,
+      "median": 0.06
+    },
+    "min_obstacle_clearance_m": -0.04,
+    "formation_error_p95_m_median": 2.3,
+    "duration_s_median": 62.9,
+    "packet_loss_pct_mean": 0.0,
+    "latency_ms_p95_mean": 31.9
+  }
+}

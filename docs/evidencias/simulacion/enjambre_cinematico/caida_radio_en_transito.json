@@ -1,0 +1,22 @@
+{
+  "runs": 200,
+  "config": {
+    "drop_out": [
+      2,
+      20.0
+    ]
+  },
+  "completed": 200,
+  "collisions_total": 0,
+  "runs_with_collision": 0,
+  "min_separation_m": {
+    "min": 1.43,
+    "p5": 2.09,
+    "median": 2.55
+  },
+  "min_obstacle_clearance_m": 2.67,
+  "formation_error_p95_m_median": 2.35,
+  "duration_s_median": 66.7,
+  "packet_loss_pct_mean": 23.5,
+  "latency_ms_p95_mean": 32.0
+}

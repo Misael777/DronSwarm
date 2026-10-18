@@ -1,0 +1,19 @@
+{
+  "runs": 200,
+  "config": {
+    "radio": "wifi_24"
+  },
+  "completed": 200,
+  "collisions_total": 0,
+  "runs_with_collision": 0,
+  "min_separation_m": {
+    "min": 1.92,
+    "p5": 2.25,
+    "median": 2.52
+  },
+  "min_obstacle_clearance_m": 2.67,
+  "formation_error_p95_m_median": 2.36,
+  "duration_s_median": 65.7,
+  "packet_loss_pct_mean": 0.0,
+  "latency_ms_p95_mean": 9.1
+}

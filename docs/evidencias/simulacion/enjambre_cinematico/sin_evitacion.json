@@ -1,0 +1,19 @@
+{
+  "runs": 200,
+  "config": {
+    "avoidance": false
+  },
+  "completed": 200,
+  "collisions_total": 3004,
+  "runs_with_collision": 200,
+  "min_separation_m": {
+    "min": 0.01,
+    "p5": 0.03,
+    "median": 0.06
+  },
+  "min_obstacle_clearance_m": -0.04,
+  "formation_error_p95_m_median": 2.3,
+  "duration_s_median": 62.9,
+  "packet_loss_pct_mean": 0.0,
+  "latency_ms_p95_mean": 31.9
+}

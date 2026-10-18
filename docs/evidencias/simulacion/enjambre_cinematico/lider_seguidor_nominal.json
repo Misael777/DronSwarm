@@ -1,0 +1,19 @@
+{
+  "runs": 200,
+  "config": {
+    "mode": "leader"
+  },
+  "completed": 200,
+  "collisions_total": 0,
+  "runs_with_collision": 0,
+  "min_separation_m": {
+    "min": 1.31,
+    "p5": 1.79,
+    "median": 2.37
+  },
+  "min_obstacle_clearance_m": 2.66,
+  "formation_error_p95_m_median": 4.05,
+  "duration_s_median": 79.9,
+  "packet_loss_pct_mean": 0.0,
+  "latency_ms_p95_mean": 31.9
+}
