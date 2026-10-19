@@ -39,3 +39,6 @@ Saved/
 .DS_Store
 Thumbs.db
 *:Zone.Identifier
+
+# CAD: ensamble completo en STL (se regenera con tools/cad/build_frame.py; para ver, usar el .png o el .FCStd)
+cad/exports/*/*_ensamble.stl

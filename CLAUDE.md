@@ -28,5 +28,7 @@ SCENE=swarm MODEL=ds_d MISSION=fault MISSION_ARGS="--case motor" bash tools/sitl
 .venv/bin/python -m control.swarm.campaign --runs 200 --out <dir>   # Monte Carlo del enjambre (simulador cinemático)
 .venv/bin/python -m engineering.spec_v1                 # spec v1 (docs/ingenieria/spec_v1.md)
 ~/.venvs/gpu/bin/python                                 # PyTorch + CUDA (RTX 3050 Ti, 4 GB)
-bash tools/cad/export_scad.sh <pieza.scad> [--fcstd]    # OpenSCAD → STL + STEP
+bash tools/cad/export_scad.sh <pieza.scad> [--fcstd]    # OpenSCAD → STL + STEP (una pieza)
+.venv/bin/python tools/cad/build_frame.py inspection|delivery   # frame completo: piezas, DXF, ensamble, masas
+.venv/bin/python tools/fea/run_fea.py inspection|delivery       # FEA (gmsh + CalculiX) → tools/fea/fea_report.py
 ```

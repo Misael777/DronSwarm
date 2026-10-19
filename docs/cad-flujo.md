@@ -33,6 +33,26 @@ El script imprime un resumen y falla si el STEP no es un sólido válido:
 3. Para planos: workbench **TechDraw** → vista de la pieza → cotas. Funciona porque el STEP tiene caras y aristas reales.
 4. Si cambia una medida, no editar el STEP: pedir el cambio en el `.scad` y re-exportar; luego en FreeCAD **Recargar** el STEP.
 
+## Frames completos (S07-S08)
+
+```bash
+.venv/bin/python tools/cad/gen_cad_params.py            # parámetros desde la spec v1 → cad/openscad/<grupo>/*_params.scad
+.venv/bin/python tools/cad/build_frame.py inspection    # DS-I: piezas, DXF, ensamble, interferencias, masas (~2 min)
+.venv/bin/python tools/cad/build_frame.py delivery      # DS-D (~5 min)
+.venv/bin/python tools/fea/run_fea.py inspection        # FEA con gmsh + CalculiX → cad/freecad/<grupo>/fea/
+.venv/bin/python tools/fea/fea_report.py                # informe → docs/ingenieria/fea_frames.md
+.venv/bin/python tools/gen_sdf.py                       # simulación con la malla y las masas del CAD
+```
+
+- Cada pieza está en su propio sistema de coordenadas. `assembly.scad` la posiciona y la anuncia con
+  `echo("PLACE|…")`, y `build_frame.py` arma en FreeCAD el ensamble con los STEP:
+  `cad/freecad/<grupo>/<dron>_ensamble_generado.FCStd`, con una pieza por objeto y los componentes comerciales en
+  un grupo aparte.
+- **El ensamble generado se sobrescribe en cada corrida.** Para revisar, anotar o acotar, guardarlo con otro nombre:
+  `ds-i_ensamble.FCStd` es el archivo del usuario y el agente no lo toca.
+- Salidas en `cad/exports/<grupo>/`: STL y STEP por pieza, DXF de corte, ensamble STEP/STL, `masas.json` (masa por
+  pieza y por categoría contra el S04, interferencias, holgura de hélices) y `<dron>_sim.stl` (malla para Gazebo).
+
 ## Reglas de diseño en OpenSCAD
 
 | Regla | Motivo |
@@ -41,6 +61,8 @@ El script imprime un resumen y falla si el STEP no es un sólido válido:
 | Una pieza fabricable por archivo; los ensambles van aparte | Cada pieza exporta su propio STEP y plano |
 | **Evitar `hull()` y `minkowski()` en piezas que necesitan planos**; usar primitivas y `linear_extrude`/`rotate_extrude` de perfiles 2D | FreeCAD convierte `hull`/`minkowski` en mallas trianguladas: el sólido deja de tener caras acotables |
 | `$fn` ≥ 64 en agujeros funcionales | Agujeros redondos en STL e impresión |
+| **Sin booleanas 2D para el STEP:** formas redondeadas con cubos y cilindros (`rbox`), y DXF con `projection()` o un modo `2d` aparte | El importador CSG de FreeCAD devuelve formas nulas con `union()` 2D dentro de `linear_extrude` |
+| **Cada grupo de agujeros, hijo directo del `difference()`** con su propio `translate` | El importador falla si varios operandos cuelgan de una sola transformación |
 | Holguras de impresión como parámetro (no fijas en la geometría) | Ajuste por material/impresora |
 
 ## Verificación (S01-06, 2026-10-17)

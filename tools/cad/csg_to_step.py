@@ -27,6 +27,10 @@ roots = [o for o in doc.Objects if hasattr(o, "Shape") and not o.InList and not 
 shape = roots[0].Shape if len(roots) == 1 else Part.makeCompound([o.Shape for o in roots])
 if not shape.Solids:
     raise SystemExit("ERROR: la exportación no produjo sólidos")
+if len(shape.Solids) > 1:          # el importador deja los operandos de union() como sólidos superpuestos
+    fused = shape.Solids[0].multiFuse(shape.Solids[1:])
+    if fused.isValid() and fused.Solids:
+        shape = fused
 refined = shape.removeSplitter()  # une caras coplanares; a veces deja la B-rep inválida
 if refined.isValid():
     shape = refined
@@ -48,5 +52,6 @@ print("RESULT " + json.dumps({
     "solids": len(shape.Solids),
     "faces": len(shape.Faces),
     "volume_mm3": round(shape.Volume, 1),
+    "center_of_mass_mm": [round(c, 2) for c in (shape.CenterOfMass if hasattr(shape, "CenterOfMass") else shape.BoundBox.Center)],
     "bbox_mm": [round(bb.XLength, 2), round(bb.YLength, 2), round(bb.ZLength, 2)],
 }))
