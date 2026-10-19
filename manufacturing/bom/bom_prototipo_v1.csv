@@ -1,0 +1,53 @@
+id,dron,categoria,descripcion,cant_por_dron,cant_flota,cant_repuesto,cant_total,precio_unit_usd,total_usd,fase,plazo_semanas,proveedor_1,proveedor_2,fuente_precio,estimado
+I001,DS-I,propulsión,Motor T-Motor MN4006 KV380 (AntiGravity) (fase A: 2 para el banco),4,16,1,17,75,1275,A+B,4,distribuidor oficial T-Motor / MAD,tienda UAV (EE. UU./UE),"robotshop.com / getfpv.com (2026-10): 66-68 g, 194 mΩ, 16 A, 380 W",sí
+I002,DS-I,propulsión,ESC 4 en 1 BLHeli32/AM32 6S 50 A con telemetría DShot bidireccional (1 placa por dron),1,4,1,5,80,400,A+B,3,Holybro / iFlight,tienda FPV,clase Tekko32 / Holybro (≈ US$80 el 4 en 1),sí
+I003,DS-I,propulsión,"Hélice plegable 15"" (pares CW/CCW)",4,16,8,24,5.62,134.88,A+B,3,T-Motor / MAD,Hobbywing / genérica de carbono,modelo de costo del S04 (verificar),sí
+I004,DS-I,aviónica,controladora: Holybro Pixhawk 6C (caja de plástico),1,4,0,4,225,900,B,3,distribuidor oficial,tienda UAV,pyrodrone.com (2026-10): US$224.99,no
+I005,DS-I,aviónica,"GNSS: u-blox ZED-F9P multibanda, RTK, con brújula (clase Holybro H-RTK F9P Ultralight)",1,4,0,4,250,1000,B,3,distribuidor oficial,tienda UAV,estimado: módulos F9P US$200-300,sí
+I006,DS-I,aviónica,computadora a bordo: Raspberry Pi 5 4 GB + disipador + caja,1,4,0,4,80,320,B,3,distribuidor oficial,tienda UAV,precio de lista Raspberry Pi,no
+I007,DS-I,aviónica,radio de tierra: RFDesign RFD900x (malla/multipunto 900 MHz),1,4,0,4,140,560,B,3,distribuidor oficial,tienda UAV,unmannedtechshop.co.uk (2026-10): £219.95 el par,no
+I008,DS-I,aviónica,radio entre drones: Módulo ESP32-S3 (ESP-NOW 2.4 GHz) en la computadora a bordo,1,4,0,4,10,40,B,3,distribuidor oficial,tienda UAV,precio de lista,no
+I009,DS-I,aviónica,receptor RC: ExpressLRS 900 MHz (clase RadioMaster BR3),1,4,0,4,25,100,B,3,distribuidor oficial,tienda UAV,estimado,sí
+I010,DS-I,aviónica,"flujo óptico + telémetro: MicoAir MTF-01P (flujo óptico + lidar 8 m, MAVLink)",1,4,0,4,40,160,B,3,distribuidor oficial,tienda UAV,estimado; requisito del S06 (pérdida de GNSS),sí
+I011,DS-I,aviónica,"módulo de potencia: Holybro PM02 V3 (2-12S, sensado de V/I)",1,4,0,4,30,120,B,3,distribuidor oficial,tienda UAV,estimado,sí
+I012,DS-I,aviónica,"cámara + gimbal: SIYI A8 mini (1/1.7"" 8 MP, gimbal 3 ejes, 4K)",1,4,0,4,280,1120,B,3,distribuidor oficial,tienda UAV,"irlock.com / siyi.biz (2026-10): 95 g, US$190-330",no
+I013,DS-I,batería,"Pack Li-ion 6S2P Samsung 50S (21700, 10 Ah, XT90-S), armado local",2,8,0,8,95,760,A,6,armador de packs en Lima (celdas de distribuidor autorizado),pack comercial 6S2P 21700,estimado: 12 celdas × US$5.5 + armado,sí
+I014,DS-I,frame y kits,Impresión PA12-CF (15 piezas),1,4,1,5,58,290,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+I015,DS-I,frame y kits,Impresión TPU (4 pies),1,4,1,5,5,25,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+I016,DS-I,frame y kits,Corte CNC de 2 placas de carbono 3 mm,1,4,0,4,32,128,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+I017,DS-I,frame y kits,Tubos de carbono (Ø20 y Ø12),1,4,0,4,32,128,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+I018,DS-I,frame y kits,Tornillería M3 + tuercas autoblocantes,1,4,0,4,6,24,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+I019,DS-I,frame y kits,"Kit IP54 (junta EPDM, prensaestopa M12, ventila ePTFE)",1,4,0,4,15,60,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+I020,DS-I,frame y kits,Amortiguadores de cámara (4),1,4,0,4,8,32,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+I021,DS-I,frame y kits,"Kit de cableado (12 AWG, XT90-S, JST-GH, malla, ferritas)",1,4,0,4,25,100,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+I022,DS-I,frame y kits,BEC 5 V / 5 A,1,4,0,4,12,48,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+D023,DS-D,propulsión,Motor MAD M6C12 EEE KV150 (fase A: 2 para el banco),6,12,1,13,170,2210,A+B,4,distribuidor oficial T-Motor / MAD,tienda UAV (EE. UU./UE),"openelab.io (2026-10): 257 g, empuje máx. 9.4 kgf a 12S, hover 3-4 kgf",sí
+D024,DS-D,propulsión,"APD 120F3[X] V2 12S 120 A (BLHeli32, telemetría DShot)",6,12,1,13,120,1560,A+B,6,Advanced Power Drives (distribuidor),GetFPV / RaceDayQuads,"getfpv.com / racedayquads.com (2026-10): 12S, 20 g; precio a confirmar",sí
+D025,DS-D,propulsión,"Hélice plegable 26"" (pares CW/CCW)",6,12,12,24,16.9,405.6,A+B,3,T-Motor / MAD,Hobbywing / genérica de carbono,modelo de costo del S04 (verificar),sí
+D026,DS-D,aviónica,controladora: Holybro Pixhawk 6C (caja de plástico),1,2,0,2,225,450,B,3,distribuidor oficial,tienda UAV,pyrodrone.com (2026-10): US$224.99,no
+D027,DS-D,aviónica,"GNSS: u-blox ZED-F9P multibanda, RTK, con brújula (clase Holybro H-RTK F9P Ultralight)",1,2,0,2,250,500,B,3,distribuidor oficial,tienda UAV,estimado: módulos F9P US$200-300,sí
+D028,DS-D,aviónica,computadora a bordo: Raspberry Pi 5 4 GB + disipador + caja,1,2,0,2,80,160,B,3,distribuidor oficial,tienda UAV,precio de lista Raspberry Pi,no
+D029,DS-D,aviónica,radio de tierra: RFDesign RFD900x (malla/multipunto 900 MHz),1,2,0,2,140,280,B,3,distribuidor oficial,tienda UAV,unmannedtechshop.co.uk (2026-10): £219.95 el par,no
+D030,DS-D,aviónica,radio entre drones: Módulo ESP32-S3 (ESP-NOW 2.4 GHz) en la computadora a bordo,1,2,0,2,10,20,B,3,distribuidor oficial,tienda UAV,precio de lista,no
+D031,DS-D,aviónica,receptor RC: ExpressLRS 900 MHz (clase RadioMaster BR3),1,2,0,2,25,50,B,3,distribuidor oficial,tienda UAV,estimado,sí
+D032,DS-D,aviónica,"flujo óptico + telémetro: MicoAir MTF-01P (flujo óptico + lidar 8 m, MAVLink)",1,2,0,2,40,80,B,3,distribuidor oficial,tienda UAV,estimado; requisito del S06 (pérdida de GNSS),sí
+D033,DS-D,aviónica,módulo de potencia: Sensor Hall 200 A (clase Mauch HS-200) + regulador 5.3 V,1,2,0,2,90,180,B,3,distribuidor oficial,tienda UAV,estimado,sí
+D034,DS-D,aviónica,cámara FPV: Cámara FPV analógica/digital 19 mm,1,2,0,2,30,60,B,3,distribuidor oficial,tienda UAV,estimado,sí
+D035,DS-D,aviónica,servo de liberación: Servo estándar de engranajes metálicos 20 kg·cm + micro-interruptor,1,2,0,2,35,70,B,3,distribuidor oficial,tienda UAV,estimado,sí
+D036,DS-D,aviónica,"luces anticolisión: 4 LED de alta luminosidad (rojo, verde, 2 blancas destellantes)",1,2,0,2,30,60,B,3,distribuidor oficial,tienda UAV,estimado,sí
+D037,DS-D,batería,"Pack Li-ion 12S5P Molicel P42A (21700, 21 Ah, AS150U), armado local",2,4,0,4,390,1560,A,6,armador de packs en Lima (celdas de distribuidor autorizado),LiPo 12S 22 Ah comercial,estimado: 60 celdas × US$5 + armado,sí
+D038,DS-D,frame y kits,Impresión PA12-CF (24 piezas),1,2,1,3,115,345,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+D039,DS-D,frame y kits,Impresión TPU (4 zapatas),1,2,1,3,6,18,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+D040,DS-D,frame y kits,Corte CNC de 2 placas de carbono 3 mm,1,2,0,2,90,180,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+D041,DS-D,frame y kits,Gancho de aluminio 6061 (corte por agua),1,2,0,2,20,40,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+D042,DS-D,frame y kits,Tubos de carbono (Ø22×1.5 y Ø16),1,2,0,2,125,250,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+D043,DS-D,frame y kits,6 levas de apriete rápido + tornillería M4,1,2,0,2,35,70,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+D044,DS-D,frame y kits,"Kit IP54 (junta EPDM, prensaestopa M16, ventila ePTFE)",1,2,0,2,18,36,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+D045,DS-D,frame y kits,"Kit de cableado (6 AWG, AS150U, 6 XT60, barra de cobre, JST-GH)",1,2,0,2,70,140,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+D046,DS-D,frame y kits,Reguladores 5 V / 12 V / 7.4 V,1,2,0,2,25,50,B,2,taller local (Lima),segundo taller local,manufacturing/procesos/piezas_frame.md (estimado),sí
+T047,tierra,equipo de tierra y banco,Radiocontrol RadioMaster TX16S + módulo ExpressLRS 900 MHz,1,1,0,1,250,250,B,3,tienda local / importación,—,estimado,sí
+T048,tierra,equipo de tierra y banco,RFD900x de tierra + antena 6 dBi + mástil 6 m,1,1,0,1,200,200,B,3,tienda local / importación,—,estimado,sí
+T049,tierra,equipo de tierra y banco,Cargador 1 kW 12S (para DS-D) ×1 y cargador 6S ×1,1,1,0,1,380,380,A,3,tienda local / importación,—,plan: 2 × US$120 (subestimado para 12S),sí
+T050,tierra,equipo de tierra y banco,Bolsas y caja de transporte ignífugas para baterías,1,1,0,1,90,90,A,2,tienda local / importación,—,estimado,sí
+T051,tierra,equipo de tierra y banco,"Banco de empuje: celda de carga 20 kg + 2 celdas 5 kg (torque), HX711, sensor óptico de rpm, sensor de corriente/voltaje, ESP32",1,1,0,1,180,180,A,2,tienda local / importación,—,hardware/test_bench/ (S10),sí
+T052,tierra,equipo de tierra y banco,Fuente de laboratorio o batería de banco 12S + multímetro de pinza DC,1,1,0,1,150,150,A,2,tienda local / importación,—,estimado,sí

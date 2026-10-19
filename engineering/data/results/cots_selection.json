@@ -1,0 +1,741 @@
+{
+  "motors": [
+    {
+      "name": "T-Motor MN4006 KV380 (AntiGravity)",
+      "vehicle": "DS-I",
+      "kv": 380,
+      "rm": 0.194,
+      "i0": 0.3,
+      "i_max": 16,
+      "mass_kg": 0.068,
+      "cost_usd": 75,
+      "p_max_w": 380,
+      "props_in": [
+        12,
+        15
+      ],
+      "mount": "4×M3 Ø19/Ø25 (DMI-S)",
+      "source": "robotshop.com / getfpv.com (2026-10): 66-68 g, 194 mΩ, 16 A, 380 W",
+      "estimated": [
+        "cost_usd"
+      ]
+    },
+    {
+      "name": "T-Motor MN4014 KV330",
+      "vehicle": "DS-I",
+      "kv": 330,
+      "rm": 0.085,
+      "i0": 0.6,
+      "i_max": 25,
+      "mass_kg": 0.171,
+      "cost_usd": 105,
+      "p_max_w": 750,
+      "props_in": [
+        15,
+        17
+      ],
+      "mount": "4×M3 Ø25 (DMI-S)",
+      "source": "store.tmotor.com / robu.in (2026-10): 171 g con cables, 85 mΩ, 25 A, 750 W, hélice P17×5.8",
+      "estimated": [
+        "i0",
+        "cost_usd"
+      ]
+    },
+    {
+      "name": "T-Motor U8 Lite KV100",
+      "vehicle": "DS-D",
+      "kv": 100,
+      "rm": 0.17,
+      "i0": 0.7,
+      "i_max": 29.3,
+      "mass_kg": 0.238,
+      "cost_usd": 330,
+      "p_max_w": 1406,
+      "props_in": [
+        27,
+        28
+      ],
+      "mount": "4×M4 Ø36 (DMI-L)",
+      "source": "ligpower.com / irlock.com (2026-10): 238 g, 170 mΩ, 29.3 A, 1,406 W; US$310-387",
+      "estimated": []
+    },
+    {
+      "name": "MAD M6C12 EEE KV150",
+      "vehicle": "DS-D",
+      "kv": 150,
+      "rm": 0.1,
+      "i0": 0.9,
+      "i_max": 45,
+      "mass_kg": 0.257,
+      "cost_usd": 170,
+      "p_max_w": 1900,
+      "props_in": [
+        22,
+        26
+      ],
+      "mount": "4×M4 Ø35 (DMI-L)",
+      "source": "openelab.io (2026-10): 257 g, empuje máx. 9.4 kgf a 12S, hover 3-4 kgf",
+      "estimated": [
+        "rm",
+        "i0",
+        "i_max",
+        "cost_usd",
+        "p_max_w"
+      ]
+    },
+    {
+      "name": "T-Motor MN6007II KV160",
+      "vehicle": "DS-D",
+      "kv": 160,
+      "rm": 0.227,
+      "i0": 0.6,
+      "i_max": 25,
+      "mass_kg": 0.155,
+      "cost_usd": 150,
+      "p_max_w": 1100,
+      "props_in": [
+        21,
+        22
+      ],
+      "mount": "4×M4 Ø30 (DMI-L)",
+      "source": "rcdrone.top / robotshop.com (2026-10): 155 g, 227 mΩ (v1), hélice P21-22",
+      "estimated": [
+        "i0",
+        "i_max",
+        "cost_usd",
+        "p_max_w"
+      ]
+    }
+  ],
+  "escs": [
+    {
+      "name": "ESC 4 en 1 BLHeli32/AM32 6S 50 A con telemetría DShot bidireccional",
+      "vehicle": "DS-I",
+      "current_a": 50,
+      "mass_kg": 0.004,
+      "cost_usd": 20,
+      "telemetry": true,
+      "source": "clase Tekko32 / Holybro (≈ US$80 el 4 en 1)"
+    },
+    {
+      "name": "APD 120F3[X] V2 12S 120 A (BLHeli32, telemetría DShot)",
+      "vehicle": "DS-D",
+      "current_a": 120,
+      "mass_kg": 0.02,
+      "cost_usd": 120,
+      "telemetry": true,
+      "source": "getfpv.com / racedayquads.com (2026-10): 12S, 20 g; precio a confirmar"
+    }
+  ],
+  "options": [
+    {
+      "vehicle": "DS-I",
+      "motor": "T-Motor MN4006 KV380 (AntiGravity)",
+      "prop_in": 15,
+      "mtow_kg": 2.433,
+      "endurance_new_min": 32.1,
+      "endurance_eol_min": 24.7,
+      "twr_5000m": 2.27,
+      "hover_thrust_fraction": 0.41,
+      "hover_current_per_motor_a": 6.4,
+      "max_current_per_motor_a": 13.6,
+      "hover_motor_efficiency": 0.849,
+      "propulsion_cost_usd": 402.0,
+      "pack_current_full_a": 55.2,
+      "pack_current_twr2_a": 49.3,
+      "pack_limit_a": 50.0,
+      "thr_max_recommended": 0.91,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": true,
+        "autonomía ≥ 30 min (batería nueva, 4,500 msnm)": true,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": true
+      },
+      "notes": [
+        "a fondo el pack daría 55 A (límite 50 A): limitar con MPC_THR_MAX = 0.91",
+        "datos estimados: cost_usd (se miden en el S10)"
+      ],
+      "ok": true
+    },
+    {
+      "vehicle": "DS-I",
+      "motor": "T-Motor MN4006 KV380 (AntiGravity)",
+      "prop_in": 16,
+      "mtow_kg": 2.448,
+      "endurance_new_min": 33.2,
+      "endurance_eol_min": 25.5,
+      "twr_5000m": 2.51,
+      "hover_thrust_fraction": 0.39,
+      "hover_current_per_motor_a": 6.8,
+      "max_current_per_motor_a": 16.0,
+      "hover_motor_efficiency": 0.832,
+      "propulsion_cost_usd": 406.0,
+      "pack_current_full_a": 64.9,
+      "pack_current_twr2_a": 52.7,
+      "pack_limit_a": 50.0,
+      "thr_max_recommended": 0.77,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": true,
+        "autonomía ≥ 30 min (batería nueva, 4,500 msnm)": true,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": false
+      },
+      "notes": [
+        "a fondo el pack daría 65 A (límite 50 A): limitar con MPC_THR_MAX = 0.77",
+        "hover al 39% del empuje máximo (guía 40-65 %): motor holgado, margen extra en altura",
+        "hélice de 16\" fuera del rango del fabricante (12-15\"): verificar temperatura en el banco (S10)",
+        "a fondo llega al límite de corriente del motor: el empuje máximo lo fija la corriente",
+        "datos estimados: cost_usd (se miden en el S10)"
+      ],
+      "ok": false
+    },
+    {
+      "vehicle": "DS-I",
+      "motor": "T-Motor MN4006 KV380 (AntiGravity)",
+      "prop_in": 17,
+      "mtow_kg": 2.464,
+      "endurance_new_min": 34.1,
+      "endurance_eol_min": 26.2,
+      "twr_5000m": 2.34,
+      "hover_thrust_fraction": 0.42,
+      "hover_current_per_motor_a": 7.3,
+      "max_current_per_motor_a": 16.0,
+      "hover_motor_efficiency": 0.813,
+      "propulsion_cost_usd": 409.0,
+      "pack_current_full_a": 64.9,
+      "pack_current_twr2_a": 56.2,
+      "pack_limit_a": 50.0,
+      "thr_max_recommended": 0.77,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": true,
+        "autonomía ≥ 30 min (batería nueva, 4,500 msnm)": true,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": false
+      },
+      "notes": [
+        "a fondo el pack daría 65 A (límite 50 A): limitar con MPC_THR_MAX = 0.77",
+        "hélice de 17\" fuera del rango del fabricante (12-15\"): verificar temperatura en el banco (S10)",
+        "a fondo llega al límite de corriente del motor: el empuje máximo lo fija la corriente",
+        "datos estimados: cost_usd (se miden en el S10)"
+      ],
+      "ok": false
+    },
+    {
+      "vehicle": "DS-I",
+      "motor": "T-Motor MN4014 KV330",
+      "prop_in": 15,
+      "mtow_kg": 2.845,
+      "endurance_new_min": 26.6,
+      "endurance_eol_min": 20.4,
+      "twr_5000m": 1.84,
+      "hover_thrust_fraction": 0.49,
+      "hover_current_per_motor_a": 6.7,
+      "max_current_per_motor_a": 11.6,
+      "hover_motor_efficiency": 0.871,
+      "propulsion_cost_usd": 522.0,
+      "pack_current_full_a": 47.2,
+      "pack_current_twr2_a": 50.8,
+      "pack_limit_a": 50.0,
+      "thr_max_recommended": 1.0,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": false,
+        "autonomía ≥ 30 min (batería nueva, 4,500 msnm)": false,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": false
+      },
+      "notes": [
+        "datos estimados: i0, cost_usd (se miden en el S10)"
+      ],
+      "ok": false
+    },
+    {
+      "vehicle": "DS-I",
+      "motor": "T-Motor MN4014 KV330",
+      "prop_in": 16,
+      "mtow_kg": 2.86,
+      "endurance_new_min": 28.0,
+      "endurance_eol_min": 21.5,
+      "twr_5000m": 2.2,
+      "hover_thrust_fraction": 0.41,
+      "hover_current_per_motor_a": 7.1,
+      "max_current_per_motor_a": 14.5,
+      "hover_motor_efficiency": 0.868,
+      "propulsion_cost_usd": 526.0,
+      "pack_current_full_a": 59.0,
+      "pack_current_twr2_a": 54.3,
+      "pack_limit_a": 50.0,
+      "thr_max_recommended": 0.85,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": true,
+        "autonomía ≥ 30 min (batería nueva, 4,500 msnm)": false,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": false
+      },
+      "notes": [
+        "a fondo el pack daría 59 A (límite 50 A): limitar con MPC_THR_MAX = 0.85",
+        "datos estimados: i0, cost_usd (se miden en el S10)"
+      ],
+      "ok": false
+    },
+    {
+      "vehicle": "DS-I",
+      "motor": "T-Motor MN4014 KV330",
+      "prop_in": 17,
+      "mtow_kg": 2.876,
+      "endurance_new_min": 29.3,
+      "endurance_eol_min": 22.5,
+      "twr_5000m": 2.59,
+      "hover_thrust_fraction": 0.35,
+      "hover_current_per_motor_a": 7.6,
+      "max_current_per_motor_a": 18.0,
+      "hover_motor_efficiency": 0.864,
+      "propulsion_cost_usd": 529.0,
+      "pack_current_full_a": 72.8,
+      "pack_current_twr2_a": 57.7,
+      "pack_limit_a": 50.0,
+      "thr_max_recommended": 0.69,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": true,
+        "autonomía ≥ 30 min (batería nueva, 4,500 msnm)": false,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": false
+      },
+      "notes": [
+        "a fondo el pack daría 73 A (límite 50 A): limitar con MPC_THR_MAX = 0.69",
+        "hover al 35% del empuje máximo (guía 40-65 %): motor holgado, margen extra en altura",
+        "datos estimados: i0, cost_usd (se miden en el S10)"
+      ],
+      "ok": false
+    },
+    {
+      "vehicle": "DS-D",
+      "motor": "T-Motor U8 Lite KV100",
+      "prop_in": 24,
+      "mtow_kg": 14.883,
+      "endurance_new_min": 20.5,
+      "endurance_eol_min": 15.8,
+      "twr_5000m": 1.35,
+      "hover_thrust_fraction": 0.67,
+      "hover_current_per_motor_a": 10.4,
+      "max_current_per_motor_a": 13.7,
+      "hover_motor_efficiency": 0.881,
+      "propulsion_cost_usd": 2786.0,
+      "pack_current_full_a": 83.0,
+      "pack_current_twr2_a": 118.6,
+      "pack_limit_a": 225.0,
+      "thr_max_recommended": 1.0,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": false,
+        "autonomía ≥ 20 min (batería nueva, 4,500 msnm)": true,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": true
+      },
+      "notes": [
+        "hover al 67% del empuje máximo (guía 40-65 %): poco margen",
+        "hélice de 24\" fuera del rango del fabricante (27-28\"): verificar temperatura en el banco (S10)"
+      ],
+      "ok": false
+    },
+    {
+      "vehicle": "DS-D",
+      "motor": "T-Motor U8 Lite KV100",
+      "prop_in": 26,
+      "mtow_kg": 14.955,
+      "endurance_new_min": 21.9,
+      "endurance_eol_min": 16.8,
+      "twr_5000m": 1.7,
+      "hover_thrust_fraction": 0.54,
+      "hover_current_per_motor_a": 11.2,
+      "max_current_per_motor_a": 18.4,
+      "hover_motor_efficiency": 0.873,
+      "propulsion_cost_usd": 2801.0,
+      "pack_current_full_a": 110.9,
+      "pack_current_twr2_a": 128.6,
+      "pack_limit_a": 225.0,
+      "thr_max_recommended": 1.0,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": false,
+        "autonomía ≥ 20 min (batería nueva, 4,500 msnm)": true,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": true
+      },
+      "notes": [
+        "hélice de 26\" fuera del rango del fabricante (27-28\"): verificar temperatura en el banco (S10)"
+      ],
+      "ok": false
+    },
+    {
+      "vehicle": "DS-D",
+      "motor": "MAD M6C12 EEE KV150",
+      "prop_in": 24,
+      "mtow_kg": 14.997,
+      "endurance_new_min": 20.2,
+      "endurance_eol_min": 15.5,
+      "twr_5000m": 2.39,
+      "hover_thrust_fraction": 0.38,
+      "hover_current_per_motor_a": 15.5,
+      "max_current_per_motor_a": 34.9,
+      "hover_motor_efficiency": 0.875,
+      "propulsion_cost_usd": 1826.0,
+      "pack_current_full_a": 210.2,
+      "pack_current_twr2_a": 177.9,
+      "pack_limit_a": 225.0,
+      "thr_max_recommended": 1.0,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": true,
+        "autonomía ≥ 20 min (batería nueva, 4,500 msnm)": true,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": true
+      },
+      "notes": [
+        "hover al 38% del empuje máximo (guía 40-65 %): motor holgado, margen extra en altura",
+        "datos estimados: rm, i0, i_max, cost_usd, p_max_w (se miden en el S10)"
+      ],
+      "ok": true
+    },
+    {
+      "vehicle": "DS-D",
+      "motor": "MAD M6C12 EEE KV150",
+      "prop_in": 26,
+      "mtow_kg": 15.069,
+      "endurance_new_min": 21.4,
+      "endurance_eol_min": 16.4,
+      "twr_5000m": 2.77,
+      "hover_thrust_fraction": 0.35,
+      "hover_current_per_motor_a": 16.8,
+      "max_current_per_motor_a": 43.6,
+      "hover_motor_efficiency": 0.862,
+      "propulsion_cost_usd": 1841.0,
+      "pack_current_full_a": 262.3,
+      "pack_current_twr2_a": 193.1,
+      "pack_limit_a": 225.0,
+      "thr_max_recommended": 0.86,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": true,
+        "autonomía ≥ 20 min (batería nueva, 4,500 msnm)": true,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": true
+      },
+      "notes": [
+        "a fondo el pack daría 262 A (límite 225 A): limitar con MPC_THR_MAX = 0.86",
+        "hover al 35% del empuje máximo (guía 40-65 %): motor holgado, margen extra en altura",
+        "datos estimados: rm, i0, i_max, cost_usd, p_max_w (se miden en el S10)"
+      ],
+      "ok": true
+    },
+    {
+      "vehicle": "DS-D",
+      "motor": "T-Motor MN6007II KV160",
+      "prop_in": 24,
+      "mtow_kg": 14.385,
+      "endurance_new_min": 19.8,
+      "endurance_eol_min": 15.2,
+      "twr_5000m": 1.65,
+      "hover_thrust_fraction": 0.6,
+      "hover_current_per_motor_a": 15.6,
+      "max_current_per_motor_a": 25.0,
+      "hover_motor_efficiency": 0.807,
+      "propulsion_cost_usd": 1706.0,
+      "pack_current_full_a": 150.6,
+      "pack_current_twr2_a": 180.4,
+      "pack_limit_a": 225.0,
+      "thr_max_recommended": 1.0,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": false,
+        "autonomía ≥ 20 min (batería nueva, 4,500 msnm)": false,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": true
+      },
+      "notes": [
+        "hélice de 24\" fuera del rango del fabricante (21-22\"): verificar temperatura en el banco (S10)",
+        "a fondo llega al límite de corriente del motor: el empuje máximo lo fija la corriente",
+        "datos estimados: i0, i_max, cost_usd, p_max_w (se miden en el S10)"
+      ],
+      "ok": false
+    },
+    {
+      "vehicle": "DS-D",
+      "motor": "T-Motor MN6007II KV160",
+      "prop_in": 26,
+      "mtow_kg": 14.457,
+      "endurance_new_min": 20.4,
+      "endurance_eol_min": 15.7,
+      "twr_5000m": 1.51,
+      "hover_thrust_fraction": 0.66,
+      "hover_current_per_motor_a": 16.9,
+      "max_current_per_motor_a": 25.0,
+      "hover_motor_efficiency": 0.776,
+      "propulsion_cost_usd": 1721.0,
+      "pack_current_full_a": 150.6,
+      "pack_current_twr2_a": 196.0,
+      "pack_limit_a": 225.0,
+      "thr_max_recommended": 1.0,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": false,
+        "autonomía ≥ 20 min (batería nueva, 4,500 msnm)": true,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": true
+      },
+      "notes": [
+        "hover al 66% del empuje máximo (guía 40-65 %): poco margen",
+        "hélice de 26\" fuera del rango del fabricante (21-22\"): verificar temperatura en el banco (S10)",
+        "a fondo llega al límite de corriente del motor: el empuje máximo lo fija la corriente",
+        "datos estimados: i0, i_max, cost_usd, p_max_w (se miden en el S10)"
+      ],
+      "ok": false
+    }
+  ],
+  "selected": {
+    "DS-I": {
+      "vehicle": "DS-I",
+      "motor": "T-Motor MN4006 KV380 (AntiGravity)",
+      "prop_in": 15,
+      "mtow_kg": 2.433,
+      "endurance_new_min": 32.1,
+      "endurance_eol_min": 24.7,
+      "twr_5000m": 2.27,
+      "hover_thrust_fraction": 0.41,
+      "hover_current_per_motor_a": 6.4,
+      "max_current_per_motor_a": 13.6,
+      "hover_motor_efficiency": 0.849,
+      "propulsion_cost_usd": 402.0,
+      "pack_current_full_a": 55.2,
+      "pack_current_twr2_a": 49.3,
+      "pack_limit_a": 50.0,
+      "thr_max_recommended": 0.91,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": true,
+        "autonomía ≥ 30 min (batería nueva, 4,500 msnm)": true,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": true
+      },
+      "notes": [
+        "a fondo el pack daría 55 A (límite 50 A): limitar con MPC_THR_MAX = 0.91",
+        "datos estimados: cost_usd (se miden en el S10)"
+      ],
+      "ok": true,
+      "esc": "ESC 4 en 1 BLHeli32/AM32 6S 50 A con telemetría DShot bidireccional"
+    },
+    "DS-D": {
+      "vehicle": "DS-D",
+      "motor": "MAD M6C12 EEE KV150",
+      "prop_in": 26,
+      "mtow_kg": 15.069,
+      "endurance_new_min": 21.4,
+      "endurance_eol_min": 16.4,
+      "twr_5000m": 2.77,
+      "hover_thrust_fraction": 0.35,
+      "hover_current_per_motor_a": 16.8,
+      "max_current_per_motor_a": 43.6,
+      "hover_motor_efficiency": 0.862,
+      "propulsion_cost_usd": 1841.0,
+      "pack_current_full_a": 262.3,
+      "pack_current_twr2_a": 193.1,
+      "pack_limit_a": 225.0,
+      "thr_max_recommended": 0.86,
+      "checks": {
+        "empuje/peso ≥ 2.0 a 5,000 msnm": true,
+        "autonomía ≥ 20 min (batería nueva, 4,500 msnm)": true,
+        "corriente máxima ≤ la del motor": true,
+        "ESC con telemetría": true,
+        "el pack entrega la corriente para empuje/peso 2.0": true
+      },
+      "notes": [
+        "a fondo el pack daría 262 A (límite 225 A): limitar con MPC_THR_MAX = 0.86",
+        "hover al 35% del empuje máximo (guía 40-65 %): motor holgado, margen extra en altura",
+        "datos estimados: rm, i0, i_max, cost_usd, p_max_w (se miden en el S10)"
+      ],
+      "ok": true,
+      "esc": "APD 120F3[X] V2 12S 120 A (BLHeli32, telemetría DShot)"
+    }
+  },
+  "avionics": {
+    "DS-I": [
+      {
+        "role": "controladora",
+        "name": "Holybro Pixhawk 6C (caja de plástico)",
+        "mass_kg": 0.06,
+        "cost_usd": 225,
+        "source": "pyrodrone.com (2026-10): US$224.99",
+        "estimated": false
+      },
+      {
+        "role": "GNSS",
+        "name": "u-blox ZED-F9P multibanda, RTK, con brújula (clase Holybro H-RTK F9P Ultralight)",
+        "mass_kg": 0.04,
+        "cost_usd": 250,
+        "source": "estimado: módulos F9P US$200-300",
+        "estimated": true
+      },
+      {
+        "role": "computadora a bordo",
+        "name": "Raspberry Pi 5 4 GB + disipador + caja",
+        "mass_kg": 0.06,
+        "cost_usd": 80,
+        "source": "precio de lista Raspberry Pi",
+        "estimated": false
+      },
+      {
+        "role": "radio de tierra",
+        "name": "RFDesign RFD900x (malla/multipunto 900 MHz)",
+        "mass_kg": 0.015,
+        "cost_usd": 140,
+        "source": "unmannedtechshop.co.uk (2026-10): £219.95 el par",
+        "estimated": false
+      },
+      {
+        "role": "radio entre drones",
+        "name": "Módulo ESP32-S3 (ESP-NOW 2.4 GHz) en la computadora a bordo",
+        "mass_kg": 0.005,
+        "cost_usd": 10,
+        "source": "precio de lista",
+        "estimated": false
+      },
+      {
+        "role": "receptor RC",
+        "name": "ExpressLRS 900 MHz (clase RadioMaster BR3)",
+        "mass_kg": 0.005,
+        "cost_usd": 25,
+        "source": "estimado",
+        "estimated": true
+      },
+      {
+        "role": "flujo óptico + telémetro",
+        "name": "MicoAir MTF-01P (flujo óptico + lidar 8 m, MAVLink)",
+        "mass_kg": 0.005,
+        "cost_usd": 40,
+        "source": "estimado; requisito del S06 (pérdida de GNSS)",
+        "estimated": true
+      },
+      {
+        "role": "módulo de potencia",
+        "name": "Holybro PM02 V3 (2-12S, sensado de V/I)",
+        "mass_kg": 0.03,
+        "cost_usd": 30,
+        "source": "estimado",
+        "estimated": true
+      },
+      {
+        "role": "cámara + gimbal",
+        "name": "SIYI A8 mini (1/1.7\" 8 MP, gimbal 3 ejes, 4K)",
+        "mass_kg": 0.095,
+        "cost_usd": 280,
+        "source": "irlock.com / siyi.biz (2026-10): 95 g, US$190-330",
+        "estimated": false
+      }
+    ],
+    "DS-D": [
+      {
+        "role": "controladora",
+        "name": "Holybro Pixhawk 6C (caja de plástico)",
+        "mass_kg": 0.06,
+        "cost_usd": 225,
+        "source": "pyrodrone.com (2026-10): US$224.99",
+        "estimated": false
+      },
+      {
+        "role": "GNSS",
+        "name": "u-blox ZED-F9P multibanda, RTK, con brújula (clase Holybro H-RTK F9P Ultralight)",
+        "mass_kg": 0.04,
+        "cost_usd": 250,
+        "source": "estimado: módulos F9P US$200-300",
+        "estimated": true
+      },
+      {
+        "role": "computadora a bordo",
+        "name": "Raspberry Pi 5 4 GB + disipador + caja",
+        "mass_kg": 0.06,
+        "cost_usd": 80,
+        "source": "precio de lista Raspberry Pi",
+        "estimated": false
+      },
+      {
+        "role": "radio de tierra",
+        "name": "RFDesign RFD900x (malla/multipunto 900 MHz)",
+        "mass_kg": 0.015,
+        "cost_usd": 140,
+        "source": "unmannedtechshop.co.uk (2026-10): £219.95 el par",
+        "estimated": false
+      },
+      {
+        "role": "radio entre drones",
+        "name": "Módulo ESP32-S3 (ESP-NOW 2.4 GHz) en la computadora a bordo",
+        "mass_kg": 0.005,
+        "cost_usd": 10,
+        "source": "precio de lista",
+        "estimated": false
+      },
+      {
+        "role": "receptor RC",
+        "name": "ExpressLRS 900 MHz (clase RadioMaster BR3)",
+        "mass_kg": 0.005,
+        "cost_usd": 25,
+        "source": "estimado",
+        "estimated": true
+      },
+      {
+        "role": "flujo óptico + telémetro",
+        "name": "MicoAir MTF-01P (flujo óptico + lidar 8 m, MAVLink)",
+        "mass_kg": 0.005,
+        "cost_usd": 40,
+        "source": "estimado; requisito del S06 (pérdida de GNSS)",
+        "estimated": true
+      },
+      {
+        "role": "módulo de potencia",
+        "name": "Sensor Hall 200 A (clase Mauch HS-200) + regulador 5.3 V",
+        "mass_kg": 0.045,
+        "cost_usd": 90,
+        "source": "estimado",
+        "estimated": true
+      },
+      {
+        "role": "cámara FPV",
+        "name": "Cámara FPV analógica/digital 19 mm",
+        "mass_kg": 0.01,
+        "cost_usd": 30,
+        "source": "estimado",
+        "estimated": true
+      },
+      {
+        "role": "servo de liberación",
+        "name": "Servo estándar de engranajes metálicos 20 kg·cm + micro-interruptor",
+        "mass_kg": 0.06,
+        "cost_usd": 35,
+        "source": "estimado",
+        "estimated": true
+      },
+      {
+        "role": "luces anticolisión",
+        "name": "4 LED de alta luminosidad (rojo, verde, 2 blancas destellantes)",
+        "mass_kg": 0.03,
+        "cost_usd": 30,
+        "source": "estimado",
+        "estimated": true
+      }
+    ]
+  },
+  "fixed_equipment_delta": {
+    "DS-I": {
+      "mass_kg": -0.22,
+      "cost_usd": 485
+    },
+    "DS-D": {
+      "mass_kg": 0.04,
+      "cost_usd": 515
+    }
+  }
+}
