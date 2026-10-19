@@ -151,3 +151,64 @@ abierto, con un control que pase sin cambios de la simulación al dron real (ADR
 - Los parámetros están dimensionados para DS-I (3 m entre centros). Los enjambres mixtos con DS-D o DS-H necesitan
   márgenes según el tamaño de cada dron (pendiente, v2).
 - La radio real debe sostener 10 Hz por dron con latencia p95 < 100 ms. Se verifica en campo en el S14.
+
+## ADR-011 · Frame del DS-I e interfaz de motor estándar (DMI)
+- Estado: **Propuesta** (S07-01, para el CDR del Gate G2)
+
+### Contexto
+El DS-I (quad X, 672 mm entre ejes, hélices de 17") necesita un frame barato, fabricable en Perú con servicios
+comunes (corte CNC de carbono e impresión 3D) y preparado para cambiar al motor propio al final del proyecto (S17+).
+
+### Decisión
+- **Placas centrales de carbono de 3 mm cortadas por CNC** (Ø168 mm), separadas 26 mm por **4 bloques de brazo
+  impresos en PA12-CF** que abrazan los tubos. Los tubos de los brazos son de carbono enrollado Ø20×1 mm.
+- **Brazos fijos, no plegables:** el dron mide ~1.1 m con hélices y se transporta con las hélices quitadas. Plegar
+  agrega bisagras, juego y ~40 g sin necesidad a este tamaño. El DS-D sí pliega (ADR-012).
+- **Interfaz de motor DronSwarm (DMI):** placa con 4 ranuras radiales a 90°. DMI-S acepta 4×M3 en círculos de
+  Ø16-25 mm (motores 28xx-41xx) y DMI-L acepta 4×M4 en Ø30-42 mm (50xx-70xx). Los motores COTS del S09 y el motor
+  propio del S17+ deben caer en ese rango: así el frame no cambia al reemplazar el motor.
+- **Tren de aterrizaje:** patas de tubo Ø12 abrazadas a los brazos (base de 300 mm entre pies) con **pies
+  amortiguadores de TPU 85A** (giroide al 15 %, ~30 mm de carrera). Con un pie macizo, una caída de 1 m daba
+  ~4.5 kN por pata; con el amortiguador, ~0.9 kN (FEA: abrazadera FS 3.6, tubo del brazo FS 2.2).
+- **Electrónica en una carcasa IP54 impresa** sobre la placa superior: junta EPDM en canal, 8 tornillos M3 con
+  arandela de nylon, prensaestopa M12 y ventila de membrana ePTFE. Batería abajo-atrás, transversal (cambio rápido
+  con 2 correas); cámara adelante-abajo sobre 4 amortiguadores de silicona.
+- Todo el frame es **paramétrico desde la spec v1** (`tools/cad/gen_cad_params.py`): si cambia el dimensionamiento,
+  se regeneran las piezas.
+
+### Consecuencias
+- El frame pesa 52 g más que lo presupuestado en el S04 (+1.9 % del MTOW): empuje/peso 2.04 a 5,000 msnm y
+  ~30.4 min de autonomía, todavía dentro del escenario D.
+- Los tornillos que atraviesan la placa dentro de la carcasa necesitan arandela de nylon o sellador para el IP54.
+- El PA12-CF impreso es más débil entre capas (~50 %): las piezas se orientan en la impresora según
+  `docs/ingenieria/dfm_dfa_ds-i.md`.
+
+## ADR-012 · Frame del DS-D: brazos desmontables y liberación de carga a prueba de fallas
+- Estado: **Propuesta** (S08, para el CDR del Gate G2). **Se aparta del plan** (que decía "brazos plegables"): decide el usuario.
+
+### Contexto
+El DS-D (hexa, 1,453 mm entre ejes, hélices de 26") mide ~2.1 m con hélices: hay que reducirlo para
+transportarlo en una camioneta. Con los empujes de diseño (FS 2.5), el momento en la raíz de cada brazo es ~138 N·m.
+
+### Decisión
+- **Brazos desmontables, no plegables, en la v1.** Cada tubo entra 54 mm en un bloque impreso (PA12-CF) entre las
+  placas y se fija con 2 levas de apriete rápido. Los cables del motor llevan un conector XT60 en el bloque y el
+  brazo se monta en ~20 s, sin herramientas. El primer diseño plegable, con bisagra de aluminio, pesaba 250 g por
+  brazo (1.5 kg en total): 10 % del MTOW. Un plegable liviano y bien verificado queda para la v2, con datos de
+  despliegue en campo.
+- **Placas de carbono de 3 mm** (el S04 suponía 4 mm). El momento del brazo llega a las placas como una fuerza en
+  su plano, y el aplastamiento en los agujeros M4 queda en ≈ 60 MPa.
+- **Batería arriba-atrás (transversal) y carcasa IP54 arriba-adelante:** el centro de abajo queda libre para el
+  mecanismo de carga, que descarga directo en la placa (la caja no cuelga de la batería).
+- **Liberación a prueba de fallas:** gancho de aluminio 6061 trabado por un pasador con resorte. Sin energía queda
+  trabado, y el servo solo actúa para soltar. Un micro-interruptor confirma "gancho cerrado" a la controladora.
+- **Tren de esquíes** con patas inclinadas 16° (base de 440 mm entre esquíes) y zapatas de TPU.
+- **Luces anticolisión** en los 6 brazos y **cámara FPV** adelante-abajo. Las protecciones de hélice no se
+  diseñan en la v1: suman ~300 g y la operación en mina es lejos de personas (se revisa con la regulación, S22).
+
+### Consecuencias
+- El frame pesa 2.50 kg en CAD contra 2.65 kg presupuestados (con tornillería, ≈ presupuesto): se mantienen el
+  escenario C (≥ 20 min con 5 kg) y el empuje/peso de 2.12.
+- Montar el dron toma ~2 min (6 brazos), contra ~30 s de un plegable.
+- El mecanismo de liberación es un concepto verificado por FEA (gancho FS 9.6): se valida con un prototipo impreso
+  y ciclos de carga en el banco (S10).

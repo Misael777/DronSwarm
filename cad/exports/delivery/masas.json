@@ -1,0 +1,639 @@
+{
+  "vehicle": "DS-D",
+  "parts": {
+    "center_plate_bottom": {
+      "material": "carbono",
+      "qty": 1,
+      "unit_kg": 0.4354,
+      "total_kg": 0.4354
+    },
+    "center_plate_top": {
+      "material": "carbono",
+      "qty": 1,
+      "unit_kg": 0.4496,
+      "total_kg": 0.4496
+    },
+    "arm_socket": {
+      "material": "PA12-CF",
+      "qty": 6,
+      "unit_kg": 0.0374,
+      "total_kg": 0.2246
+    },
+    "arm_tube": {
+      "material": "carbono",
+      "qty": 6,
+      "unit_kg": 0.0892,
+      "total_kg": 0.5354
+    },
+    "motor_mount": {
+      "material": "PA12-CF",
+      "qty": 6,
+      "unit_kg": 0.0302,
+      "total_kg": 0.1811
+    },
+    "light_mount": {
+      "material": "PA12-CF",
+      "qty": 6,
+      "unit_kg": 0.0051,
+      "total_kg": 0.0306
+    },
+    "battery_tray": {
+      "material": "PA12-CF",
+      "qty": 1,
+      "unit_kg": 0.092,
+      "total_kg": 0.092
+    },
+    "housing": {
+      "material": "PA12-CF",
+      "qty": 1,
+      "unit_kg": 0.1096,
+      "total_kg": 0.1096
+    },
+    "payload_release_body": {
+      "material": "PA12-CF",
+      "qty": 1,
+      "unit_kg": 0.0695,
+      "total_kg": 0.0695
+    },
+    "payload_release_hook": {
+      "material": "aluminio",
+      "qty": 1,
+      "unit_kg": 0.0179,
+      "total_kg": 0.0179
+    },
+    "fpv_mount": {
+      "material": "PA12-CF",
+      "qty": 1,
+      "unit_kg": 0.0059,
+      "total_kg": 0.0059
+    },
+    "gear_mount": {
+      "material": "PA12-CF",
+      "qty": 4,
+      "unit_kg": 0.0158,
+      "total_kg": 0.063
+    },
+    "leg_tube": {
+      "material": "carbono",
+      "qty": 4,
+      "unit_kg": 0.0291,
+      "total_kg": 0.1163
+    },
+    "skid_tee": {
+      "material": "PA12-CF",
+      "qty": 4,
+      "unit_kg": 0.0113,
+      "total_kg": 0.0453
+    },
+    "skid_pad": {
+      "material": "TPU",
+      "qty": 4,
+      "unit_kg": 0.0103,
+      "total_kg": 0.041
+    },
+    "skid_tube": {
+      "material": "carbono",
+      "qty": 2,
+      "unit_kg": 0.0409,
+      "total_kg": 0.0818
+    }
+  },
+  "categories": {
+    "placas centrales": {
+      "cad_kg": 0.885,
+      "budget_kg": 1.366,
+      "delta_pct": -35.0
+    },
+    "brazos": {
+      "cad_kg": 0.535,
+      "budget_kg": 0.505,
+      "delta_pct": 6.0
+    },
+    "soportes de motor": {
+      "cad_kg": 0.181,
+      "budget_kg": 0.09,
+      "delta_pct": 101.0
+    },
+    "piezas impresas y tornillería": {
+      "cad_kg": 0.353,
+      "budget_kg": 0.09,
+      "delta_pct": 292.0
+    },
+    "tren de aterrizaje (equipo fijo)": {
+      "cad_kg": 0.347,
+      "budget_kg": 0.25,
+      "delta_pct": 39.0
+    },
+    "carcasa IP54 (equipo fijo)": {
+      "cad_kg": 0.11,
+      "budget_kg": 0.2,
+      "delta_pct": -45.0
+    },
+    "mecanismo de liberación (equipo fijo)": {
+      "cad_kg": 0.087,
+      "budget_kg": 0.15,
+      "delta_pct": -42.0
+    }
+  },
+  "dxf": [
+    "cad/exports/delivery/center_plate_top.dxf",
+    "cad/exports/delivery/center_plate_bottom.dxf"
+  ],
+  "frame_cad_kg": 2.499,
+  "frame_budget_kg": 2.651,
+  "note": "Masa sin tornillería ni adhesivos (≈ 5-8 % adicional). Impresas a densidad efectiva de 4 perímetros + 40 % de relleno.",
+  "placements": {
+    "center_plate_bottom": [
+      0,
+      0,
+      -3
+    ],
+    "center_plate_top": [
+      0,
+      0,
+      28
+    ],
+    "arm_socket_0": [
+      178.6,
+      0,
+      0
+    ],
+    "arm_tube_0": [
+      124.6,
+      0,
+      14
+    ],
+    "motor_mount_0": [
+      726.5,
+      0,
+      32
+    ],
+    "light_mount_0": [
+      636.5,
+      0,
+      14
+    ],
+    "motor_0": [
+      726.5,
+      0,
+      32
+    ],
+    "prop_0": [
+      726.5,
+      0,
+      76
+    ],
+    "esc_0": [
+      84.6,
+      0,
+      7
+    ],
+    "arm_socket_1": [
+      89.3,
+      154.672,
+      0
+    ],
+    "arm_tube_1": [
+      62.3,
+      107.907,
+      14
+    ],
+    "motor_mount_1": [
+      363.25,
+      629.167,
+      32
+    ],
+    "light_mount_1": [
+      318.25,
+      551.225,
+      14
+    ],
+    "motor_1": [
+      363.25,
+      629.167,
+      32
+    ],
+    "prop_1": [
+      363.25,
+      629.167,
+      76
+    ],
+    "esc_1": [
+      42.3,
+      73.2657,
+      7
+    ],
+    "arm_socket_2": [
+      -89.3,
+      154.672,
+      0
+    ],
+    "arm_tube_2": [
+      -62.3,
+      107.907,
+      14
+    ],
+    "motor_mount_2": [
+      -363.25,
+      629.167,
+      32
+    ],
+    "light_mount_2": [
+      -318.25,
+      551.225,
+      14
+    ],
+    "motor_2": [
+      -363.25,
+      629.167,
+      32
+    ],
+    "prop_2": [
+      -363.25,
+      629.167,
+      76
+    ],
+    "esc_2": [
+      -42.3,
+      73.2657,
+      7
+    ],
+    "arm_socket_3": [
+      -178.6,
+      0,
+      0
+    ],
+    "arm_tube_3": [
+      -124.6,
+      0,
+      14
+    ],
+    "motor_mount_3": [
+      -726.5,
+      0,
+      32
+    ],
+    "light_mount_3": [
+      -636.5,
+      0,
+      14
+    ],
+    "motor_3": [
+      -726.5,
+      0,
+      32
+    ],
+    "prop_3": [
+      -726.5,
+      0,
+      76
+    ],
+    "esc_3": [
+      -84.6,
+      0,
+      7
+    ],
+    "arm_socket_4": [
+      -89.3,
+      -154.672,
+      0
+    ],
+    "arm_tube_4": [
+      -62.3,
+      -107.907,
+      14
+    ],
+    "motor_mount_4": [
+      -363.25,
+      -629.167,
+      32
+    ],
+    "light_mount_4": [
+      -318.25,
+      -551.225,
+      14
+    ],
+    "motor_4": [
+      -363.25,
+      -629.167,
+      32
+    ],
+    "prop_4": [
+      -363.25,
+      -629.167,
+      76
+    ],
+    "esc_4": [
+      -42.3,
+      -73.2657,
+      7
+    ],
+    "arm_socket_5": [
+      89.3,
+      -154.672,
+      0
+    ],
+    "arm_tube_5": [
+      62.3,
+      -107.907,
+      14
+    ],
+    "motor_mount_5": [
+      363.25,
+      -629.167,
+      32
+    ],
+    "light_mount_5": [
+      318.25,
+      -551.225,
+      14
+    ],
+    "motor_5": [
+      363.25,
+      -629.167,
+      32
+    ],
+    "prop_5": [
+      363.25,
+      -629.167,
+      76
+    ],
+    "esc_5": [
+      42.3,
+      -73.2657,
+      7
+    ],
+    "battery_tray": [
+      -60,
+      0,
+      31
+    ],
+    "battery": [
+      -60,
+      0,
+      35
+    ],
+    "housing": [
+      90,
+      0,
+      31
+    ],
+    "fc_stack": [
+      70,
+      0,
+      35
+    ],
+    "companion": [
+      110,
+      0,
+      63
+    ],
+    "gnss": [
+      90,
+      0,
+      99
+    ],
+    "release_body": [
+      0,
+      0,
+      -3
+    ],
+    "release_hook": [
+      0,
+      0,
+      -3
+    ],
+    "servo": [
+      21,
+      0,
+      -44
+    ],
+    "payload_box": [
+      -12,
+      0,
+      -103.5
+    ],
+    "fpv_mount": [
+      151.6,
+      0,
+      -3
+    ],
+    "fpv_cam": [
+      153.6,
+      0,
+      -21
+    ],
+    "gear_mount_0": [
+      100,
+      110,
+      -3
+    ],
+    "leg_tube_0": [
+      100,
+      111.068,
+      -12.8548
+    ],
+    "skid_tee_0": [
+      100,
+      220,
+      -406
+    ],
+    "skid_pad_0": [
+      220,
+      220,
+      -406
+    ],
+    "gear_mount_1": [
+      100,
+      -110,
+      -3
+    ],
+    "leg_tube_1": [
+      100,
+      -111.068,
+      -12.8548
+    ],
+    "skid_tee_1": [
+      100,
+      -220,
+      -406
+    ],
+    "skid_pad_1": [
+      220,
+      -220,
+      -406
+    ],
+    "gear_mount_2": [
+      -100,
+      110,
+      -3
+    ],
+    "leg_tube_2": [
+      -100,
+      111.068,
+      -12.8548
+    ],
+    "skid_tee_2": [
+      -100,
+      220,
+      -406
+    ],
+    "skid_pad_2": [
+      -220,
+      220,
+      -406
+    ],
+    "gear_mount_3": [
+      -100,
+      -110,
+      -3
+    ],
+    "leg_tube_3": [
+      -100,
+      -111.068,
+      -12.8548
+    ],
+    "skid_tee_3": [
+      -100,
+      -220,
+      -406
+    ],
+    "skid_pad_3": [
+      -220,
+      -220,
+      -406
+    ],
+    "skid_tube_0": [
+      0,
+      220,
+      -406
+    ],
+    "skid_tube_1": [
+      0,
+      -220,
+      -406
+    ]
+  },
+  "assembly": {
+    "interferences": [],
+    "prop_clearance": [
+      {
+        "prop": "prop_0",
+        "min_clearance_mm": 48.0,
+        "nearest": "light_mount_0"
+      },
+      {
+        "prop": "prop_1",
+        "min_clearance_mm": 48.0,
+        "nearest": "light_mount_1"
+      },
+      {
+        "prop": "prop_2",
+        "min_clearance_mm": 48.0,
+        "nearest": "light_mount_2"
+      },
+      {
+        "prop": "prop_3",
+        "min_clearance_mm": 48.0,
+        "nearest": "light_mount_3"
+      },
+      {
+        "prop": "prop_4",
+        "min_clearance_mm": 48.0,
+        "nearest": "light_mount_4"
+      },
+      {
+        "prop": "prop_5",
+        "min_clearance_mm": 48.0,
+        "nearest": "light_mount_5"
+      },
+      {
+        "prop": "prop_0↔prop_1",
+        "min_clearance_mm": 66.1,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_0↔prop_2",
+        "min_clearance_mm": 597.9,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_0↔prop_3",
+        "min_clearance_mm": 792.6,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_0↔prop_4",
+        "min_clearance_mm": 597.9,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_0↔prop_5",
+        "min_clearance_mm": 66.1,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_1↔prop_2",
+        "min_clearance_mm": 66.1,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_1↔prop_3",
+        "min_clearance_mm": 597.9,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_1↔prop_4",
+        "min_clearance_mm": 792.6,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_1↔prop_5",
+        "min_clearance_mm": 597.9,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_2↔prop_3",
+        "min_clearance_mm": 66.1,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_2↔prop_4",
+        "min_clearance_mm": 597.9,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_2↔prop_5",
+        "min_clearance_mm": 792.6,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_3↔prop_4",
+        "min_clearance_mm": 66.1,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_3↔prop_5",
+        "min_clearance_mm": 597.9,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_4↔prop_5",
+        "min_clearance_mm": 66.1,
+        "nearest": "hélice vecina"
+      }
+    ],
+    "bbox_mm": [
+      1515.0,
+      1320.2,
+      531.2
+    ],
+    "zmin_mm": -420.0,
+    "zmax_mm": 111.2
+  },
+  "assembly_files": [
+    "cad/freecad/delivery/ds-d_ensamble_generado.FCStd",
+    "cad/exports/delivery/ds-d_ensamble.step",
+    "cad/exports/delivery/ds-d_ensamble.stl"
+  ]
+}

@@ -1,0 +1,132 @@
+{
+  "vehicle": "DS-D",
+  "thrust_max_per_motor_N": 101.5,
+  "design_thrust_N": 253.7,
+  "cases": {
+    "motor_mount": {
+      "title": "Soporte de motor DMI-L (PA12-CF)",
+      "load": "empuje 254 N sobre la placa DMI",
+      "nodes": 80687,
+      "elements": 47839,
+      "vm_max_mpa": 12.8,
+      "vm_p995_mpa": 3.4,
+      "disp_max_mm": 0.134,
+      "strength_mpa": 50.0,
+      "safety_factor": 14.9,
+      "ok": true,
+      "fixed_nodes": 6225,
+      "loaded_nodes": {
+        "empuje": 4703
+      }
+    },
+    "arm_socket": {
+      "title": "Bloque de brazo (arm_socket, PA12-CF)",
+      "load": "momento del brazo 139.0 N·m y corte 254 N",
+      "nodes": 100569,
+      "elements": 61771,
+      "vm_max_mpa": 171.2,
+      "vm_p995_mpa": 19.0,
+      "disp_max_mm": 0.048,
+      "strength_mpa": 50.0,
+      "safety_factor": 2.63,
+      "ok": true,
+      "fixed_nodes": 11592,
+      "loaded_nodes": {
+        "boca": 431,
+        "fondo": 414
+      }
+    },
+    "gear_mount": {
+      "title": "Soporte de pata (PA12-CF)",
+      "load": "aterrizaje a 2 m/s con carga en 2 patas: 1041 N por pata × 1.5 (+30 % lateral)",
+      "nodes": 41336,
+      "elements": 25037,
+      "vm_max_mpa": 26.9,
+      "vm_p995_mpa": 13.9,
+      "disp_max_mm": 0.107,
+      "strength_mpa": 50.0,
+      "safety_factor": 3.6,
+      "ok": true,
+      "fixed_nodes": 3599,
+      "loaded_nodes": {
+        "aterrizaje": 1068
+      }
+    },
+    "release_hook": {
+      "title": "Gancho de carga (aluminio 6061-T6)",
+      "load": "caja de 5 kg × 2 (tirón) × 2.5 = 245 N en la anilla",
+      "nodes": 61793,
+      "elements": 38746,
+      "vm_max_mpa": 37.4,
+      "vm_p995_mpa": 25.0,
+      "disp_max_mm": 0.025,
+      "strength_mpa": 240.0,
+      "safety_factor": 9.6,
+      "ok": true,
+      "fixed_nodes": 1653,
+      "loaded_nodes": {
+        "anilla": 535
+      }
+    },
+    "release_body": {
+      "title": "Cuerpo de liberación (PA12-CF)",
+      "load": "245 N en el perno del gancho",
+      "nodes": 221931,
+      "elements": 125467,
+      "vm_max_mpa": 8.6,
+      "vm_p995_mpa": 2.7,
+      "disp_max_mm": 0.087,
+      "strength_mpa": 50.0,
+      "safety_factor": 18.21,
+      "ok": true,
+      "fixed_nodes": 10807,
+      "loaded_nodes": {
+        "perno": 815
+      }
+    },
+    "arm_flight": {
+      "title": "Tubo del brazo en vuelo (analítico)",
+      "load": "254 N en la punta, 548 mm",
+      "stress_mpa": 299.6,
+      "strength_mpa": 500.0,
+      "safety_factor": 1.67,
+      "required_sf": 1.0,
+      "ok": true
+    },
+    "arm_modal": {
+      "title": "Modal del brazo (viga B32R + masa en la punta)",
+      "tip_mass_kg": 0.456,
+      "length_mm": 555.9,
+      "f1_hz": 18.3,
+      "f_1p_hz": 43.8,
+      "f_2p_hz": 87.6,
+      "separation_pct": 58.0,
+      "note": "primer modo bajo 1P: se cruza solo al acelerar los motores desde reposo",
+      "ok": true
+    }
+  },
+  "materials": {
+    "PA12-CF": {
+      "name": "PA12-CF (FDM, 4 perímetros)",
+      "e_mpa": 3500,
+      "nu": 0.35,
+      "rho_t_mm3": 1e-09,
+      "strength_mpa": 50.0
+    },
+    "tubo": {
+      "name": "Carbono enrollado (tubo)",
+      "e_mpa": 70000,
+      "nu": 0.3,
+      "rho_t_mm3": 1.55e-09,
+      "strength_mpa": 500.0
+    },
+    "aluminio": {
+      "name": "Aluminio 6061-T6",
+      "e_mpa": 69000,
+      "nu": 0.33,
+      "rho_t_mm3": 2.7e-09,
+      "strength_mpa": 240.0
+    }
+  },
+  "all_ok": true
+}

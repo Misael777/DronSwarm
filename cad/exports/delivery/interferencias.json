@@ -1,0 +1,117 @@
+{
+  "interferences": [],
+  "prop_clearance": [
+    {
+      "prop": "prop_0",
+      "min_clearance_mm": 48.0,
+      "nearest": "light_mount_0"
+    },
+    {
+      "prop": "prop_1",
+      "min_clearance_mm": 48.0,
+      "nearest": "light_mount_1"
+    },
+    {
+      "prop": "prop_2",
+      "min_clearance_mm": 48.0,
+      "nearest": "light_mount_2"
+    },
+    {
+      "prop": "prop_3",
+      "min_clearance_mm": 48.0,
+      "nearest": "light_mount_3"
+    },
+    {
+      "prop": "prop_4",
+      "min_clearance_mm": 48.0,
+      "nearest": "light_mount_4"
+    },
+    {
+      "prop": "prop_5",
+      "min_clearance_mm": 48.0,
+      "nearest": "light_mount_5"
+    },
+    {
+      "prop": "prop_0↔prop_1",
+      "min_clearance_mm": 66.1,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_0↔prop_2",
+      "min_clearance_mm": 597.9,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_0↔prop_3",
+      "min_clearance_mm": 792.6,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_0↔prop_4",
+      "min_clearance_mm": 597.9,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_0↔prop_5",
+      "min_clearance_mm": 66.1,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_1↔prop_2",
+      "min_clearance_mm": 66.1,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_1↔prop_3",
+      "min_clearance_mm": 597.9,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_1↔prop_4",
+      "min_clearance_mm": 792.6,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_1↔prop_5",
+      "min_clearance_mm": 597.9,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_2↔prop_3",
+      "min_clearance_mm": 66.1,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_2↔prop_4",
+      "min_clearance_mm": 597.9,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_2↔prop_5",
+      "min_clearance_mm": 792.6,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_3↔prop_4",
+      "min_clearance_mm": 66.1,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_3↔prop_5",
+      "min_clearance_mm": 597.9,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_4↔prop_5",
+      "min_clearance_mm": 66.1,
+      "nearest": "hélice vecina"
+    }
+  ],
+  "bbox_mm": [
+    1515.0,
+    1320.2,
+    531.2
+  ],
+  "zmin_mm": -420.0,
+  "zmax_mm": 111.2
+}
