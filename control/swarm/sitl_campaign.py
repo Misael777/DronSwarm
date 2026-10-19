@@ -3,6 +3,7 @@
 
 Cada corrida usa otra semilla para la radio simulada; algunas con pérdida de paquetes o con un dron que se queda sin
 radio. El juez es el monitor del mundo (posición real de Gazebo): `seguridad.json` de cada corrida.
+Si se interrumpe, al relanzarla reutiliza las corridas completas y repite solo las que faltan.
 
     .venv/bin/python -m control.swarm.sitl_campaign --nominal 14 --loss 3 --dropout 3 --out docs/evidencias/simulacion/enjambre_sitl
 """
@@ -29,15 +30,18 @@ def idle() -> bool:
 
 def run(k: int, name: str, args: str, model: str) -> dict:
     out = RUNS_DIR / f"{k:02d}_{name}"
-    out.mkdir(parents=True, exist_ok=True)
-    while not idle():                                   # nunca dos simulaciones a la vez
-        time.sleep(5)
-    env = dict(os.environ, SCENE="swarm", MODELS=",".join([model] * 6), MISSION_ARGS=args)
-    t0 = time.monotonic()
-    with open(out / "consola.log", "w") as log:
-        rc = subprocess.run(["bash", str(ROOT / "tools/sitl/run_gz_multi.sh"), "6", str(out)], env=env, stdout=log,
-                            stderr=subprocess.STDOUT, timeout=1500).returncode
-    res = {"run": k, "name": name, "args": args, "rc": rc, "wall_s": round(time.monotonic() - t0)}
+    if (out / "takeoff.json").exists() and (out / "seguridad.json").exists():
+        res = {"run": k, "name": name, "args": args, "rc": 0, "wall_s": None, "reused": True}   # ya completa: retomar
+    else:
+        out.mkdir(parents=True, exist_ok=True)
+        while not idle():                               # nunca dos simulaciones a la vez
+            time.sleep(5)
+        env = dict(os.environ, SCENE="swarm", MODELS=",".join([model] * 6), MISSION_ARGS=args)
+        t0 = time.monotonic()
+        with open(out / "consola.log", "w") as log:
+            rc = subprocess.run(["bash", str(ROOT / "tools/sitl/run_gz_multi.sh"), "6", str(out)], env=env, stdout=log,
+                                stderr=subprocess.STDOUT, timeout=1500).returncode
+        res = {"run": k, "name": name, "args": args, "rc": rc, "wall_s": round(time.monotonic() - t0)}
     for f, keys in [("seguridad.json", ("collisions", "min_separation_m", "min_separation_pair", "min_obstacle_clearance_m")),
                     ("takeoff.json", ("completed", "duration_s", "formation_error_p95_m", "lost_link_agents")),
                     ("resources.json", ("rtf_median",))]:

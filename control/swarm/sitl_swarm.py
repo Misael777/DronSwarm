@@ -67,19 +67,30 @@ class Telemetry:
         await asyncio.gather(_pos(), _vel())
 
 
-async def arm_and_takeoff(d, alt: float):
+async def arm_and_takeoff(d, alt: float, tries: int = 3):
+    """Arma y despega; con varias instancias PX4 a veces rechaza el despegue al arrancar: se reintenta."""
     await first(d.telemetry.health(), lambda h: h.is_armable and h.is_local_position_ok, 180)
     await d.action.set_takeoff_altitude(alt)
-    for attempt in range(30):
+    for k in range(tries):
+        if not await anext(d.telemetry.armed()):        # tras un despegue fallido puede seguir armado
+            await first(d.telemetry.health(), lambda h: h.is_armable, 90)
+            for attempt in range(30):
+                try:
+                    await d.action.arm()
+                    break
+                except Exception:
+                    if attempt == 29:
+                        raise
+                    await asyncio.sleep(2)
         try:
-            await d.action.arm()
-            break
+            await d.action.takeoff()
+            await first(d.telemetry.position(), lambda p: p.relative_altitude_m >= 2.0, 45)
+            return
         except Exception:
-            if attempt == 29:
+            if k == tries - 1:
                 raise
-            await asyncio.sleep(2)
-    await d.action.takeoff()
-    await first(d.telemetry.position(), lambda p: p.relative_altitude_m >= 2.0, 120)
+            print("   un dron no despegó: reintento", flush=True)
+            await asyncio.sleep(12)                    # PX4 lo desarma solo si quedó armado en tierra
 
 
 async def run(n: int, alt: float, mode: str, radio: str, loss: float, drop_out: tuple[int, float] | None,

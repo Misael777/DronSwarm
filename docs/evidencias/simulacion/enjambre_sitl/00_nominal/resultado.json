@@ -1,0 +1,68 @@
+{
+  "n": 6,
+  "ok": 6,
+  "mode": "consensus",
+  "radio": "mesh_900",
+  "loss_extra": 0.0,
+  "drop_out": null,
+  "completed": true,
+  "duration_s": 65.8,
+  "phases": [
+    {
+      "phase": "formar_v",
+      "t_start": 0.0,
+      "timed_out": false,
+      "form_error_end_m": 0.3,
+      "t_end": 6.1,
+      "duration_s": 6.1
+    },
+    {
+      "phase": "transito_v",
+      "t_start": 6.1,
+      "timed_out": false,
+      "form_error_end_m": 0.26,
+      "t_end": 27.2,
+      "duration_s": 21.1
+    },
+    {
+      "phase": "circulo",
+      "t_start": 27.2,
+      "timed_out": false,
+      "form_error_end_m": 0.31,
+      "t_end": 32.8,
+      "duration_s": 5.7
+    },
+    {
+      "phase": "cruce",
+      "t_start": 32.8,
+      "timed_out": false,
+      "form_error_end_m": 0.33,
+      "t_end": 43.0,
+      "duration_s": 10.2
+    },
+    {
+      "phase": "linea_regreso",
+      "t_start": 43.0,
+      "timed_out": false,
+      "form_error_end_m": 0.26,
+      "t_end": 65.8,
+      "duration_s": 22.8
+    }
+  ],
+  "formation_error_p50_m": 0.76,
+  "formation_error_p95_m": 2.2,
+  "lost_link_agents": [],
+  "comms": {
+    "radio": "Malla 900 MHz",
+    "packets_sent": 19590,
+    "packet_loss_pct": 0.0,
+    "latency_ms_mean": 20.0,
+    "latency_ms_p95": 31.9,
+    "range_m_50pct": 32621,
+    "extra_loss_pct": 0.0
+  },
+  "mission_origin_world_m": [
+    0.17,
+    7.54
+  ]
+}

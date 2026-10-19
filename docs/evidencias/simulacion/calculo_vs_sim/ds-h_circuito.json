@@ -1,0 +1,17 @@
+{
+  "vehicle": "DS-H",
+  "log": "drone_0.ulg",
+  "mass_kg": 30.26,
+  "hover_samples": 114,
+  "rpm_hover_measured": 2617,
+  "rpm_hover_predicted": 2615,
+  "rpm_error_pct": 0.0,
+  "thrust_over_weight": 1.001,
+  "power_w_at_measured_rpm": 4229,
+  "power_w_predicted": 4224,
+  "endurance_min_at_measured_rpm": 16.4,
+  "endurance_min_predicted": 16.4,
+  "motor_spread_pct": 1.1,
+  "px4_hover_thrust_estimate": NaN,
+  "consistent": true
+}
