@@ -471,7 +471,7 @@ act_tests() {
     pause
 }
 
-act_cad() {
+act_cad_piece() {
     local files=() f items=() choice dir rc
     while IFS= read -r f; do files+=("$f"); done < <(cd "$REPO" && find cad/openscad -name '*.scad' | sort)
     if [[ ${#files[@]} -eq 0 ]]; then msg "CAD" "No hay piezas en cad/openscad/."; return; fi
@@ -499,6 +499,62 @@ act_cad() {
         printf '\n%s✘ La exportación falló%s\n' "$R" "$N"
         pause
     fi
+}
+
+build_frame_ui() {   # $1 = grupo (inspection|delivery), $2 = nombre
+    local g="$1" name="$2" pre rc
+    pre="$([[ $g == inspection ]] && echo ds-i || echo ds-d)"
+    header "Frame $name" "Piezas STL/STEP, DXF de corte, ensamble de FreeCAD, interferencias y masas (≈ $([[ $g == inspection ]] && echo 2 || echo 5) min)."
+    (cd "$REPO" && "$PY" tools/cad/build_frame.py "$g") 2>&1 | grep -vE '^\s+"|^\{|^\}' | tail -25
+    rc=${PIPESTATUS[0]}
+    if [[ $rc -eq 0 ]]; then
+        "$PY" "$REPO/tools/cad/render_stl.py" "$REPO/cad/exports/$g/$pre""_ensamble.stl" "$REPO/cad/exports/$g/$pre""_ensamble.png" --title "$name" >/dev/null 2>&1
+        printf '\n%s✔ Ensamble para revisar en FreeCAD:%s cad/freecad/%s/%s_ensamble_generado.FCStd\n' "$G" "$N" "$g" "$pre"
+    fi
+    pause
+}
+
+act_cad() {
+    local opt="" g pre
+    while true; do
+        opt="$(wt --title "CAD y FEA (S07-S08)" --default-item "${opt:-dsi}" --menu "Frames generados desde la spec v1 (OpenSCAD → FreeCAD):" "$H" "$W" 9 \
+            dsi "Construir el frame DS-I (≈ 2 min)" \
+            dsd "Construir el frame DS-D (≈ 5 min)" \
+            fea "Correr el FEA de los dos frames + informe (≈ 9 min)" \
+            img "Ver las imágenes de los ensambles" \
+            masas "Masas del CAD contra el presupuesto del S04" \
+            freecad "Abrir la carpeta de FreeCAD en Windows (ensambles generados)" \
+            pieza "Exportar una pieza suelta (STL + STEP + FCStd)" \
+            volver "Volver")" || return
+        case "$opt" in
+            dsi) build_frame_ui inspection "DS-I" ;;
+            dsd) build_frame_ui delivery "DS-D" ;;
+            fea) header "FEA de los frames" "gmsh + CalculiX: soportes de motor, bloques, tren de aterrizaje, gancho y modal de brazos."
+                 (cd "$REPO" && "$PY" tools/fea/run_fea.py inspection && "$PY" tools/fea/run_fea.py delivery && "$PY" tools/fea/fea_report.py)
+                 pause ;;
+            img) for g in inspection delivery; do pre="$([[ $g == inspection ]] && echo ds-i || echo ds-d)"
+                     [[ -f "$REPO/cad/exports/$g/$pre""_ensamble.stl" && ! -f "$REPO/cad/exports/$g/$pre""_ensamble.png" ]] && \
+                         "$PY" "$REPO/tools/cad/render_stl.py" "$REPO/cad/exports/$g/$pre""_ensamble.stl" "$REPO/cad/exports/$g/$pre""_ensamble.png" >/dev/null 2>&1
+                     [[ -f "$REPO/cad/exports/$g/$pre""_ensamble.png" ]] && open_in_windows "$REPO/cad/exports/$g/$pre""_ensamble.png"; done ;;
+            masas) local tmp; tmp="$(mktemp)"
+                   (cd "$REPO" && "$PY" - > "$tmp" <<'EOF2'
+import json
+for g, n in (("inspection", "DS-I"), ("delivery", "DS-D")):
+    try:
+        d = json.load(open(f"cad/exports/{g}/masas.json"))
+    except FileNotFoundError:
+        print(f"{n}: falta construir el frame"); continue
+    print(f"{n}: frame {d['frame_cad_kg']:.3f} kg en CAD (+6 % tornillería) vs {d['frame_budget_kg']:.3f} kg del S04")
+    for k, v in d["categories"].items():
+        print(f"   {k:<40} {v['cad_kg']:.3f} kg  (S04 {v['budget_kg']})")
+    print()
+EOF2
+                   ); wt --title "Masas del CAD" --scrolltext --textbox "$tmp" "$H" "$W"; rm -f "$tmp" ;;
+            freecad) open_in_windows "$REPO/cad/freecad" ;;
+            pieza) act_cad_piece ;;
+            volver) return ;;
+        esac
+    done
 }
 
 plan_summary() {
@@ -645,7 +701,7 @@ main_menu() {
             "5" "Prueba de vuelo sin gráficos + gráfica" \
             "6" "Medir capacidad del PC" \
             "7" "Pruebas automáticas (lint + tests)" \
-            "8" "CAD: exportar una pieza a STEP / FreeCAD" \
+            "8" "CAD y FEA: frames DS-I y DS-D, ensambles de FreeCAD, masas (S07-S08)" \
             "9" "Plan de trabajo: avance y actualizar tareas" \
             "H" "Historias de usuario (para revisar)" \
             "I" "Ingeniería: informe, autonomía, validación (S03-S04)" \

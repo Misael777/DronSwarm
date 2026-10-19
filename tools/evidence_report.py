@@ -101,6 +101,20 @@ def write() -> Path:
         fault_row("battery", "Batería crítica (DS-I)", "RTL automático y aterrizaje en casa"),
         fault_row("link", "Pérdida de enlace con la estación (DS-I)", "RTL automático y aterrizaje en casa"),
         fault_row("geofence", "Geocerca de 70 × 70 m (DS-I)", "misión rechazada y el dron no cruza el límite"),
+    ]
+    cad = SIM / "cad_s07_s08"
+    if cad.exists():
+        ins, ent, mix = (j(cad / f) for f in ("inspeccion_ds-i_cad.json", "entrega_ds-d_cad.json", "enjambre_mixto_cad.json"))
+        if ins:
+            rows.append(f"| HU-01/02 | Inspección con el DS-I **diseñado en CAD** (masa y malla reales, S07) | {ins['photos']} fotos, error medio "
+                        f"{ins['photo_error_mean_m']} m, órbita a {abs(ins['orbit_min_alt_m']):.0f} m bajo el borde | igual que S05 | {ok(ins['passed'])} |")
+        if ent:
+            rows.append(f"| HU-06 | Entrega con el DS-D **diseñado en CAD** (S08) | caja liberada a {ent['delivery_error_m']} m del objetivo | "
+                        f"igual que S05 | {ok(ent['passed'])} |")
+        if mix:
+            rows.append(f"| HU-08 | Enjambre mixto DS-I + DS-D (CAD) + DS-H en formación (S08) | {mix['ok']} de {mix['n']} drones completaron | "
+                        f"formación de 4 drones de 3 tamaños | {ok(mix['passed'])} |")
+    rows += [
         "| HU-03 | Corredor de faja transportadora | — | video 4K georreferenciado de 3 km | pendiente (misión de corredor, S13) |",
         "| HU-04, HU-05, HU-11 | Procesamiento fotogramétrico (ODM) | — | DEM ±5 cm, modelo en ≤ 30 min, sin licencias | pendiente (S13) |",
         "| HU-07 | Envío de muestras | cubierto por la entrega HU-06 | caja sellada, registro en bitácora | 🟡 bitácora pendiente (DS-GCS) |",

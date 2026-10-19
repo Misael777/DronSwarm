@@ -195,6 +195,7 @@ def delivery_scene(wind: float, wind_dir: float, scale: float, payload_kg: float
     md = MODELS / "ds_d_hook"
     md.mkdir(exist_ok=True)
     (md / "model.sdf").write_text(text)
+    gen_sdf.copy_cad_mesh("DS-D", md)
     (md / "model.config").write_text("<?xml version='1.0'?>\n<model><name>ds_d_hook</name><sdf version='1.9'>model.sdf</sdf></model>\n")
     af = gen_sdf.AIRFRAMES / "22030_gz_ds_d_hook"
     af.write_text((gen_sdf.AIRFRAMES / "22002_gz_ds_d").read_text().replace("PX4_SIM_MODEL:=ds_d}", "PX4_SIM_MODEL:=ds_d_hook}"))

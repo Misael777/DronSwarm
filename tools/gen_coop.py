@@ -97,6 +97,7 @@ def main():
     md = MODELS / "ds_d_coop"
     md.mkdir(exist_ok=True)
     (md / "model.sdf").write_text(text)
+    gen_sdf.copy_cad_mesh("DS-D", md)
     (md / "model.config").write_text("<?xml version='1.0'?>\n<model><name>ds_d_coop</name><sdf version='1.9'>model.sdf</sdf></model>\n")
     base_af = (gen_sdf.AIRFRAMES / "22002_gz_ds_d").read_text()
     af = gen_sdf.AIRFRAMES / "22029_gz_ds_d_coop"

@@ -201,10 +201,10 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | S07-01 | Arquitectura del frame DS-I | Quad X, brazos de tubo de carbono, placas CNC, piezas PA12-CF; brazos plegables sí/no (ADR). Interfaz de motor estándar (patrón de montaje) para cambiar a motor propio después. | `docs/decisiones.md (ADR frame DS-I)` | Alta | 6 | S06-05 |
 | S07-02 | Modelo paramétrico en OpenSCAD (agente) | Variables: distancia entre ejes, diámetro de tubo, bahía de batería, montaje de gimbal y de motor. Una pieza por archivo + archivo de ensamble. | `cad/openscad/inspection/` | Alta | 16 | S07-01 |
 | S07-03 | Ensamble y revisión en FreeCAD (usuario) | Importar sólidos (CSG/STEP) al workbench Assembly, verificar interferencias y holguras, renders; exportar STEP del ensamble. | `cad/freecad/inspection/ds-i_ensamble.FCStd` | Alta | 6 | S07-02 |
-| S07-04 | FEA y análisis modal (FreeCAD FEM / CalculiX) | Empuje máx × FS y caída de 1 m; primer modo alejado de las RPM de hover. | `cad/freecad/inspection/fea/` | Alta | 10 | S07-03 |
+| S07-04 | FEA y análisis modal (FreeCAD FEM / CalculiX) | Empuje máx × FS y caída de 1 m; primer modo alejado de las RPM de hover. | `cad/freecad/inspection/fea/, docs/ingenieria/fea_frames.md` | Alta | 10 | S07-03 |
 | S07-05 | Carcasa de electrónica IP54 y aislamiento de vibraciones | Sellos, ventilación filtrada, amortiguación de FC y cámara. | `cad/openscad/inspection/housing.scad` | Alta | 8 | S07-02 |
 | S07-06 | DFM / DFA | Mínimo de piezas, un solo tipo de tornillo, impresión sin soportes, tiempo de ensamble objetivo. | `docs/ingenieria/dfm_dfa_ds-i.md` | Media | 4 | S07-03 |
-| S07-07 | Exportar geometría y re-simular DS-I | STL/DAE → SDF actualizado con masas reales del CAD; repetir misión de inspección. | `cad/exports/, simulation/xtdrone/models/inspection_drone/` | Alta | 4 | S07-04 |
+| S07-07 | Exportar geometría y re-simular DS-I | STL/DAE → SDF actualizado con masas reales del CAD; repetir misión de inspección. | `cad/exports/inspection/, simulation/xtdrone/models/ds_i/ (malla y masas del CAD)` | Alta | 4 | S07-04 |
 
 ### S08 · Frame del dron de delivery (DS-D) y mecanismos
 
@@ -217,7 +217,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | S08-03 | Ensamble y revisión en FreeCAD (usuario) | Ensamble completo DS-D con mecanismo de carga; interferencias, plegado de brazos; exportar STEP. | `cad/freecad/delivery/ds-d_ensamble.FCStd` | Alta | 6 | S08-02 |
 | S08-04 | FEA y análisis modal de DS-D | Carga máxima × FS y aterrizaje duro con carga. | `cad/freecad/delivery/fea/` | Alta | 8 | S08-03 |
 | S08-05 | Montaje de cámara FPV y protecciones | Soporte de FPV, protección opcional de hélices y luces anticolisión. | `cad/openscad/delivery/` | Media | 4 | S08-01 |
-| S08-06 | Re-validar DS-D y enjambre en simulación | Geometría real exportada; misión delivery + enjambre mixto. | `simulation/xtdrone/models/delivery_drone/` | Alta | 6 | S08-04 |
+| S08-06 | Re-validar DS-D y enjambre en simulación | Geometría real exportada; misión delivery + enjambre mixto. | `simulation/xtdrone/models/ds_d/ (malla y masas del CAD)` | Alta | 6 | S08-04 |
 | S08-07 | Plan de fabricación de piezas | Perfiles de impresión 3D, DXF para corte CNC de carbono, servicios locales cotizados. | `manufacturing/procesos/piezas_frame.md` | Alta | 6 | S08-03 |
 
 ### S09 · Selección de componentes comerciales y CDR de prototipo · Gate G2

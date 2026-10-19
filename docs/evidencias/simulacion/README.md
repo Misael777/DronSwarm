@@ -22,6 +22,9 @@ Todo esto es **simulación**: PX4 real (el mismo autopiloto que volará) con dro
 | HU-09 | Batería crítica (DS-I) | aterrizó a 0.1 m de casa y a 50.3 m del punto de la falla; llegada al suelo 0.7 m/s; inclinación máx. 20.2°; modos PX4: HOLD → TAKEOFF → HOLD → RETURN_TO_LAUNCH → LAND → HOLD | RTL automático y aterrizaje en casa | ✅ cumple |
 | HU-09 | Pérdida de enlace con la estación (DS-I) | aterrizó a 0.1 m de casa y a 49.9 m del punto de la falla; llegada al suelo 0.7 m/s; inclinación máx. 16.0°; modos PX4: HOLD → TAKEOFF → HOLD | RTL automático y aterrizaje en casa | ✅ cumple |
 | HU-10 | Geocerca de 70 × 70 m (DS-I) | misión que cruza la geocerca: rechazada; distancia máx. a la base 0.3 m (límite 35.0 m); orden rechazada o detenido dentro (TimeoutError); RTL ordenado; aterrizó a 0.1 m de casa | misión rechazada y el dron no cruza el límite | ✅ cumple |
+| HU-01/02 | Inspección con el DS-I **diseñado en CAD** (masa y malla reales, S07) | 55 fotos, error medio 0.75 m, órbita a 14 m bajo el borde | igual que S05 | ✅ cumple |
+| HU-06 | Entrega con el DS-D **diseñado en CAD** (S08) | caja liberada a 0.26 m del objetivo | igual que S05 | ✅ cumple |
+| HU-08 | Enjambre mixto DS-I + DS-D (CAD) + DS-H en formación (S08) | 4 de 4 drones completaron | formación de 4 drones de 3 tamaños | ✅ cumple |
 | HU-03 | Corredor de faja transportadora | — | video 4K georreferenciado de 3 km | pendiente (misión de corredor, S13) |
 | HU-04, HU-05, HU-11 | Procesamiento fotogramétrico (ODM) | — | DEM ±5 cm, modelo en ≤ 30 min, sin licencias | pendiente (S13) |
 | HU-07 | Envío de muestras | cubierto por la entrega HU-06 | caja sellada, registro en bitácora | 🟡 bitácora pendiente (DS-GCS) |
@@ -51,7 +54,9 @@ Figuras: `enjambre_cinematico/trayectorias_nominal.png`, `trayectorias_caida_rad
 | Dron | Vuelo | Error de rpm | Empuje/peso | Autonomía a las rpm medidas / calculada |
 |---|---|---|---|---|
 | DS-D | entrega | -0.1 % | 0.999 | 20.4 / 20.3 min |
+| DS-D | hover_cad | -0.1 % | 0.999 | 20.4 / 20.3 min |
 | DS-H | circuito | +0.0 % | 1.001 | 16.4 / 16.4 min |
+| DS-I | hover_cad | -0.2 % | 0.995 | 30.6 / 30.5 min |
 | DS-I | inspeccion | +1.6 % | 1.031 | 30.1 / 31.3 min |
 
 Coherencia del modelo del simulador con el diseño (mismas constantes); la validación independiente es el banco de empuje (S10).

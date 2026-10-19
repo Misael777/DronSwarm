@@ -26,7 +26,9 @@ def test_model_matches_sizing(vehicle, tmp_path):
     sdf, info = gen_sdf.build(vehicle, design)
     n = design["rotors"]
     assert sdf.count("MulticopterMotorModel") == n
-    assert info["mass_kg"] == pytest.approx(design["mtow_kg"], rel=0.01)       # la masa del modelo es la del S04
+    cad = gen_sdf.cad_frame(vehicle)                                           # S07-S08: masa estructural del CAD
+    expected = design["mtow_kg"] + (cad["delta_kg"] if cad else 0.0)
+    assert info["mass_kg"] == pytest.approx(expected, rel=0.01)
     assert sdf.count("<turningDirection>ccw") == sdf.count("<turningDirection>cw") == n // 2
     af = gen_sdf.airframe(vehicle, design, info["model"], 22000)
     assert f"CA_ROTOR_COUNT {n}" in af

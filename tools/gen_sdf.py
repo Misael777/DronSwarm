@@ -16,6 +16,7 @@ x500 de PX4 para tener el mismo ruido que el resto de la simulación.
 import json
 import math
 import re
+import shutil
 import sys
 from pathlib import Path
 
@@ -35,6 +36,35 @@ VEHICLES = {
     "DS-H": ("ds_h", 22003, (0.80, 0.20, 0.15), 0.52, (0.050, 0.045), (0.50, 0.40, 0.28)),
 }
 ROTOR_MASS = 0.02
+HARDWARE = 1.06                           # tornillería y adhesivos sobre la masa del CAD
+# Frames diseñados en CAD (S07-S08): malla visual, posición de pies/hélices y masa estructural reales
+CAD = {"DS-I": ("inspection", "ds-i"), "DS-D": ("delivery", "ds-d")}
+CAD_DIR = ROOT / "cad" / "exports"
+
+
+def copy_cad_mesh(vehicle: str, model_dir: Path) -> None:
+    """Copia la malla del ensamble CAD al modelo (meshes/frame.stl), si el dron tiene CAD."""
+    cad = cad_frame(vehicle)
+    if cad:
+        (model_dir / "meshes").mkdir(parents=True, exist_ok=True)
+        shutil.copyfile(cad["stl"], model_dir / "meshes" / "frame.stl")
+
+
+def cad_frame(vehicle: str) -> dict | None:
+    """Datos del frame en CAD si existe (cad/exports/<grupo>/masas.json + ensamble STL)."""
+    if vehicle not in CAD:
+        return None
+    group, prefix = CAD[vehicle]
+    rep, stl = CAD_DIR / group / "masas.json", CAD_DIR / group / f"{prefix}_sim.stl"
+    if not rep.exists() or not stl.exists():
+        return None
+    r = json.loads(rep.read_text())
+    pl = r["placements"]
+    feet = [v for k, v in pl.items() if k.startswith("foot_")]
+    motor_z = [v[2] for k, v in pl.items() if k.startswith("prop_")]
+    return {"stl": stl, "delta_kg": r["frame_cad_kg"] * HARDWARE - r["frame_budget_kg"],
+            "ground_z": r["assembly"]["zmin_mm"] / 1000, "feet_xy": [(f[0] / 1000, f[1] / 1000) for f in feet],
+            "prop_z": (sum(motor_z) / len(motor_z)) / 1000 if motor_z else None}
 # Máscaras de colisión: 0x01 = drones y cajas, 0x02 = cuerdas. El suelo choca con todo; las cuerdas no chocan con
 # los drones (el gancho está soldado al dron y la física no tolera que además se toquen).
 DRONE_MASK = "<surface><contact><collide_bitmask>0x01</collide_bitmask></contact></surface>"
@@ -71,12 +101,15 @@ def build(vehicle: str, design: dict, with_payload: bool = True, name_suffix: st
     prop_r = design["prop_diameter_in"] * 0.0254 / 2
     payload_kg = design["masses"].get("carga útil", 0.0)
     has_payload = with_payload and payload_kg > 0 and payload_box is not None
-    body_mass = design["mtow_kg"] - payload_kg - n * ROTOR_MASS
+    cad = cad_frame(vehicle)
+    body_mass = design["mtow_kg"] - payload_kg - n * ROTOR_MASS + (cad["delta_kg"] if cad else 0.0)
+    if cad:                                   # origen del modelo = cara superior de la placa inferior del CAD
+        leg_h = -cad["ground_z"]
     # Inercia del dron sin la carga (la caja es un link aparte): restar su aporte (caja bajo el CG)
     plate = 0.25 * design["wheelbase_m"]
     body_box = (plate, plate, 0.10)
     sdf = design["sdf"]
-    z_rot = 0.05
+    z_rot = cad["prop_z"] if cad and cad["prop_z"] else 0.05
 
     v = []   # visuales del cuerpo
     v.append(f'<visual name="body"><geometry><box><size>{plate:.3f} {plate:.3f} 0.08</size></box></geometry>{material(color)}</visual>')
@@ -92,11 +125,15 @@ def build(vehicle: str, design: dict, with_payload: bool = True, name_suffix: st
                  f'<radius>{od / 2:.4f}</radius><length>{arm_len:.4f}</length></cylinder></geometry>{material((0.1, 0.1, 0.1))}</visual>')
         v.append(f'<visual name="motor_{k}"><pose>{x:.4f} {y:.4f} {z_rot - motor_h / 2 - 0.005:.4f} 0 0 0</pose><geometry><cylinder>'
                  f'<radius>{motor_r}</radius><length>{motor_h}</length></cylinder></geometry>{material((0.3, 0.3, 0.32))}</visual>')
+    if cad:                                   # la malla del ensamble reemplaza a las primitivas del cuerpo
+        v = [f'<visual name="frame_cad"><geometry><mesh><uri>meshes/frame.stl</uri><scale>0.001 0.001 0.001</scale>'
+             f'</mesh></geometry>{material(color)}</visual>']
     feet = []
-    for k, (sx, sy) in enumerate(((1, 1), (1, -1), (-1, 1), (-1, -1))):
-        lx, ly = sx * plate * 0.45, sy * plate * 0.45
-        v.append(f'<visual name="leg_{k}"><pose>{lx:.3f} {ly:.3f} {-leg_h / 2:.3f} 0 0 0</pose><geometry><cylinder>'
-                 f'<radius>0.008</radius><length>{leg_h:.3f}</length></cylinder></geometry>{material((0.1, 0.1, 0.1))}</visual>')
+    feet_xy = cad["feet_xy"] if cad else [(sx * plate * 0.45, sy * plate * 0.45) for sx, sy in ((1, 1), (1, -1), (-1, 1), (-1, -1))]
+    for k, (lx, ly) in enumerate(feet_xy):
+        if not cad:
+            v.append(f'<visual name="leg_{k}"><pose>{lx:.3f} {ly:.3f} {-leg_h / 2:.3f} 0 0 0</pose><geometry><cylinder>'
+                     f'<radius>0.008</radius><length>{leg_h:.3f}</length></cylinder></geometry>{material((0.1, 0.1, 0.1))}</visual>')
         feet.append(f'<collision name="foot_{k}"><pose>{lx:.3f} {ly:.3f} {-leg_h + 0.015:.3f} 0 0 0</pose><geometry><sphere>'
                     f'<radius>0.015</radius></sphere></geometry>{DRONE_MASK}</collision>')
 
@@ -250,6 +287,7 @@ def main():
         d = MODELS / model
         d.mkdir(exist_ok=True)
         (d / "model.sdf").write_text(sdf_text)
+        copy_cad_mesh(vehicle, d)
         (d / "model.config").write_text(f"<?xml version='1.0'?>\n<model><name>{model}</name><version>1.0</version>"
                                         f"<sdf version='1.9'>model.sdf</sdf><description>DronSwarm {vehicle}</description></model>\n")
         af = AIRFRAMES / f"{af_id}_gz_{model}"
