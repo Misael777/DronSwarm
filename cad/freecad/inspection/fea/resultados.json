@@ -1,0 +1,109 @@
+{
+  "vehicle": "DS-I",
+  "thrust_max_per_motor_N": 25.9,
+  "design_thrust_N": 64.9,
+  "cases": {
+    "motor_mount": {
+      "title": "Soporte de motor DMI-S (PA12-CF)",
+      "load": "empuje 65 N sobre la placa DMI",
+      "nodes": 45007,
+      "elements": 25468,
+      "vm_max_mpa": 3.0,
+      "vm_p995_mpa": 1.4,
+      "disp_max_mm": 0.038,
+      "strength_mpa": 50.0,
+      "safety_factor": 36.15,
+      "ok": true,
+      "fixed_nodes": 4294,
+      "loaded_nodes": {
+        "empuje": 2032
+      }
+    },
+    "arm_block": {
+      "title": "Bloque de brazo (arm_block, PA12-CF)",
+      "load": "momento del brazo 16.5 N·m y corte 65 N",
+      "nodes": 49808,
+      "elements": 29906,
+      "vm_max_mpa": 11.2,
+      "vm_p995_mpa": 4.4,
+      "disp_max_mm": 0.009,
+      "strength_mpa": 50.0,
+      "safety_factor": 11.25,
+      "ok": true,
+      "fixed_nodes": 5963,
+      "loaded_nodes": {
+        "boca": 384,
+        "fondo": 424
+      }
+    },
+    "leg_clamp": {
+      "title": "Abrazadera de pata (PA12-CF)",
+      "load": "caída de 1 m en 2 patas: 891 N por pata × 1.5 (+30 % lateral), carrera 30 mm",
+      "nodes": 30134,
+      "elements": 16914,
+      "vm_max_mpa": 22.7,
+      "vm_p995_mpa": 13.7,
+      "disp_max_mm": 0.115,
+      "strength_mpa": 50.0,
+      "safety_factor": 3.64,
+      "ok": true,
+      "fixed_nodes": 2733,
+      "loaded_nodes": {
+        "impacto": 1345
+      }
+    },
+    "arm_flight": {
+      "title": "Tubo del brazo en vuelo (analítico)",
+      "load": "65 N en la punta, 255 mm",
+      "stress_mpa": 61.2,
+      "strength_mpa": 500.0,
+      "safety_factor": 8.16,
+      "required_sf": 1.0,
+      "ok": true
+    },
+    "arm_drop": {
+      "title": "Tubo del brazo en la caída (analítico)",
+      "load": "891 N a 70 mm del bloque",
+      "stress_mpa": 230.8,
+      "strength_mpa": 500.0,
+      "safety_factor": 2.17,
+      "required_sf": 1.5,
+      "ok": true
+    },
+    "arm_modal": {
+      "title": "Modal del brazo (viga B32R + masa en la punta)",
+      "tip_mass_kg": 0.123,
+      "length_mm": 263.0,
+      "f1_hz": 78.3,
+      "f_1p_hz": 52.1,
+      "f_2p_hz": 104.2,
+      "separation_pct": 25.0,
+      "note": "entre 1P y 2P",
+      "ok": true
+    }
+  },
+  "materials": {
+    "PA12-CF": {
+      "name": "PA12-CF (FDM, 4 perímetros)",
+      "e_mpa": 3500,
+      "nu": 0.35,
+      "rho_t_mm3": 1e-09,
+      "strength_mpa": 50.0
+    },
+    "tubo": {
+      "name": "Carbono enrollado (tubo)",
+      "e_mpa": 70000,
+      "nu": 0.3,
+      "rho_t_mm3": 1.55e-09,
+      "strength_mpa": 500.0
+    },
+    "aluminio": {
+      "name": "Aluminio 6061-T6",
+      "e_mpa": 69000,
+      "nu": 0.33,
+      "rho_t_mm3": 2.7e-09,
+      "strength_mpa": 240.0
+    }
+  },
+  "all_ok": true
+}

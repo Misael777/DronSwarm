@@ -1,0 +1,62 @@
+{
+  "interferences": [],
+  "prop_clearance": [
+    {
+      "prop": "prop_0",
+      "min_clearance_mm": 33.0,
+      "nearest": "leg_clamp_0"
+    },
+    {
+      "prop": "prop_1",
+      "min_clearance_mm": 33.0,
+      "nearest": "leg_clamp_1"
+    },
+    {
+      "prop": "prop_2",
+      "min_clearance_mm": 33.0,
+      "nearest": "leg_clamp_2"
+    },
+    {
+      "prop": "prop_3",
+      "min_clearance_mm": 33.0,
+      "nearest": "leg_clamp_3"
+    },
+    {
+      "prop": "prop_0↔prop_1",
+      "min_clearance_mm": 43.4,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_0↔prop_2",
+      "min_clearance_mm": 240.2,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_0↔prop_3",
+      "min_clearance_mm": 43.4,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_1↔prop_2",
+      "min_clearance_mm": 43.4,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_1↔prop_3",
+      "min_clearance_mm": 240.2,
+      "nearest": "hélice vecina"
+    },
+    {
+      "prop": "prop_2↔prop_3",
+      "min_clearance_mm": 43.4,
+      "nearest": "hélice vecina"
+    }
+  ],
+  "bbox_mm": [
+    512.9,
+    512.9,
+    271.0
+  ],
+  "zmin_mm": -166.0,
+  "zmax_mm": 105.0
+}

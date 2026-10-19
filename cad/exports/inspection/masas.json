@@ -1,0 +1,420 @@
+{
+  "vehicle": "DS-I",
+  "parts": {
+    "center_plate_bottom": {
+      "material": "carbono",
+      "qty": 1,
+      "unit_kg": 0.0976,
+      "total_kg": 0.0976
+    },
+    "center_plate_top": {
+      "material": "carbono",
+      "qty": 1,
+      "unit_kg": 0.1021,
+      "total_kg": 0.1021
+    },
+    "arm_block": {
+      "material": "PA12-CF",
+      "qty": 4,
+      "unit_kg": 0.018,
+      "total_kg": 0.0721
+    },
+    "arm_tube": {
+      "material": "carbono",
+      "qty": 4,
+      "unit_kg": 0.0266,
+      "total_kg": 0.1062
+    },
+    "motor_mount": {
+      "material": "PA12-CF",
+      "qty": 4,
+      "unit_kg": 0.0146,
+      "total_kg": 0.0584
+    },
+    "leg_clamp": {
+      "material": "PA12-CF",
+      "qty": 4,
+      "unit_kg": 0.0107,
+      "total_kg": 0.0426
+    },
+    "leg_tube": {
+      "material": "carbono",
+      "qty": 4,
+      "unit_kg": 0.007,
+      "total_kg": 0.0279
+    },
+    "foot": {
+      "material": "TPU",
+      "qty": 4,
+      "unit_kg": 0.0088,
+      "total_kg": 0.0351
+    },
+    "battery_tray": {
+      "material": "PA12-CF",
+      "qty": 1,
+      "unit_kg": 0.0381,
+      "total_kg": 0.0381
+    },
+    "gimbal_mount_top": {
+      "material": "PA12-CF",
+      "qty": 1,
+      "unit_kg": 0.0144,
+      "total_kg": 0.0144
+    },
+    "gimbal_mount_bottom": {
+      "material": "PA12-CF",
+      "qty": 1,
+      "unit_kg": 0.0207,
+      "total_kg": 0.0207
+    },
+    "housing": {
+      "material": "PA12-CF",
+      "qty": 1,
+      "unit_kg": 0.0778,
+      "total_kg": 0.0778
+    }
+  },
+  "categories": {
+    "placas centrales": {
+      "cad_kg": 0.2,
+      "budget_kg": 0.253,
+      "delta_pct": -21.0
+    },
+    "brazos": {
+      "cad_kg": 0.106,
+      "budget_kg": 0.096,
+      "delta_pct": 11.0
+    },
+    "soportes de motor": {
+      "cad_kg": 0.058,
+      "budget_kg": 0.06,
+      "delta_pct": -3.0
+    },
+    "piezas impresas y tornillería": {
+      "cad_kg": 0.145,
+      "budget_kg": 0.09,
+      "delta_pct": 61.0
+    },
+    "tren de aterrizaje (equipo fijo)": {
+      "cad_kg": 0.106,
+      "budget_kg": 0.06,
+      "delta_pct": 76.0
+    },
+    "carcasa IP54 (equipo fijo)": {
+      "cad_kg": 0.078,
+      "budget_kg": 0.12,
+      "delta_pct": -35.0
+    }
+  },
+  "dxf": [
+    "cad/exports/inspection/center_plate_top.dxf",
+    "cad/exports/inspection/center_plate_bottom.dxf"
+  ],
+  "frame_cad_kg": 0.693,
+  "frame_budget_kg": 0.679,
+  "note": "Masa sin tornillería ni adhesivos (≈ 5-8 % adicional). Impresas a densidad efectiva de 4 perímetros + 40 % de relleno.",
+  "placements": {
+    "center_plate_bottom": [
+      0,
+      0,
+      -3
+    ],
+    "center_plate_top": [
+      0,
+      0,
+      26
+    ],
+    "arm_block_0": [
+      57.2756,
+      57.2756,
+      0
+    ],
+    "arm_tube_0": [
+      31.8198,
+      31.8198,
+      13
+    ],
+    "motor_mount_0": [
+      237.588,
+      237.588,
+      28
+    ],
+    "leg_clamp_0": [
+      106.773,
+      106.773,
+      13
+    ],
+    "leg_tube_0": [
+      106.773,
+      106.773,
+      -3
+    ],
+    "foot_0": [
+      106.773,
+      106.773,
+      -121
+    ],
+    "motor_0": [
+      237.588,
+      237.588,
+      28
+    ],
+    "prop_0": [
+      237.588,
+      237.588,
+      60
+    ],
+    "arm_block_1": [
+      -57.2756,
+      57.2756,
+      0
+    ],
+    "arm_tube_1": [
+      -31.8198,
+      31.8198,
+      13
+    ],
+    "motor_mount_1": [
+      -237.588,
+      237.588,
+      28
+    ],
+    "leg_clamp_1": [
+      -106.773,
+      106.773,
+      13
+    ],
+    "leg_tube_1": [
+      -106.773,
+      106.773,
+      -3
+    ],
+    "foot_1": [
+      -106.773,
+      106.773,
+      -121
+    ],
+    "motor_1": [
+      -237.588,
+      237.588,
+      28
+    ],
+    "prop_1": [
+      -237.588,
+      237.588,
+      60
+    ],
+    "arm_block_2": [
+      -57.2756,
+      -57.2756,
+      0
+    ],
+    "arm_tube_2": [
+      -31.8198,
+      -31.8198,
+      13
+    ],
+    "motor_mount_2": [
+      -237.588,
+      -237.588,
+      28
+    ],
+    "leg_clamp_2": [
+      -106.773,
+      -106.773,
+      13
+    ],
+    "leg_tube_2": [
+      -106.773,
+      -106.773,
+      -3
+    ],
+    "foot_2": [
+      -106.773,
+      -106.773,
+      -121
+    ],
+    "motor_2": [
+      -237.588,
+      -237.588,
+      28
+    ],
+    "prop_2": [
+      -237.588,
+      -237.588,
+      60
+    ],
+    "arm_block_3": [
+      57.2756,
+      -57.2756,
+      0
+    ],
+    "arm_tube_3": [
+      31.8198,
+      -31.8198,
+      13
+    ],
+    "motor_mount_3": [
+      237.588,
+      -237.588,
+      28
+    ],
+    "leg_clamp_3": [
+      106.773,
+      -106.773,
+      13
+    ],
+    "leg_tube_3": [
+      106.773,
+      -106.773,
+      -3
+    ],
+    "foot_3": [
+      106.773,
+      -106.773,
+      -121
+    ],
+    "motor_3": [
+      237.588,
+      -237.588,
+      28
+    ],
+    "prop_3": [
+      237.588,
+      -237.588,
+      60
+    ],
+    "battery_tray": [
+      -28,
+      0,
+      -3
+    ],
+    "battery": [
+      -28,
+      0,
+      -6
+    ],
+    "gimbal_plate_top": [
+      47,
+      0,
+      -3
+    ],
+    "gimbal_plate_bottom": [
+      47,
+      0,
+      -3
+    ],
+    "damper_0": [
+      27,
+      -25,
+      -17
+    ],
+    "damper_1": [
+      27,
+      25,
+      -17
+    ],
+    "damper_2": [
+      67,
+      -25,
+      -17
+    ],
+    "damper_3": [
+      67,
+      25,
+      -17
+    ],
+    "gimbal_camera": [
+      62,
+      0,
+      -21
+    ],
+    "housing": [
+      0,
+      0,
+      29
+    ],
+    "fc_stack": [
+      0,
+      0,
+      35
+    ],
+    "companion": [
+      0,
+      0,
+      63
+    ],
+    "gnss": [
+      10,
+      0,
+      93
+    ]
+  },
+  "assembly": {
+    "interferences": [],
+    "prop_clearance": [
+      {
+        "prop": "prop_0",
+        "min_clearance_mm": 33.0,
+        "nearest": "leg_clamp_0"
+      },
+      {
+        "prop": "prop_1",
+        "min_clearance_mm": 33.0,
+        "nearest": "leg_clamp_1"
+      },
+      {
+        "prop": "prop_2",
+        "min_clearance_mm": 33.0,
+        "nearest": "leg_clamp_2"
+      },
+      {
+        "prop": "prop_3",
+        "min_clearance_mm": 33.0,
+        "nearest": "leg_clamp_3"
+      },
+      {
+        "prop": "prop_0↔prop_1",
+        "min_clearance_mm": 43.4,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_0↔prop_2",
+        "min_clearance_mm": 240.2,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_0↔prop_3",
+        "min_clearance_mm": 43.4,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_1↔prop_2",
+        "min_clearance_mm": 43.4,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_1↔prop_3",
+        "min_clearance_mm": 240.2,
+        "nearest": "hélice vecina"
+      },
+      {
+        "prop": "prop_2↔prop_3",
+        "min_clearance_mm": 43.4,
+        "nearest": "hélice vecina"
+      }
+    ],
+    "bbox_mm": [
+      512.9,
+      512.9,
+      271.0
+    ],
+    "zmin_mm": -166.0,
+    "zmax_mm": 105.0
+  },
+  "assembly_files": [
+    "cad/freecad/inspection/ds-i_ensamble_generado.FCStd",
+    "cad/exports/inspection/ds-i_ensamble.step",
+    "cad/exports/inspection/ds-i_ensamble.stl"
+  ]
+}
