@@ -71,6 +71,24 @@ MOTORS = [
               "rcdrone.top / robotshop.com (2026-10): 155 g, 227 mΩ (v1), hélice P21-22", ("i0", "i_max", "cost_usd", "p_max_w")),
 ]
 
+
+def _with_bench_data(motors: list[CotsMotor]) -> list[CotsMotor]:
+    """S10-05: si el banco midió un motor (engineering/data/motors/*.json), sus Kv, Rm e I0 reemplazan al catálogo."""
+    from dataclasses import replace
+    measured = {}
+    for f in (Path(__file__).resolve().parent / "data" / "motors").glob("*.json"):
+        m = json.loads(f.read_text())
+        measured[m["name"]] = m
+    out = []
+    for m in motors:
+        b = measured.get(m.name)
+        out.append(m if b is None else replace(m, kv=b["kv"], rm=b["rm"], i0=b["i0"], source=f"{m.source} · medido: {b['source']}",
+                                               estimated=tuple(x for x in m.estimated if x not in ("kv", "rm", "i0"))))
+    return out
+
+
+MOTORS = _with_bench_data(MOTORS)
+
 ESCS = [
     Esc("ESC 4 en 1 BLHeli32/AM32 6S 50 A con telemetría DShot bidireccional", "DS-I", 50, 0.004, 20, True,
         "clase Tekko32 / Holybro (≈ US$80 el 4 en 1)"),
@@ -162,7 +180,9 @@ class Option:
     endurance_eol_min: float
     twr_5000m: float
     hover_thrust_fraction: float
-    hover_current_per_motor_a: float
+    hover_current_per_motor_a: float        # corriente del MOTOR (fase) en hover
+    hover_battery_current_a: float          # corriente del PACK en hover (todos los motores + aviónica)
+    hover_p_battery_per_motor_w: float
     max_current_per_motor_a: float
     hover_motor_efficiency: float
     propulsion_cost_usd: float
@@ -195,14 +215,15 @@ def evaluate(m: CotsMotor, esc: Esc, prop_in: float) -> Option:
     req = REQUIREMENTS[m.vehicle]
     opt = Option(m.vehicle, m.name, prop_in, round(mtow, 3), round(e_new * 60 / hov["p_total"], 1),
                  round(e_eol * 60 / hov["p_total"], 1), round(mx["total_thrust"] / (mtow * G0), 2),
-                 round(hov["thrust_fraction"], 2), round(hov["current"], 1), round(mx["current"], 1),
+                 round(hov["thrust_fraction"], 2), round(hov["current"], 1), round(hov["current_total"], 1),
+                 round(hov["p_battery"], 1), round(mx["current"], 1),
                  round(hov["efficiency"], 3), round(n * (m.cost_usd + prop_cost(prop_in) + esc.cost_usd), 0))
     # corriente del pack: a fondo y con empuje = 2 × peso (lo que hace falta para el requisito de empuje/peso)
     pack = base.pack
     opt.pack_limit_a = round(pack.i_max, 1)
     opt.pack_current_full_a = round(n * mx["current"] + base.avionics_w / pack.v_nominal, 1)
     op2 = operating_point(m.motor(), prop.table(a_thr), 2.0 * mtow * G0 / n, mx["v_battery"])
-    opt.pack_current_twr2_a = round(n * op2["current"] + base.avionics_w / pack.v_nominal, 1)
+    opt.pack_current_twr2_a = round((n * op2["p_battery"] + base.avionics_w) / mx["v_battery"], 1)
     if opt.pack_current_full_a > opt.pack_limit_a:
         # throttle colectivo que deja el pack en su límite (el empuje crece ~ con la corriente en esa zona)
         opt.thr_max_recommended = round(max(0.5, min(1.0, opt.pack_limit_a / opt.pack_current_full_a)), 2)

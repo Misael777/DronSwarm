@@ -105,6 +105,14 @@ def main():
         w.writeheader()
         w.writerows(rows)
     write_summary(rows, sel)
+    track = OUT.parent / "seguimiento_compras.csv"
+    if not track.exists():                       # planilla del usuario: se crea una vez y nunca se sobrescribe
+        with open(track, "w", newline="") as f:
+            w = csv.writer(f)
+            w.writerow(["id", "descripcion", "cant_total", "fase", "proveedor_elegido", "precio_real_usd", "fecha_pedido",
+                        "fecha_estimada", "fecha_llegada", "inspeccion_ok", "observaciones"])
+            for r in rows:
+                w.writerow([r["id"], r["descripcion"], r["cant_total"], r["fase"], "", "", "", "", "", "", ""])
     print(OUT)
 
 
