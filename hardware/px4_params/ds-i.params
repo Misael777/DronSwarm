@@ -1,0 +1,112 @@
+# DronSwarm DS-I · PX4 1.15 · Pixhawk 6C · generado por tools/px4/gen_params.py
+# Cargar en QGroundControl: Parámetros → Herramientas → Cargar desde archivo. Revisar hardware/px4_params/README.md
+# Vehicle-Id	Component-Id	Name	Value	Type
+# SYS_AUTOSTART: multirrotor genérico; la geometría real va en CA_*
+1	1	SYS_AUTOSTART	4001	6
+# CA_AIRFRAME: multirrotor
+1	1	CA_AIRFRAME	0	6
+1	1	CA_ROTOR_COUNT	4	6
+# CA_ROTOR0_PX: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR0_PX	0.237600	9
+# CA_ROTOR0_PY: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR0_PY	-0.237600	9
+# CA_ROTOR0_KM: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR0_KM	0.028800	9
+# CA_ROTOR1_PX: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR1_PX	-0.237600	9
+# CA_ROTOR1_PY: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR1_PY	-0.237600	9
+# CA_ROTOR1_KM: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR1_KM	-0.028800	9
+# CA_ROTOR2_PX: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR2_PX	-0.237600	9
+# CA_ROTOR2_PY: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR2_PY	0.237600	9
+# CA_ROTOR2_KM: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR2_KM	0.028800	9
+# CA_ROTOR3_PX: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR3_PX	0.237600	9
+# CA_ROTOR3_PY: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR3_PY	0.237600	9
+# CA_ROTOR3_KM: geometría del airframe de SITL (validado en S05-S08)
+1	1	CA_ROTOR3_KM	-0.028800	9
+# PWM_AUX_TIM0: DShot600 en el grupo de timers de los motores (verificar en QGC → Actuadores)
+1	1	PWM_AUX_TIM0	-3	6
+# PWM_AUX_FUNC1: motor 1
+1	1	PWM_AUX_FUNC1	101	6
+# PWM_AUX_FUNC2: motor 2
+1	1	PWM_AUX_FUNC2	102	6
+# PWM_AUX_FUNC3: motor 3
+1	1	PWM_AUX_FUNC3	103	6
+# PWM_AUX_FUNC4: motor 4
+1	1	PWM_AUX_FUNC4	104	6
+# DSHOT_TEL_CFG: telemetría de ESC (rpm, corriente, temperatura) → filtro notch y detección de motor caído
+1	1	DSHOT_TEL_CFG	103	6
+# MOT_POLE_COUNT: polos del motor: VERIFICAR con la ficha (afecta las rpm del filtro notch)
+1	1	MOT_POLE_COUNT	28	6
+# IMU_GYRO_DNF_EN: filtro notch dinámico con las rpm del ESC
+1	1	IMU_GYRO_DNF_EN	1	6
+# IMU_GYRO_DNF_HMC: armónicos del filtro notch
+1	1	IMU_GYRO_DNF_HMC	3	6
+# MAV_0_CONFIG: RFD900x (estación de tierra)
+1	1	MAV_0_CONFIG	101	6
+# MAV_1_CONFIG: Raspberry Pi 5 (control del enjambre por MAVSDK)
+1	1	MAV_1_CONFIG	102	6
+# MAV_1_MODE: onboard
+1	1	MAV_1_MODE	2	6
+1	1	SER_TEL2_BAUD	921600	6
+# MAV_2_CONFIG: flujo óptico + lidar MTF-01P (MAVLink)
+1	1	MAV_2_CONFIG	202	6
+1	1	SER_GPS2_BAUD	115200	6
+# RC_INPUT_PROTO: detección automática (SBUS del receptor ExpressLRS)
+1	1	RC_INPUT_PROTO	-1	6
+# GPS_1_CONFIG: u-blox F9P
+1	1	GPS_1_CONFIG	201	6
+# GPS_1_GNSS: todas las constelaciones
+1	1	GPS_1_GNSS	0	6
+# EKF2_OF_CTRL: fusiona flujo óptico: sostiene posición sin GNSS (hallazgo del S06)
+1	1	EKF2_OF_CTRL	1	6
+# EKF2_RNG_CTRL: telémetro cerca del suelo
+1	1	EKF2_RNG_CTRL	1	6
+# SENS_FLOW_MAXHGT: alcance útil del lidar del MTF-01P
+1	1	SENS_FLOW_MAXHGT	8.000000	9
+# COM_POSCTL_NAVL: sin posición: aterrizar
+1	1	COM_POSCTL_NAVL	2	6
+1	1	BAT1_N_CELLS	6	6
+# BAT1_V_EMPTY: Li-ion bajo carga (corte de celda 2.5-3.0 V)
+1	1	BAT1_V_EMPTY	3.200000	9
+1	1	BAT1_V_CHARGED	4.150000	9
+1	1	BAT1_CAPACITY	10000.000000	9
+# BAT_LOW_THR: umbrales mineros: el regreso desde lejos necesita margen (S06)
+1	1	BAT_LOW_THR	0.350000	9
+1	1	BAT_CRIT_THR	0.250000	9
+1	1	BAT_EMERGEN_THR	0.100000	9
+# COM_LOW_BAT_ACT: RTL en crítico, aterrizar en emergencia
+1	1	COM_LOW_BAT_ACT	3	6
+# NAV_DLL_ACT: pérdida de enlace con la estación → RTL
+1	1	NAV_DLL_ACT	2	6
+1	1	COM_DL_LOSS_T	10	6
+# NAV_RCL_ACT: pérdida de RC → RTL (en misión automática no corta la misión: COM_RCL_EXCEPT)
+1	1	NAV_RCL_ACT	2	6
+# COM_RCL_EXCEPT: la misión sigue si se pierde el RC
+1	1	COM_RCL_EXCEPT	4	6
+# GF_ACTION: geocerca → RTL (HU-10)
+1	1	GF_ACTION	3	6
+# GF_PREDICT: frena antes del límite
+1	1	GF_PREDICT	1	6
+# GF_MAX_HOR_DIST: límite por defecto: la mina carga su propia geocerca
+1	1	GF_MAX_HOR_DIST	2000.000000	9
+1	1	GF_MAX_VER_DIST	150.000000	9
+# RTL_RETURN_ALT: sobre los taludes y torres de iluminación
+1	1	RTL_RETURN_ALT	40.000000	9
+1	1	RTL_DESCEND_ALT	15.000000	9
+# MPC_THR_MAX: no pasar la corriente continua del pack (S09)
+1	1	MPC_THR_MAX	0.910000	9
+# MPC_THR_HOVER: estimado; el estimador de hover lo ajusta en vuelo (MPC_USE_HTE)
+1	1	MPC_THR_HOVER	0.460000	9
+# MPC_XY_VEL_MAX: envolvente del target (DS-I ≥ 15 m/s)
+1	1	MPC_XY_VEL_MAX	15.000000	9
+1	1	MPC_XY_CRUISE	10.000000	9
+1	1	MPC_TILTMAX_AIR	35.000000	9
+# SDLOG_PROFILE: logs con estimador y alta frecuencia (análisis de vibración y autonomía)
+1	1	SDLOG_PROFILE	3	6
