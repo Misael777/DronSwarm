@@ -10,7 +10,7 @@ Plan, fases y criterios: [PLAN.md](PLAN.md) · decisión: ADR-013 en [docs/decis
 | M0 · Requisitos | ✅ | [requisitos/README.md](requisitos/README.md): puntos de operación, restricciones y metas por dron |
 | M1 · Referencia comercial | ✅ | [informes/M1_referencia_cots.md](informes/M1_referencia_cots.md): a superar 84.8 % (DS-I) y 87.3 % (DS-D) en hover |
 | M2 · Cálculo y optimización | ✅ | [informes/M2_diseno.md](informes/M2_diseno.md): DS-I 24N22P (+4.1 pt, +3.1 % de autonomía, US$12); DS-D 36N32P (+2.0 pt, −54 g, +5.7 %, US$32) |
-| M3 · Reductores | ✅ | [informes/M3_reductores.md](informes/M3_reductores.md): gana el **directo**; los reductores hechos en casa pierden 3-21 puntos de autonomía, el armónico no es viable (ADR-014) |
+| M3 · Reductores | ✅ | [informes/M3_reductores.md](informes/M3_reductores.md): gana el **directo**; los reductores hechos en casa pierden 3-25 puntos de autonomía, el armónico no es viable (ADR-014) |
 | M4 · FEM 2D | siguiente | |
 | M5-M8 | pendiente | |
 
