@@ -14,7 +14,7 @@
    "gap": 0.5,
    "r_mag_in": 22.455380679382824,
    "r_mag_out": 23.455380679382827,
-   "r_out": 24.737962599486597,
+   "r_out": 24.910234791338244,
    "h_magnet": 1.0,
    "pole_arc": 0.85,
    "overhang": 1.531602130985343,
@@ -29,7 +29,72 @@
    "n_lam": 29,
    "n_ring": 9,
    "ring_sheet": 1.0,
-   "magnet_w": 4.612600779194198
+   "magnet_w": 4.612600779194198,
+   "h_yoke_g": 1.2960807373872998,
+   "mech": {
+    "bearing": {
+     "name": "694ZZ",
+     "d": 4.0,
+     "D": 11.0,
+     "B": 4.0,
+     "Da": 9.6,
+     "da": 5.4,
+     "r": 0.15
+    },
+    "clip": {
+     "name": "DIN 6799-3.2",
+     "groove_d": 3.2,
+     "m": 0.64,
+     "s": 0.6,
+     "od": 7.3,
+     "n": 1.0
+    },
+    "shim": {
+     "name": "DIN 988 4×8×0.3",
+     "d": 4.0,
+     "D": 8.0,
+     "t": 0.3
+    },
+    "wave": {
+     "name": "DIN 137 B4 (ondulada)",
+     "d": 4.3,
+     "D": 9.0,
+     "h_free": 1.0,
+     "h_work": 0.6
+    },
+    "insert": {
+     "name": "inserto roscado M3 × 3 (corto)",
+     "thread": "M3",
+     "hole": 4.0,
+     "depth": 4.2,
+     "clear": 3.4,
+     "head_d": 5.5
+    },
+    "base_t": 5.4,
+    "h_low": 2.34,
+    "z_s0": 7.731602130985343,
+    "z_s1": 13.932011237208444,
+    "z_tube": 13.932011237208444,
+    "z_g1": 1.4,
+    "z_g2": 20.56361336819379,
+    "shaft_bot": 0.3999999999999999,
+    "shaft_top": 22.20361336819379,
+    "shaft_len": 21.80361336819379,
+    "z_sp": 14.832011237208444,
+    "z_cap": 16.263613368193788,
+    "t_plateau": 5.2,
+    "z_pt": 21.463613368193787,
+    "z_rb": 20.263613368193788,
+    "z_r0": 6.731602130985343,
+    "z_r1": 14.932011237208444,
+    "flat": 0.3,
+    "wire_d": 1.7,
+    "h_yoke": 1.2960807373872998,
+    "r_tube": 13.983275432965328,
+    "r_shoulder": 14.810923875397709,
+    "r_flange": 19.03327543296533,
+    "r_plateau": 12.5
+   }
   },
   "files": {
    "lamina_estator": "cad/exports/motor/ds-i/lamina_estator.dxf",
@@ -39,7 +104,13 @@
    "plantilla_imanes": "cad/exports/motor/ds-i/plantilla_imanes.stl",
    "mandril_apilado": "cad/exports/motor/ds-i/mandril_apilado.stl",
    "soporte_bobinado": "cad/exports/motor/ds-i/soporte_bobinado.stl",
-   "ensamble": "cad/exports/motor/ds-i/ensamble.stl"
+   "ensamble": "cad/exports/motor/ds-i/ensamble.stl",
+   "eje": "cad/exports/motor/ds-i/eje.stl",
+   "vista_ensamble": "cad/exports/motor/ds-i/vista_ensamble.png",
+   "vista_corte": "cad/exports/motor/ds-i/vista_corte.png",
+   "vista_explosionado": "cad/exports/motor/ds-i/vista_explosionado.png",
+   "util_concentricidad": "cad/exports/motor/ds-i/util_concentricidad.stl",
+   "probeta_ajustes": "cad/exports/motor/ds-i/probeta_ajustes.stl"
   }
  },
  "DS-D": {
@@ -57,7 +128,7 @@
    "gap": 0.6,
    "r_mag_in": 35.46652750144743,
    "r_mag_out": 36.98768720177978,
-   "r_out": 38.785438832044115,
+   "r_out": 38.964406433602285,
    "h_magnet": 1.5211597003323458,
    "pole_arc": 0.85,
    "overhang": 1.5255866432937355,
@@ -72,7 +143,72 @@
    "n_lam": 40,
    "n_ring": 11,
    "ring_sheet": 1.0,
-   "magnet_w": 5.919260931865904
+   "magnet_w": 5.919260931865904,
+   "h_yoke_g": 1.7761055321643155,
+   "mech": {
+    "bearing": {
+     "name": "696ZZ",
+     "d": 6.0,
+     "D": 15.0,
+     "B": 5.0,
+     "Da": 13.4,
+     "da": 7.6,
+     "r": 0.2
+    },
+    "clip": {
+     "name": "DIN 6799-5",
+     "groove_d": 5.0,
+     "m": 0.74,
+     "s": 0.7,
+     "od": 11.3,
+     "n": 1.2
+    },
+    "shim": {
+     "name": "DIN 988 6×12×0.5",
+     "d": 6.0,
+     "D": 12.0,
+     "t": 0.5
+    },
+    "wave": {
+     "name": "DIN 137 B6 (ondulada)",
+     "d": 6.4,
+     "D": 11.0,
+     "h_free": 1.3,
+     "h_work": 0.8
+    },
+    "insert": {
+     "name": "inserto roscado M4 × 4 (corto)",
+     "thread": "M4",
+     "hole": 5.6,
+     "depth": 5.0,
+     "clear": 4.5,
+     "head_d": 7.0
+    },
+    "base_t": 6.2,
+    "h_low": 2.84,
+    "z_s0": 8.525586643293735,
+    "z_s1": 16.899738373365167,
+    "z_tube": 16.899738373365167,
+    "z_g1": 1.5999999999999999,
+    "z_g2": 24.225325016658903,
+    "shaft_bot": 0.3999999999999999,
+    "shaft_top": 26.1653250166589,
+    "shaft_len": 25.765325016658903,
+    "z_sp": 18.199738373365168,
+    "z_cap": 19.225325016658903,
+    "t_plateau": 6.0,
+    "z_pt": 25.225325016658903,
+    "z_rb": 23.725325016658903,
+    "z_r0": 7.525586643293735,
+    "z_r1": 17.899738373365167,
+    "flat": 0.5,
+    "wire_d": 2.7,
+    "h_yoke": 1.7761055321643155,
+    "r_tube": 23.422041438919106,
+    "r_shoulder": 24.537704758217696,
+    "r_flange": 28.472041438919106,
+    "r_plateau": 17.8
+   }
   },
   "files": {
    "lamina_estator": "cad/exports/motor/ds-d/lamina_estator.dxf",
@@ -82,7 +218,13 @@
    "plantilla_imanes": "cad/exports/motor/ds-d/plantilla_imanes.stl",
    "mandril_apilado": "cad/exports/motor/ds-d/mandril_apilado.stl",
    "soporte_bobinado": "cad/exports/motor/ds-d/soporte_bobinado.stl",
-   "ensamble": "cad/exports/motor/ds-d/ensamble.stl"
+   "ensamble": "cad/exports/motor/ds-d/ensamble.stl",
+   "eje": "cad/exports/motor/ds-d/eje.stl",
+   "util_concentricidad": "cad/exports/motor/ds-d/util_concentricidad.stl",
+   "probeta_ajustes": "cad/exports/motor/ds-d/probeta_ajustes.stl",
+   "vista_ensamble": "cad/exports/motor/ds-d/vista_ensamble.png",
+   "vista_corte": "cad/exports/motor/ds-d/vista_corte.png",
+   "vista_explosionado": "cad/exports/motor/ds-d/vista_explosionado.png"
   }
  }
 }

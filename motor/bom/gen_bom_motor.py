@@ -60,7 +60,8 @@ def rows_for(veh: str, c: dict, p: dict) -> list[dict]:
     wire = wire_choice(g["a_cond_ideal"])
     strands = wire["strands"]
     wl = wire_m(c, strands)
-    shaft_len = round(p["l_stack"] + 2 * p["overhang"] + p["cap_t"] + p["base_t"] + 12, 0)
+    mech = p.get("mech") or {}
+    shaft_len = round(mech.get("shaft_len", p["l_stack"] + 2 * p["overhang"] + p["cap_t"] + p["base_t"] + 12), 1)
     mag_dims = f"{p['magnet_w']:.1f} × {p['l_stack']:.1f} × {p['h_magnet']:.1f} mm"
     filament_g = round((c["mass"]["tapa impresa"] + c["mass"]["base impresa"]) * 1e3 * 1.15, 0)
     R = []
@@ -76,7 +77,7 @@ def rows_for(veh: str, c: dict, p: dict) -> list[dict]:
         "estimado. Referencias 2026: RS UK, plancha 0.30 mm 300×300 a £26 (minorista); mayorista China 0.5 mm ≈ US$0.6/kg. "
         "Para la flota, cotizar 10-25 kg de 0.2 mm cortado a 300×300: puede bajar a US$1-3 por plancha")
     ring_ps = per_sheet(od_ring)
-    add("rotor", f"Acero laminado en frío DC01/SPCC 1.0 mm. Anillos Ø{od_ring:.1f}/Ø{2 * p['r_mag_out']:.1f} mm "
+    add("rotor", f"Acero laminado en frío DC01/SPCC 1.0 mm. Anillos Ø{od_ring:.1f} mm con interior de {n_mag} caras planas "
         f"(anillo_rotor.dxf); se apilan {p['n_ring']}", p["n_ring"], "anillos", f"plancha 300×300 mm ({ring_ps} anillos)", ring_ps,
         4.0, "ferretería industrial local", 1, "estimado: chapa negra 1 mm")
     add("rotor", f"Imán de neodimio N48SH (150 °C), bloque {mag_dims} (ancho × largo × espesor), magnetizado en el espesor, "
@@ -94,8 +95,14 @@ def rows_for(veh: str, c: dict, p: dict) -> list[dict]:
         shaft_len, "mm", "barra de 330 mm", 330, 3.0 if small else 4.0, "ferretería industrial / AliExpress", 2, "estimado")
     add("mecánica", f"Anillo de retención E DIN 6799 para eje Ø{SHAFT[veh] * 1e3:.0f} mm", 2, "u", "paquete de 100", 100, 3.0,
         "ferretería", 1, "estimado")
-    add("mecánica", "Prisionero M3×4 (fija la tapa al eje)", 1, "u", "paquete de 50", 50, 3.0, "ferretería", 1, "estimado")
-    add("mecánica", f"Tornillos {'M3×8' if small else 'M4×10'} cabeza allen (hélice ×4 y base al soporte DMI ×4)", 8, "u",
+    sh, wv, ins = mech.get("shim", {}), mech.get("wave", {}), mech.get("insert", {})
+    add("mecánica", f"Arandela de ajuste {sh.get('name', 'DIN 988')} (bajo el anillo E inferior, sobre el rodamiento superior y bajo "
+        "el anillo E superior)", 3, "u", "paquete de 50", 50, 4.0, "AliExpress / ferretería industrial", 2, "estimado")
+    add("mecánica", f"Arandela ondulada {wv.get('name', 'DIN 137').split(' (')[0]} (precarga de los rodamientos)", 1, "u", "paquete de 50", 50, 4.0,
+        "AliExpress / ferretería industrial", 2, "estimado")
+    add("mecánica", f"{ins.get('name', 'inserto roscado')[:1].upper()}{ins.get('name', 'inserto roscado')[1:]} de latón para impresión 3D (4 de la hélice + 4 del montaje DMI)",
+        8, "u", "paquete de 100", 100, 7.0 if small else 9.0, "AliExpress (tipo Ruthex/CNC Kitchen)", 2, "estimado")
+    add("mecánica", f"Tornillos {'M3×8' if small else 'M4×10'} cabeza allen (hélice ×4 y soporte DMI ×4, a los insertos)", 8, "u",
         "paquete de 100", 100, 4.0 if small else 5.0, "ferretería", 1, "estimado")
     add("conexión", f"Cable de silicona {'18' if small else '14'} AWG (3 fases × 10 cm)", 0.3, "m", "juego de 3 m (3 colores)", 3,
         6.0 if small else 8.0, "tienda de RC / AliExpress", 2, "estimado")
@@ -116,6 +123,10 @@ COMMON = [
     ("consumible", "Termocontraíble surtido", 4, "piezas", "surtido de 120 piezas", 120, 5.0, "electrónica", 1),
     ("consumible", "Fijador de roscas de resistencia media (azul) 10 ml", 0.05, "ml", "frasco de 10 ml", 10, 5.0, "ferretería", 1),
     ("consumible", "Alcohol isopropílico (limpiar láminas antes de pegar) 500 ml", 10, "ml", "botella de 500 ml", 500, 5.0, "farmacia", 1),
+    ("consumible", "Fijador de rodamientos (Loctite 641 o equivalente) 10 ml: eje en los aros interiores", 0.05, "ml", "frasco de 10 ml", 10,
+     9.0, "ferretería industrial", 1),
+    ("consumible", "Adhesivo retenedor de alta resistencia (Loctite 638 o equivalente) 10 ml: eje en la tapa", 0.05, "ml",
+     "frasco de 10 ml", 10, 10.0, "ferretería industrial", 1),
 ]
 TOOLS = [
     ("Medidor de miliohmios de 4 hilos (resistencia fase-fase; control de calidad)", 35.0, "opcional pero recomendado"),
@@ -125,6 +136,10 @@ TOOLS = [
     ("Balanceador magnético de hélices (sirve para balancear el rotor con la tapa)", 12.0, ""),
     ("Gafas de seguridad y guantes de nitrilo (epoxi, barniz, imanes)", 8.0, "imprescindible"),
     ("Brújula o visor de campo magnético (verificar la polaridad alternada de los imanes)", 3.0, "imprescindible"),
+    ("Escariadores H7 de Ø4 y Ø6 mm (agujero en D de la tapa)", 12.0, "o una broca nueva de la medida + verificación con el eje"),
+    ("Juego de galgas de espesores 0.05-1.0 mm (entrehierro y tiras de centrado del estator)", 6.0, "imprescindible"),
+    ("Punta para insertos roscados del soldador (M3/M4)", 8.0, "si el soldador no la trae"),
+    ("Calibre digital 0.01 mm", 15.0, "si no se tiene: controlar láminas, anillos y la probeta de ajustes"),
 ]
 PROCESS = [
     ("Cortar las láminas del estator (láser de fibra, desatendido)", 20, 37, "láser"),

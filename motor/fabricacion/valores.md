@@ -6,7 +6,7 @@
 |---|---|---|
 | Ranuras / polos | 24N26P | 36N32P |
 | Estator | Ø43.9 mm × 6.2 mm, 29 láminas de 0.20 mm | Ø69.7 mm × 8.4 mm, 40 láminas de 0.20 mm |
-| Anillo del rotor | 9 anillos de 1.0 mm, Ø49.5 mm | 11 anillos de 1.0 mm, Ø77.6 mm |
+| Anillo del rotor | 9 anillos de 1.0 mm, Ø49.8 mm | 11 anillos de 1.0 mm, Ø77.9 mm |
 | Imanes | 26 imanes N48SH de 4.6 × 6.2 × 1.0 mm (ancho × largo × espesor, magnetizados en el espesor) | 32 imanes N48SH de 5.9 × 8.4 × 1.5 mm (ancho × largo × espesor, magnetizados en el espesor) |
 | Bobinado | 8 vueltas por diente, 1 × Ø0.60 mm (cobre +2 % del diseño), estrella | 6 vueltas por diente, 7 × Ø0.32 mm en paralelo (cobre +2 % del diseño), estrella |
 | Orden de las bobinas (diente 1 → n) | `AacCcCBbBbaAaACcCcbBbBAa` (mayúscula = un sentido, minúscula = el contrario) | `AabBbcCcaAabBbcCcaAabBbcCcaAabBbcCca` (mayúscula = un sentido, minúscula = el contrario) |
