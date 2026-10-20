@@ -1,0 +1,335 @@
+{
+  "DS-I": {
+    "model": {
+      "name": "MN4006 KV380",
+      "kv_effective": 380.0,
+      "r20_ohm": 0.194,
+      "c1": 0.0024462534626518654,
+      "c2": 5.8325790436298175e-06,
+      "mass_kg": 0.068,
+      "i_max_a": 16
+    },
+    "fit": {
+      "split": 0.324,
+      "eta_esc": 0.9236,
+      "kv_scale": 1.0,
+      "eff_error_rms_points": 1.5,
+      "eff_error_max_points": 2.35,
+      "rows": [
+        {
+          "throttle": 0.5,
+          "rpm": 3746.0,
+          "torque_nm": 0.15,
+          "current_meas_a": 3.1,
+          "current_model_a": 3.07,
+          "eff_system_meas": 0.7909,
+          "eff_system_model": 0.7983,
+          "eff_motor_model": 0.8644,
+          "t_wind_c": 26.2
+        },
+        {
+          "throttle": 0.55,
+          "rpm": 4089.0,
+          "torque_nm": 0.18,
+          "current_meas_a": 4.1,
+          "current_model_a": 4.05,
+          "eff_system_meas": 0.7833,
+          "eff_system_model": 0.7929,
+          "eff_motor_model": 0.8584,
+          "t_wind_c": 27.0
+        },
+        {
+          "throttle": 0.6,
+          "rpm": 4358.0,
+          "torque_nm": 0.2,
+          "current_meas_a": 4.8,
+          "current_model_a": 4.81,
+          "eff_system_meas": 0.7923,
+          "eff_system_model": 0.7901,
+          "eff_motor_model": 0.8554,
+          "t_wind_c": 27.8
+        },
+        {
+          "throttle": 0.65,
+          "rpm": 4634.0,
+          "torque_nm": 0.23,
+          "current_meas_a": 5.8,
+          "current_model_a": 5.93,
+          "eff_system_meas": 0.8018,
+          "eff_system_model": 0.7837,
+          "eff_motor_model": 0.8485,
+          "t_wind_c": 29.1
+        },
+        {
+          "throttle": 0.75,
+          "rpm": 5215.0,
+          "torque_nm": 0.29,
+          "current_meas_a": 8.3,
+          "current_model_a": 8.55,
+          "eff_system_meas": 0.795,
+          "eff_system_model": 0.7715,
+          "eff_motor_model": 0.8353,
+          "t_wind_c": 33.4
+        },
+        {
+          "throttle": 0.85,
+          "rpm": 5627.0,
+          "torque_nm": 0.33,
+          "current_meas_a": 10.7,
+          "current_model_a": 10.62,
+          "eff_system_meas": 0.7572,
+          "eff_system_model": 0.7626,
+          "eff_motor_model": 0.8257,
+          "t_wind_c": 38.9
+        },
+        {
+          "throttle": 1.0,
+          "rpm": 6177.0,
+          "torque_nm": 0.4,
+          "current_meas_a": 15.0,
+          "current_model_a": 14.54,
+          "eff_system_meas": 0.7187,
+          "eff_system_model": 0.7414,
+          "eff_motor_model": 0.8027,
+          "t_wind_c": 52.3
+        }
+      ],
+      "calibration": "ficha + tabla de banco del fabricante",
+      "datasheet": {
+        "kv": 380,
+        "r_line_ohm": 0.194,
+        "i0_a": 0.3,
+        "i0_at_v": 22,
+        "i_max_a": 16,
+        "p_max_w": 380,
+        "mass_kg": 0.068,
+        "configuration": "18N24P",
+        "pole_pairs": 12,
+        "outer_d_mm": 44.35,
+        "height_mm": 21,
+        "shaft_mm": 4,
+        "bench_csv": "mn4006_kv380_15x5.csv",
+        "bench_v": 24,
+        "bench_surface_t_full_c": 46,
+        "source": "ligpower.com (2026-10-20): ficha y tabla de pruebas del fabricante"
+      },
+      "kv_sensitivity": [
+        {
+          "kv_scale": 1.0,
+          "hover_efficiency": 0.8475,
+          "fit_error_rms_points": 1.5
+        },
+        {
+          "kv_scale": 1.05,
+          "hover_efficiency": 0.8304,
+          "fit_error_rms_points": 1.45
+        },
+        {
+          "kv_scale": 1.1,
+          "hover_efficiency": 0.8145,
+          "fit_error_rms_points": 1.41
+        },
+        {
+          "kv_scale": 1.15,
+          "hover_efficiency": 0.8051,
+          "fit_error_rms_points": 1.39
+        }
+      ]
+    },
+    "points": [
+      {
+        "point": "hover_4500m_0C",
+        "rpm": 3821,
+        "torque_nm": 0.1523,
+        "t_wind_c": 55.0,
+        "current_a": 6.4,
+        "voltage_v": 11.23,
+        "efficiency": 0.8475,
+        "p_loss_w": 11.0,
+        "copper_share": 0.826,
+        "noload_share": 0.174,
+        "within_i_max": 1.0
+      },
+      {
+        "point": "hover_5000m_15C",
+        "rpm": 4053,
+        "torque_nm": 0.1541,
+        "t_wind_c": 55.0,
+        "current_a": 6.48,
+        "voltage_v": 11.84,
+        "efficiency": 0.8519,
+        "p_loss_w": 11.4,
+        "copper_share": 0.816,
+        "noload_share": 0.184,
+        "within_i_max": 1.0
+      },
+      {
+        "point": "hover_vacio",
+        "rpm": 3661,
+        "torque_nm": 0.1408,
+        "t_wind_c": 55.0,
+        "current_a": 5.93,
+        "voltage_v": 10.71,
+        "efficiency": 0.8495,
+        "p_loss_w": 9.6,
+        "copper_share": 0.812,
+        "noload_share": 0.188,
+        "within_i_max": 1.0
+      },
+      {
+        "point": "maniobra_twr15",
+        "rpm": 4965,
+        "torque_nm": 0.2258,
+        "t_wind_c": 75.0,
+        "current_a": 9.67,
+        "voltage_v": 14.72,
+        "efficiency": 0.825,
+        "p_loss_w": 24.9,
+        "copper_share": 0.886,
+        "noload_share": 0.114,
+        "within_i_max": 1.0
+      },
+      {
+        "point": "maximo_twr20",
+        "rpm": 5734,
+        "torque_nm": 0.2963,
+        "t_wind_c": 95.0,
+        "current_a": 12.96,
+        "voltage_v": 17.26,
+        "efficiency": 0.7954,
+        "p_loss_w": 45.8,
+        "copper_share": 0.922,
+        "noload_share": 0.078,
+        "within_i_max": 1.0
+      }
+    ],
+    "weighted_efficiency": 0.8466
+  },
+  "DS-D": {
+    "model": {
+      "name": "M6C12 KV150",
+      "kv_effective": 150,
+      "r20_ohm": 0.09,
+      "c1": 0.014928733662019786,
+      "c2": 8.851763161178576e-05,
+      "mass_kg": 0.257,
+      "i_max_a": 36.18
+    },
+    "fit": {
+      "split": 0.35,
+      "eta_esc": null,
+      "kv_scale": 1.0,
+      "rows": [],
+      "calibration": "solo ficha (I0 y R); reparto de pérdidas en vacío copiado del MN4006 — se mide en el banco (S10)",
+      "datasheet": {
+        "kv": 150,
+        "r_line_ohm": 0.09,
+        "i0_a": 0.67,
+        "i0_at_v": 20,
+        "i_max_a": 36.18,
+        "p_max_w": 1725,
+        "mass_kg": 0.257,
+        "configuration": "24N28P",
+        "pole_pairs": 14,
+        "outer_d_mm": 72,
+        "height_mm": 33.4,
+        "shaft_mm": 6,
+        "bearings": "696ZZ ×2",
+        "max_torque_nm": 2.64,
+        "max_thrust_kg": 9.4,
+        "bench_csv": null,
+        "source": "openelab.io / rcdrone.top (2026-10-20): ficha de MAD Components; la tabla de pruebas solo está en imagen"
+      },
+      "kv_sensitivity": [
+        {
+          "kv_scale": 1.0,
+          "hover_efficiency": 0.873,
+          "fit_error_rms_points": null
+        },
+        {
+          "kv_scale": 1.05,
+          "hover_efficiency": 0.8673,
+          "fit_error_rms_points": null
+        },
+        {
+          "kv_scale": 1.1,
+          "hover_efficiency": 0.8611,
+          "fit_error_rms_points": null
+        },
+        {
+          "kv_scale": 1.15,
+          "hover_efficiency": 0.8544,
+          "fit_error_rms_points": null
+        }
+      ]
+    },
+    "points": [
+      {
+        "point": "hover_4500m_0C",
+        "rpm": 2581,
+        "torque_nm": 1.0134,
+        "t_wind_c": 55.0,
+        "current_a": 16.94,
+        "voltage_v": 18.53,
+        "efficiency": 0.873,
+        "p_loss_w": 39.9,
+        "copper_share": 0.737,
+        "noload_share": 0.263,
+        "within_i_max": true
+      },
+      {
+        "point": "hover_5000m_15C",
+        "rpm": 2743,
+        "torque_nm": 1.0229,
+        "t_wind_c": 55.0,
+        "current_a": 17.11,
+        "voltage_v": 19.6,
+        "efficiency": 0.8761,
+        "p_loss_w": 41.6,
+        "copper_share": 0.721,
+        "noload_share": 0.279,
+        "within_i_max": true
+      },
+      {
+        "point": "hover_vacio",
+        "rpm": 2109,
+        "torque_nm": 0.6898,
+        "t_wind_c": 55.0,
+        "current_a": 11.66,
+        "voltage_v": 14.92,
+        "efficiency": 0.8762,
+        "p_loss_w": 21.5,
+        "copper_share": 0.646,
+        "noload_share": 0.354,
+        "within_i_max": true
+      },
+      {
+        "point": "maniobra_twr15",
+        "rpm": 3357,
+        "torque_nm": 1.5069,
+        "t_wind_c": 75.0,
+        "current_a": 25.62,
+        "voltage_v": 24.11,
+        "efficiency": 0.8575,
+        "p_loss_w": 88.1,
+        "copper_share": 0.816,
+        "noload_share": 0.184,
+        "within_i_max": true
+      },
+      {
+        "point": "maximo_twr20",
+        "rpm": 3876,
+        "torque_nm": 1.9855,
+        "t_wind_c": 95.0,
+        "current_a": 34.47,
+        "voltage_v": 28.0,
+        "efficiency": 0.8351,
+        "p_loss_w": 159.1,
+        "copper_share": 0.87,
+        "noload_share": 0.13,
+        "within_i_max": true
+      }
+    ],
+    "weighted_efficiency": 0.8725
+  }
+}

@@ -1,6 +1,6 @@
 # Motor propio DronSwarm · plan del subproyecto
 
-> Estado: **borrador para aprobación** (2026-10-20). Propuesta de adelanto en ADR-013 (`docs/decisiones.md`).
+> Estado: **aprobado** (2026-10-20). Adelanto aceptado en ADR-013 (`docs/decisiones.md`).
 > Reemplaza y adelanta el alcance de los sprints S17-S19 del plan general.
 
 ## 1. Objetivo
@@ -86,7 +86,8 @@ La pregunta central es si conviene un motor lento que mueva la hélice directo, 
 motor/
 ├── PLAN.md                  # este documento
 ├── README.md                # cómo correr todo
-├── requisitos/              # puntos de operación (JSON generado desde engineering/) y criterios del G5
+├── requisitos/              # puntos de operación (JSON generado desde engineering/) y fichas de los comerciales
+├── informes/                # informes generados por fase (M1_referencia_cots.md, …)
 ├── calculo/                 # Python: dimensionamiento analítico, bobinado, pérdidas, térmico, optimizador
 ├── fem/                     # simulación electromagnética 2D (modelos, mallas, resultados)
 ├── reductores/              # modelos y comparación: directo / planetario / cicloidal / armónico / correa

@@ -1,0 +1,11 @@
+# T-Motor MN4006 KV380 AntiGravity · hélice T-Motor 15x5" CF · 24 V · temperatura de superficie a 100 % tras 10 min: 46 °C
+# Fuente: tabla de pruebas del fabricante publicada en ligpower.com/product/mn4006-kv380-motor-antigravity-type.html (consultada 2026-10-20)
+# power_w = 24 V × current_a (potencia de la fuente: incluye el ESC). torque_nm viene redondeado a 0.01 N·m (±3 % a carga baja).
+throttle,current_a,power_w,rpm,torque_nm,thrust_g,g_per_w
+0.50,3.10,74,3746,0.15,805,10.82
+0.55,4.10,98,4089,0.18,959,9.75
+0.60,4.80,115,4358,0.20,1093,9.49
+0.65,5.80,139,4634,0.23,1236,8.88
+0.75,8.30,199,5215,0.29,1561,7.84
+0.85,10.70,257,5627,0.33,1823,7.10
+1.00,15.00,360,6177,0.40,2228,6.19

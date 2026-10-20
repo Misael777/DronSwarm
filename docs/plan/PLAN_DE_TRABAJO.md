@@ -63,7 +63,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 ## Resumen del plan
 
 - 24 sprints de 14 días: 19/10/2026 → 19/09/2027.
-- 151 tareas técnicas, 1284 h estimadas (capacidad supuesta: 80 h/sprint).
+- 149 tareas técnicas, 1272 h estimadas (capacidad supuesta: 80 h/sprint).
 
 | Sprint | Fechas | Fase | Nombre | Horas | Gate |
 |---|---|---|---|---|---|
@@ -83,8 +83,8 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | S14 | 19/04–02/05/27 | F6 - Software: enjambre y estación de tierra | Estación de tierra (app) y procesamiento de datos | 62 |  |
 | S15 | 03/05–16/05/27 | F7 - Validación de campo y specs finales | Pruebas de campo en altura | 46 |  |
 | S16 | 17/05–30/05/27 | F7 - Validación de campo y specs finales | Enjambre real, confiabilidad y especificaciones finales | 55 | G4 |
-| S17 | 31/05–13/06/27 | F8 - Motor propio | Motor propio: diseño electromagnético | 52 |  |
-| S18 | 14/06–27/06/27 | F8 - Motor propio | Motor propio: CAD, planos y proceso de fabricación | 48 |  |
+| S17 | 31/05–13/06/27 | F8 - Motor propio | Motor propio: requisitos, cálculo y reductores (motor/, ADR-013) | 42 |  |
+| S18 | 14/06–27/06/27 | F8 - Motor propio | Motor propio: simulación, CAD, fabricación y guía | 46 |  |
 | S19 | 28/06–11/07/27 | F8 - Motor propio | Motor propio: prototipos, pruebas y decisión | 51 | G5 |
 | S20 | 12/07–25/07/27 | F9 - Electrónica y baterías propias | Electrónica y baterías propias: diseño | 64 |  |
 | S21 | 26/07–08/08/27 | F9 - Electrónica y baterías propias | Electrónica y baterías propias: fabricación e integración | 45 | G6 |
@@ -325,31 +325,29 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | S16-05 | Especificación congelada de electrónica y baterías | Corrientes reales, power budget, energía y C-rate medidos, temperaturas, requisitos de BMS. | `docs/requisitos/spec_electronica_baterias.md` | Alta | 6 | S16-02 |
 | S16-06 | Gate G4: validación de campo y congelamiento de specs | Targets de prioridad Alta cumplidos con COTS; specs de motor, electrónica y baterías aprobadas. | `docs/revisiones/G4_campo.md` | Alta | 3 | S16-05 |
 
-### S17 · Motor propio: diseño electromagnético
+### S17 · Motor propio: requisitos, cálculo y reductores (motor/, ADR-013)
 
-**Fase:** F8 - Motor propio · **Objetivo:** Diseño de motor validado por cálculo y FEMM contra la spec congelada.
-
-| ID | Tarea | Detalle / criterio de aceptación | Entregable | Prio | h | Depende de |
-|---|---|---|---|---|---|---|
-| S17-01 | Topología y materiales | Outrunner (12N14P o 24N28P según tamaño), acero silicio 0.2 mm, imanes N52H en arco, cobre clase H; misma interfaz de montaje del COTS. | `engineering/motor_design/topologia.md` | Alta | 8 | S16-04 |
-| S17-02 | Cálculo analítico del motor | Vueltas por diente, Kv, resistencia, pérdidas en cobre y hierro, densidad de corriente. | `engineering/motor_design/analytic.py` | Alta | 12 | S17-01 |
-| S17-03 | Simulación electromagnética 2D (FEMM) | pyfemm: flujo, cogging, back-EMF y torque; iterar hasta cumplir la spec. | `engineering/motor_design/femm/` | Alta | 16 | S17-02 |
-| S17-04 | Análisis térmico en altura | Red térmica a carga continua con aire de 5,000 msnm; T bobinado < 120 °C. | `engineering/motor_design/thermal.py` | Alta | 6 | S17-03 |
-| S17-05 | Cotizar proveedores de piezas de motor | Estatores laminados, imanes, rodamientos, campanas CNC (Perú vs China) a 10/100/1000 unidades. | `manufacturing/costeo/cotizaciones_motor.md` | Alta | 6 | S17-01 |
-| S17-06 | Make-vs-buy preliminar | Costo unitario propio vs motor COTS caracterizado en S10 (hoja Costo_Motor). | `manufacturing/costeo/make_vs_buy_motor.md` | Alta | 4 | S17-05 |
-
-### S18 · Motor propio: CAD, planos y proceso de fabricación
-
-**Fase:** F8 - Motor propio · **Objetivo:** Motor dibujado, proceso y útiles definidos, materiales pedidos.
+**Fase:** F8 - Motor propio · **Objetivo:** Diseño de motor (directo o con reductor) que en el cálculo supera al comercial.
 
 | ID | Tarea | Detalle / criterio de aceptación | Entregable | Prio | h | Depende de |
 |---|---|---|---|---|---|---|
-| S18-01 | CAD del motor en OpenSCAD + ensamble FreeCAD | Campana, base, eje, rodamientos y retención en OpenSCAD; ensamble y verificación de ajustes H7/g6 en FreeCAD. | `cad/openscad/motor/, cad/freecad/motor/` | Alta | 16 | S17-03 |
-| S18-02 | Planos de fabricación del motor | FreeCAD TechDraw con tolerancias, GD&T básico, materiales y acabados. | `cad/freecad/motor/planos/` | Alta | 8 | S18-01 |
-| S18-03 | Proceso de bobinado y útiles | Esquema de bobinado (estrella/triángulo), jig de bobinado y prensa de imanes. | `manufacturing/procesos/motor_bobinado.md` | Alta | 8 | S18-01 |
-| S18-04 | Balanceo y control de calidad del motor | Procedimiento: Kv, resistencia fase-fase, hipot, vibración y balanceo del rotor. | `manufacturing/calidad/qc_motor.md` | Alta | 6 | S18-03 |
-| S18-05 | Fabricar útiles de producción del motor | Jig de bobinado, prensa de pegado de imanes y soporte de balanceo. | `manufacturing/utiles/` | Alta | 8 | S18-03 |
-| S18-06 | Pedido de materiales para 12 motores prototipo | Estatores, imanes, alambre, rodamientos, campanas; seguimiento de plazos. | `manufacturing/bom/motor_prototipo.csv` | Alta | 2 | S18-02 |
+| S17-01 | M0 · Requisitos del motor y materiales | Puntos de operación (hover, máximo, 4,500/5,000 msnm) desde engineering/ y fichas de acero eléctrico, imanes, cobre y plásticos. | `motor/requisitos/` | Alta | 4 | S09-01 |
+| S17-02 | M1 · Modelo de referencia del motor comercial | Mismo modelo de pérdidas que el propio; reproduce la eficiencia del MN4006 y del M6C12 con error ≤ 2 puntos. | `motor/calculo/loss_model.py` | Alta | 6 | S17-01 |
+| S17-03 | M2 · Dimensionamiento analítico y optimización | Geometría, bobinado, Kv, pérdidas (cobre, hierro con borde láser, imanes), masa y costo; frente de Pareto y 2-3 candidatos por dron. | `motor/calculo/` | Alta | 16 | S17-02 |
+| S17-04 | M3 · Estudio de reductores | Directo vs planetario, cicloidal, armónico y correa: autonomía del dron, masa, inercia reflejada y juego; ADR con la decisión. | `motor/reductores/` | Alta | 12 | S17-03 |
+| S17-05 | Cotizar materiales del motor | Acero eléctrico, imanes N52H, alambre, rodamientos y ejes (Perú vs importación) a 12/100 unidades. | `motor/bom/cotizaciones.md` | Media | 4 | S17-03 |
+
+### S18 · Motor propio: simulación, CAD, fabricación y guía
+
+**Fase:** F8 - Motor propio · **Objetivo:** Motor validado por FEM y térmico, listo para fabricar en casa, con lista de compras y guía didáctica.
+
+| ID | Tarea | Detalle / criterio de aceptación | Entregable | Prio | h | Depende de |
+|---|---|---|---|---|---|---|
+| S18-01 | M4 · Simulación electromagnética 2D (FEM) | Flujo, saturación, cogging, contra-FEM, torque y desmagnetización; coincide con el cálculo en ±5 %. | `motor/fem/` | Alta | 16 | S17-03 |
+| S18-02 | M5 · Análisis térmico y mecánico | Red térmica a 5,000 msnm (bobinado < 120 °C), velocidad crítica, pegado de imanes, rodamientos y piezas impresas (FS ≥ 2). | `motor/calculo/thermal.py` | Alta | 10 | S18-01 |
+| S18-03 | M6 · CAD, archivos de fabricación y útiles | OpenSCAD paramétrico: láminas en DXF (láser), piezas y útiles en STL (impresora), ensamble FreeCAD. | `cad/openscad/motor/, motor/fabricacion/` | Alta | 10 | S18-02 |
+| S18-04 | M6 · Lista de compras de materiales del motor | Materiales por motor y lote de 12 en Excel (como la del prototipo); corte e impresión en casa. | `motor/bom/` | Alta | 4 | S18-03 |
+| S18-05 | M7 · Guía didáctica HTML de las partes del motor | Qué es, qué hace, material, forma y fabricación de cada parte; animación del campo giratorio y armado paso a paso. | `motor/docs/partes.html` | Media | 6 | S18-03 |
 
 ### S19 · Motor propio: prototipos, pruebas y decisión · Gate G5
 
@@ -357,11 +355,11 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 
 | ID | Tarea | Detalle / criterio de aceptación | Entregable | Prio | h | Depende de |
 |---|---|---|---|---|---|---|
-| S19-01 | Fabricar 12 motores prototipo | Bobinado, pegado de imanes, ensamble y balanceo; registrar tiempos reales para el costeo. | `hardware/prototipos/motores/` | Alta | 24 | S18-06 |
-| S19-02 | Caracterizar motores propios | Mismas pruebas que el COTS en S10: Kv, Rm, I0, empuje vs throttle, g/W, temperatura. | `docs/ingenieria/motor_test_report.md` | Alta | 12 | S19-01 |
-| S19-03 | Durabilidad y vibración | 10 h de funcionamiento continuo y vibración con acelerómetro. | `docs/ingenieria/motor_test_report.md` | Alta | 6 | S19-02 |
-| S19-04 | Vuelo con motores propios | Instalar en un DS-I; comparar autonomía y temperaturas vs COTS. | `docs/evidencias/vuelos/motor_propio.md` | Alta | 6 | S19-03 |
-| S19-05 | Gate G5: decisión make-vs-buy del motor | ADR con datos de costo y rendimiento; si el propio no gana, el producto sale con el COTS. | `docs/decisiones.md (ADR motor)` | Alta | 3 | S19-04 |
+| S19-01 | M8 · Fabricar 2 motores prototipo y luego el lote | Corte y apilado de láminas, bobinado, pegado de imanes, ensamble y balanceo; registrar tiempos reales. | `motor/fabricacion/registro.md` | Alta | 24 | S18-04 |
+| S19-02 | M8 · Caracterizar motores propios en el banco | Mismas pruebas que el COTS en S10: Kv, Rm, I0, empuje vs throttle, g/W, temperatura, vibración. | `motor/pruebas/` | Alta | 12 | S19-01 |
+| S19-03 | M8 · Durabilidad y vibración | 10 h de funcionamiento continuo y vibración con acelerómetro. | `motor/pruebas/` | Alta | 6 | S19-02 |
+| S19-04 | M8 · Vuelo con motores propios | Instalar en un DS-I; comparar autonomía y temperaturas vs COTS. | `docs/evidencias/vuelos/motor_propio.md` | Alta | 6 | S19-03 |
+| S19-05 | Gate G5: decisión make-vs-buy del motor | ADR con datos de costo y rendimiento contra los criterios de motor/PLAN.md §2; si el propio no gana, se sigue con el COTS. | `docs/decisiones.md (ADR motor)` | Alta | 3 | S19-04 |
 
 ### S20 · Electrónica y baterías propias: diseño
 
@@ -450,9 +448,9 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 - **Informe de pruebas de campo** (Informe) → `docs/evidencias/campo/informe.md` · tarea S15-06
 - **Especificación congelada del motor** (Informe) → `docs/requisitos/spec_motor.md` · tarea S16-04
 - **Especificación congelada de electrónica y baterías** (Informe) → `docs/requisitos/spec_electronica_baterias.md` · tarea S16-05
-- **Diseño electromagnético del motor** (Informe) → `engineering/motor_design/` · tarea S17-03
-- **Planos de fabricación del motor** (Plano) → `cad/freecad/motor/planos/` · tarea S18-02
-- **Informe de motor propio y decisión make-vs-buy** (Informe) → `docs/ingenieria/motor_test_report.md` · tarea S19-05
+- **Diseño del motor propio (cálculo, reductores, FEM)** (Informe) → `motor/informes/` · tarea S18-01
+- **Archivos de fabricación, lista de compras y guía del motor** (Plano) → `motor/fabricacion/, motor/bom/, motor/docs/` · tarea S18-05
+- **Informe de pruebas del motor propio y decisión make-vs-buy** (Informe) → `motor/pruebas/` · tarea S19-05
 - **PCB de distribución de potencia** (Electrónica) → `electronics/kicad/pdb/` · tarea S20-03
 - **Packs de batería propios** (Electrónica) → `electronics/battery/` · tarea S21-02
 - **FMEA** (Informe) → `docs/calidad/fmea.md` · tarea S22-01

@@ -1,0 +1,230 @@
+{
+  "DS-I": {
+    "vehicle": "DS-I",
+    "rotors": 4,
+    "mtow_kg": 2.433,
+    "prop": {
+      "diameter_in": 15,
+      "pitch_in": 6.75,
+      "inertia_note": "inercia de la hélice: engineering/inertia.py"
+    },
+    "battery": {
+      "cells_series": 6,
+      "v_nominal": 21.6,
+      "v_hover_5000m": 20.91,
+      "v_empty_loaded": 19.8,
+      "max_duty": 0.97
+    },
+    "points": [
+      {
+        "name": "hover_4500m_0C",
+        "rpm": 3821,
+        "torque_nm": 0.1523,
+        "p_shaft_w": 60.9,
+        "thrust_n": 5.96,
+        "cots_current_a": 6.36,
+        "cots_efficiency": 0.8487,
+        "note": "hover con MTOW: condición de autonomía del requisito"
+      },
+      {
+        "name": "hover_5000m_15C",
+        "rpm": 4053,
+        "torque_nm": 0.1541,
+        "p_shaft_w": 65.4,
+        "thrust_n": 5.96,
+        "cots_current_a": 6.43,
+        "cots_efficiency": 0.8535,
+        "note": "hover con MTOW en el caso de diseño (aire caliente y alto)"
+      },
+      {
+        "name": "hover_vacio",
+        "rpm": 3661,
+        "torque_nm": 0.1408,
+        "p_shaft_w": 54.0,
+        "thrust_n": 5.49,
+        "cots_current_a": 5.9,
+        "cots_efficiency": 0.8484,
+        "note": "DS-I liviano (referencia de carga parcial)"
+      },
+      {
+        "name": "maniobra_twr15",
+        "rpm": 4965,
+        "torque_nm": 0.2258,
+        "p_shaft_w": 117.4,
+        "thrust_n": 8.95,
+        "cots_current_a": 9.28,
+        "cots_efficiency": 0.8505,
+        "note": "empuje = 1.5 × peso: maniobras y viento"
+      },
+      {
+        "name": "maximo_twr20",
+        "rpm": 5734,
+        "torque_nm": 0.2963,
+        "p_shaft_w": 177.9,
+        "thrust_n": 11.93,
+        "cots_current_a": 12.09,
+        "cots_efficiency": 0.844,
+        "note": "empuje = 2 × peso a 5,000 msnm: requisito de empuje/peso (corto, < 30 s)"
+      }
+    ],
+    "objective_weights": {
+      "hover_4500m_0C": 0.55,
+      "hover_5000m_15C": 0.25,
+      "hover_vacio": 0.1,
+      "maniobra_twr15": 0.1
+    },
+    "constraints": {
+      "rpm_max_twr20": 5734,
+      "kv_min_rpm_per_v": 324.5,
+      "torque_peak_nm": 0.296,
+      "winding_t_max_c": 120,
+      "magnet_t_max_c": 100,
+      "ambient_c": 20,
+      "air_density_design": 0.6531,
+      "mount": "DMI-S: 4×M3 en Ø19/Ø25",
+      "max_diameter_mm": 50,
+      "max_height_mm": 32,
+      "erpm_max_esc": 200000
+    },
+    "reference_cots": {
+      "name": "T-Motor MN4006 KV380 (AntiGravity)",
+      "kv": 380,
+      "rm_ohm": 0.194,
+      "i0_a": 0.3,
+      "i_max_a": 16,
+      "mass_kg": 0.068,
+      "cost_usd": 75,
+      "mount": "4×M3 Ø19/Ø25 (DMI-S)",
+      "hover_efficiency_cots_selection": 0.849
+    },
+    "targets": {
+      "hover_efficiency_min": 0.88,
+      "mass_max_kg": 0.075,
+      "material_cost_max_usd": 22.5
+    },
+    "check_vs_s09": {
+      "hover_current_a": [
+        6.36,
+        6.4
+      ],
+      "hover_efficiency": [
+        0.8487,
+        0.849
+      ]
+    }
+  },
+  "DS-D": {
+    "vehicle": "DS-D",
+    "rotors": 6,
+    "mtow_kg": 15.069,
+    "prop": {
+      "diameter_in": 26,
+      "pitch_in": 11.7,
+      "inertia_note": "inercia de la hélice: engineering/inertia.py"
+    },
+    "battery": {
+      "cells_series": 12,
+      "v_nominal": 43.2,
+      "v_hover_5000m": 41.7,
+      "v_empty_loaded": 39.6,
+      "max_duty": 0.97
+    },
+    "points": [
+      {
+        "name": "hover_4500m_0C",
+        "rpm": 2581,
+        "torque_nm": 1.0134,
+        "p_shaft_w": 273.9,
+        "thrust_n": 24.63,
+        "cots_current_a": 16.82,
+        "cots_efficiency": 0.8622,
+        "note": "hover con MTOW: condición de autonomía del requisito"
+      },
+      {
+        "name": "hover_5000m_15C",
+        "rpm": 2743,
+        "torque_nm": 1.0229,
+        "p_shaft_w": 293.8,
+        "thrust_n": 24.63,
+        "cots_current_a": 16.97,
+        "cots_efficiency": 0.8665,
+        "note": "hover con MTOW en el caso de diseño (aire caliente y alto)"
+      },
+      {
+        "name": "hover_vacio",
+        "rpm": 2109,
+        "torque_nm": 0.6898,
+        "p_shaft_w": 152.3,
+        "thrust_n": 16.46,
+        "cots_current_a": 11.74,
+        "cots_efficiency": 0.8522,
+        "note": "DS-D de regreso sin la carga"
+      },
+      {
+        "name": "maniobra_twr15",
+        "rpm": 3357,
+        "torque_nm": 1.5069,
+        "p_shaft_w": 529.7,
+        "thrust_n": 36.94,
+        "cots_current_a": 24.57,
+        "cots_efficiency": 0.8681,
+        "note": "empuje = 1.5 × peso: maniobras y viento"
+      },
+      {
+        "name": "maximo_twr20",
+        "rpm": 3876,
+        "torque_nm": 1.9855,
+        "p_shaft_w": 806.0,
+        "thrust_n": 49.26,
+        "cots_current_a": 32.09,
+        "cots_efficiency": 0.8646,
+        "note": "empuje = 2 × peso a 5,000 msnm: requisito de empuje/peso (corto, < 30 s)"
+      }
+    ],
+    "objective_weights": {
+      "hover_4500m_0C": 0.55,
+      "hover_5000m_15C": 0.25,
+      "hover_vacio": 0.1,
+      "maniobra_twr15": 0.1
+    },
+    "constraints": {
+      "rpm_max_twr20": 3876,
+      "kv_min_rpm_per_v": 109.7,
+      "torque_peak_nm": 1.986,
+      "winding_t_max_c": 120,
+      "magnet_t_max_c": 100,
+      "ambient_c": 20,
+      "air_density_design": 0.6531,
+      "mount": "DMI-L: 4×M4 en Ø35",
+      "max_diameter_mm": 80,
+      "max_height_mm": 45,
+      "erpm_max_esc": 120000
+    },
+    "reference_cots": {
+      "name": "MAD M6C12 EEE KV150",
+      "kv": 150,
+      "rm_ohm": 0.1,
+      "i0_a": 0.9,
+      "i_max_a": 45,
+      "mass_kg": 0.257,
+      "cost_usd": 170,
+      "mount": "4×M4 Ø35 (DMI-L)",
+      "hover_efficiency_cots_selection": 0.862
+    },
+    "targets": {
+      "hover_efficiency_min": 0.88,
+      "mass_max_kg": 0.283,
+      "material_cost_max_usd": 51.0
+    },
+    "check_vs_s09": {
+      "hover_current_a": [
+        16.82,
+        16.8
+      ],
+      "hover_efficiency": [
+        0.8622,
+        0.862
+      ]
+    }
+  }
+}

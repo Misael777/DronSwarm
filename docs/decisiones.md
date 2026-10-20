@@ -216,7 +216,7 @@ transportarlo en una camioneta. Con los empujes de diseño (FS 2.5), el momento 
 ---
 
 ## ADR-013 · Adelantar el diseño del motor propio y evaluar reductores
-- Estado: **Propuesta** (2026-10-20, pedido del usuario). **Se aparta de la ADR-004**, que dejaba el motor propio para después del G4 (S17-S19): decide el usuario.
+- Estado: **Aceptada** (2026-10-20, decisión del usuario). Se aparta de la ADR-004, que dejaba el motor propio para después del G4 (S17-S19).
 
 ### Contexto
 Los motores comerciales cuestan el 16 % del DS-I (US$300) y el 25 % del DS-D (US$1,020); la propulsión completa,

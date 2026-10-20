@@ -1,0 +1,15 @@
+{
+  "MN4006 KV380": {
+    "kv": 380, "r_line_ohm": 0.194, "i0_a": 0.3, "i0_at_v": 22, "i_max_a": 16, "p_max_w": 380, "mass_kg": 0.068,
+    "configuration": "18N24P", "pole_pairs": 12, "outer_d_mm": 44.35, "height_mm": 21, "shaft_mm": 4,
+    "bench_csv": "mn4006_kv380_15x5.csv", "bench_v": 24, "bench_surface_t_full_c": 46,
+    "source": "ligpower.com (2026-10-20): ficha y tabla de pruebas del fabricante"
+  },
+  "M6C12 KV150": {
+    "kv": 150, "r_line_ohm": 0.090, "i0_a": 0.67, "i0_at_v": 20, "i_max_a": 36.18, "p_max_w": 1725, "mass_kg": 0.257,
+    "configuration": "24N28P", "pole_pairs": 14, "outer_d_mm": 72, "height_mm": 33.4, "shaft_mm": 6, "bearings": "696ZZ ×2",
+    "max_torque_nm": 2.64, "max_thrust_kg": 9.4,
+    "bench_csv": null,
+    "source": "openelab.io / rcdrone.top (2026-10-20): ficha de MAD Components; la tabla de pruebas solo está en imagen"
+  }
+}
