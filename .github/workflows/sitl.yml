@@ -1,0 +1,58 @@
+# S13-06 · Regresión de vuelo en SITL (PX4 1.15.4, simulador interno SIH: sin Gazebo, apto para CI).
+# Corre a mano (Actions → SITL → Run workflow) y una vez por semana; los cambios rápidos los cubre ci.yml.
+name: SITL
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 6 * * 1"          # lunes 06:00 UTC
+
+jobs:
+  sitl:
+    runs-on: ubuntu-22.04
+    timeout-minutes: 90
+    env:
+      PX4_DIR: ${{ github.workspace }}/PX4-Autopilot
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          lfs: false
+      - name: PX4 v1.15.4
+        run: |
+          git clone --depth 1 --branch v1.15.4 --recurse-submodules --shallow-submodules \
+            https://github.com/PX4/PX4-Autopilot.git "$PX4_DIR"
+          git -C "$PX4_DIR/platforms/nuttx/NuttX/nuttx" tag nuttx-11.0.0 || true
+          for p in simulation/px4/patches/*.patch; do git -C "$PX4_DIR" apply "$GITHUB_WORKSPACE/$p"; done
+      - name: Caché del build de PX4
+        uses: actions/cache@v4
+        with:
+          path: PX4-Autopilot/build/px4_sitl_default
+          key: px4-sitl-v1.15.4-${{ hashFiles('simulation/px4/patches/*.patch') }}
+      - name: Dependencias de PX4 (sin NuttX ni simuladores gráficos)
+        run: bash "$PX4_DIR/Tools/setup/ubuntu.sh" --no-nuttx --no-sim-tools
+      - name: Compilar PX4 SITL
+        run: make -C "$PX4_DIR" px4_sitl
+      - uses: astral-sh/setup-uv@v5
+      - name: Entorno de Python
+        run: |
+          uv venv .venv
+          uv pip install --python .venv/bin/python -r pyproject.toml --extra dev
+      - name: "Prueba de humo (SIH): despegue, hover y aterrizaje"
+        run: |
+          bash tools/sitl/run_sih.sh ci_out
+          .venv/bin/python -c "import json,sys; d=json.load(open('ci_out/smoke_test.json')); print(d); sys.exit(0 if d.get('passed', d.get('ok')) else 1)"
+      - name: Enjambre (simulador cinemático, 50 corridas por condición)
+        run: |
+          .venv/bin/python -m control.swarm.campaign --runs 50 --out ci_out/campana --workers 4
+          .venv/bin/python - <<'EOF'
+          import json, sys
+          s = json.load(open("ci_out/campana/resumen.json"))
+          bad = {k: v["runs_with_collision"] for k, v in s.items() if k != "sin_evitacion" and v["runs_with_collision"]}
+          print("colisiones:", bad or "ninguna")
+          sys.exit(1 if bad else 0)
+          EOF
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sitl-regresion
+          path: ci_out/
