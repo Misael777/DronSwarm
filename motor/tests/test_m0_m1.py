@@ -69,3 +69,14 @@ def test_chosen_designs_beat_cots():
         assert c["eta_weighted"] - c["reference"]["weighted_efficiency"] >= 0.02
         assert c["endurance_rel"] > 1.0
         assert c["ops"]["maniobra_twr15"]["t_winding"] < 120
+
+
+def test_direct_drive_beats_home_built_gearboxes():
+    import json
+    from pathlib import Path
+    res = json.loads((Path(__file__).resolve().parents[1] / "informes" / "M3_reductores.json").read_text())
+    for v in res.values():
+        direct = next(x for x in v["rows"] if x["type"] == "directo")
+        home = [x for x in v["rows"] if x["feasible"] and x["type"] not in ("directo", "planetario_aero")]
+        assert all(x["endurance_rel"] < direct["endurance_rel"] for x in home)
+        assert not any(x["feasible"] for x in v["rows"] if x["type"] == "armonico")

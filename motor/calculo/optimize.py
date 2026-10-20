@@ -100,25 +100,28 @@ def evaluate(d: Design, req: dict, ref: dict) -> dict | None:
     if dm > 0.7:
         return None
     w = req["objective_weights"]
-    eta = sum(w[k] * ops[k]["efficiency"] for k in w) / sum(w.values())
+    # eficiencia útil: potencia en la hélice / potencia eléctrica (con reductor, p_useful_w < potencia en el eje del motor)
+    eff = {k: pts[k].get("p_useful_w", ops[k]["p_shaft"]) / ops[k]["p_in"] for k in ops}
+    eta = sum(w[k] * eff[k] for k in w) / sum(w.values())
     n_rot = req["rotors"]
-    mtow_new = req["mtow_kg"] + n_rot * (m["total"] - ref["mass_model_kg"])     # masa: modelo contra modelo
+    extra = req.get("extra_mass_kg", 0.0)                                        # reductor (M3)
+    mtow_new = req["mtow_kg"] + n_rot * (m["total"] + extra - ref["mass_model_kg"])     # masa: modelo contra modelo
     endurance_rel = eta / ref["weighted_efficiency"] * (req["mtow_kg"] / mtow_new) ** 1.5
     cost = material_cost(d, g, m)
-    return {"design": d, "geometry": g, "mass": m, "cost": cost, "ops": ops, "eta_weighted": eta, "endurance_rel": endurance_rel,
+    return {"design": d, "geometry": g, "mass": m, "cost": cost, "ops": ops, "eff_useful": eff, "eta_weighted": eta, "endurance_rel": endurance_rel,
             "mtow_new": mtow_new, "demag": dm, "height": height, "r_line_20": resistance_line(d, g, 20)}
 
 
-def random_design(veh: str, rng: random.Random) -> Design:
-    r = RANGES[veh]
+def random_design(veh: str, rng: random.Random, r: dict | None = None) -> Design:
+    r = r or RANGES[veh]
     ns, p = rng.choice(r["combos"])
     return Design(veh, ns, p, rng.uniform(*r["d"]), rng.uniform(*r["l"]), GAP[veh], rng.uniform(*r["hm"]),
                   rng.uniform(0.15, 0.42), rng.uniform(1.35, 1.8), rng.uniform(1.2, 1.6), 1, rng.random() < 0.5,
                   steel=rng.choice(STEEL_OPTS), magnet=rng.choice(MAGNET_OPTS))
 
 
-def perturb(d: Design, rng: random.Random, s: float) -> Design:
-    r = RANGES[d.vehicle]
+def perturb(d: Design, rng: random.Random, s: float, r: dict | None = None) -> Design:
+    r = r or RANGES[d.vehicle]
 
     def j(x, lo, hi):
         return min(hi, max(lo, x * (1 + rng.gauss(0, s))))
@@ -128,9 +131,10 @@ def perturb(d: Design, rng: random.Random, s: float) -> Design:
 
 def search(veh: str, req: dict, ref: dict, samples: int, seed: int = 1) -> list[dict]:
     rng = random.Random(seed)
+    ranges = req.get("ranges")
     out = []
     for _ in range(samples):
-        e = evaluate(random_design(veh, rng), req, ref)
+        e = evaluate(random_design(veh, rng, ranges), req, ref)
         if e:
             out.append(e)
     # refinamiento: 3 rondas alrededor de los 40 mejores en autonomía y de los 40 más livianos con buena autonomía
@@ -139,7 +143,7 @@ def search(veh: str, req: dict, ref: dict, samples: int, seed: int = 1) -> list[
         seeds += sorted([e for e in out if e["endurance_rel"] > 1.0], key=lambda e: e["mass"]["total"])[:40]
         for e0 in seeds:
             for _ in range(samples // 400):
-                e = evaluate(perturb(e0["design"], rng, s), req, ref)
+                e = evaluate(perturb(e0["design"], rng, s, ranges), req, ref)
                 if e:
                     out.append(e)
     return out

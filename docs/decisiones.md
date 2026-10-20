@@ -234,3 +234,25 @@ comprar materiales. Pidió además evaluar un reductor (cicloidal, armónico u o
 - Los prototipos v1 siguen con motores comerciales; nada del frame cambia (el motor propio respeta la interfaz DMI, ADR-011).
 - Las tareas S17-S19 del plan se reescriben con las fases M0-M8 de `motor/PLAN.md`.
 - El Gate G5 (fabricar o comprar) usa los criterios del §2 de `motor/PLAN.md`.
+
+---
+
+## ADR-014 · Motor propio de accionamiento directo (sin reductor)
+- Estado: **Propuesta** (2026-10-20, M3 del motor propio). Decide el usuario.
+
+### Contexto
+El usuario pidió evaluar un reductor de alto torque (cicloidal, armónico u otro) para el motor propio. En M3
+(`motor/informes/M3_reductores.md`) se optimizó un motor rápido a la medida para cada reductor y relación, con el mismo
+modelo de M2, y se comparó el conjunto a nivel dron.
+
+### Decisión
+- **Motor directo** en el DS-I y el DS-D. Da +3.1 % y +5.7 % de autonomía sobre el comercial con US$12 y US$32 de materiales.
+- Todos los reductores hechos en casa pierden contra el directo: planetario de acero cortado con láser (−3 a −6 puntos de
+  autonomía), correa (−10 a −14), planetario impreso (−17 a −21) y cicloidal (−13 en el DS-I; no viable en el DS-D por el
+  límite de eRPM del ESC). El armónico no es viable: su relación mínima (~30) pide más de 100,000 rpm al motor.
+- La única variante que gana en el cálculo es un planetario comercial de aeromodelismo, con supuestos optimistas
+  (+2.4 a +3.3 puntos), pero cuesta US$80-150 por motor, más que el motor comercial que se quiere reemplazar.
+
+### Consecuencias
+- M4-M8 siguen con los motores directos elegidos en M2.
+- Se revisa solo si aparece un planetario liviano, durable y barato, o para un DS-H con hélices de 30" o más.
