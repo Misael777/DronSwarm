@@ -21,6 +21,7 @@ from motor.calculo.design import (  # noqa: E402
     RECON,
     calibrate_with_mn4006,
     thermal_calibration,
+    wire_choice,
 )
 from motor.calculo.loss_model import read_bench  # noqa: E402
 from motor.calculo.optimize import weighted  # noqa: E402
@@ -38,17 +39,13 @@ LOSS_COLORS = {"cobre": "#2a78d6", "hierro": "#eb6834", "imanes": "#1baf7a", "ro
 CHOICE = {"DS-I": "B_max_eficiencia_masa_meta", "DS-D": "C_liviano_que_cumple"}
 NAMES = {"A_max_autonomia": "A · máxima autonomía", "B_max_eficiencia_masa_meta": "B · máxima eficiencia con la masa meta",
          "C_liviano_que_cumple": "C · el más liviano que cumple"}
-WIRES_MM = (0.3, 0.4, 0.5, 0.6)
 
 
 def wire_plan(a_cond_m2: float) -> str:
-    """Hilos en paralelo para la sección de cobre de una vuelta (bobinado a mano: hilo ≤ 0.6 mm)."""
-    opts = []
-    for dw in WIRES_MM:
-        n = a_cond_m2 / (math.pi * (dw * 1e-3) ** 2 / 4)
-        opts.append((abs(n - round(n)) / max(round(n), 1), max(1, round(n)), dw))
-    _, n, dw = min(o for o in opts if 2 <= o[1] <= 12) if any(2 <= o[1] <= 12 for o in opts) else min(opts)
-    return f"{n} × Ø{dw} mm en paralelo"
+    """Hilos en paralelo para la sección de cobre de una vuelta (ver design.wire_choice)."""
+    w = wire_choice(a_cond_m2)
+    extra = f" (cobre {(1 / w['r_factor'] - 1) * 100:+.0f} % del diseño)" if abs(w["r_factor"] - 1) > 0.015 else ""
+    return w["label"] + extra
 
 
 def magnet_spec(c: dict) -> str:
@@ -196,7 +193,7 @@ def main() -> None:
               row("Diente / yugo / ranura", lambda c: f"{c['geometry']['w_tooth'] * 1e3:.2f} / {c['geometry']['h_yoke'] * 1e3:.2f} / "
                   f"{c['geometry']['h_slot'] * 1e3:.1f} mm"),
               row("Bobinado", lambda c: f"{c['design']['turns']} vueltas/diente, {'triángulo' if c['design']['delta'] else 'estrella'}, "
-                  f"{wire_plan(c['geometry']['a_cond'])}"),
+                  f"{wire_plan(c['geometry']['a_cond_ideal'])}"),
               row("Imanes", magnet_spec),
               row("Rotor", lambda c: f"anillo de acero {c['geometry']['h_rotor_yoke'] * 1e3:.1f} mm, Ø exterior {c['geometry']['r_out'] * 2e3:.1f} mm, "
                   f"alto {c['height'] * 1e3:.0f} mm"),

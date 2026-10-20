@@ -25,7 +25,12 @@ from motor.calculo.materials import COPPER, MAGNETS, PLASTICS, STEELS, laser_cut
 from motor.calculo.winding import layout
 
 MU0 = 4e-7 * math.pi
-K_LEAK = 0.92                   # fuga de flujo de los imanes
+# Fuga de flujo de los imanes. Calibrada con la FEM 2D de M4 (1ª vuelta): el flujo enlazado salía 3.5-5.8 % mayor que el
+# cálculo con 0.92 → 0.96 (algo por debajo de la FEM, que no tiene el flujo de extremo de los paquetes cortos)
+K_LEAK = 0.96
+# Desmagnetización: la FEM de M4 da un campo inverso 1.4-1.5 veces el del circuito simple de demag_margin (concentración en
+# los bordes del imán y bajo las aberturas de ranura) → se multiplica por 1.5
+K_DEMAG = 1.5
 K_STACK = 0.95                  # factor de apilado de las láminas (aislante + adhesivo)
 # Factor de calibración de las pérdidas en el hierro (catálogo × borde láser × este factor), ajustado con el MN4006
 # reconstruido contra su tabla de banco y su corriente en vacío (calibrate_with_mn4006): da ~0.5. Se usa 0.6 y el
@@ -53,7 +58,7 @@ MAGNET_PIECE_COST = {"DS-I": 0.15, "DS-D": 0.45}  # mínimo por imán (compra de
 # a nivel del mar su superficie llega a 46 °C (25 °C de ambiente); K_THERMAL se resuelve para reproducirlo. El aire que circula por
 # dentro del estator y la conducción al brazo multiplican por ~30 lo que daría solo la superficie externa. Ver
 # `thermal_calibration()`; M5 lo reemplaza por una red térmica.
-K_THERMAL = 29.3
+K_THERMAL = 26.9
 T_RUNAWAY = 400.0               # tope numérico: por encima, el diseño ya está descartado
 
 
@@ -111,7 +116,10 @@ def geometry(d: Design) -> dict | None:
     h_ry = max(1.0e-3, phi_pole / 2 / (ROTOR_YOKE_B * d.l_stack))
     r_out = r_mag_out + h_ry + BELL_WALL
     # bobinado
-    a_cond = d.fill * a_slot / (2 * d.turns)                       # sección de cobre de una vuelta
+    a_ideal = d.fill * a_slot / (2 * d.turns)                      # sección de cobre de una vuelta con el relleno de diseño
+    a_cond = wire_choice(a_ideal)["area_m2"]                       # la que da el alambre estándar que se compra (≤ ideal + 2 %)
+    if a_cond <= 0:
+        return None
     coil_thick = a_slot * d.fill / (2 * max(h_slot, 1e-4)) + INSULATION
     l_turn = 2 * d.l_stack + 2 * w_tooth + math.pi * coil_thick + 4 * INSULATION
     overhang = coil_thick + 1.0e-3                                 # cabeza de bobina sobre el paquete, por lado
@@ -123,8 +131,28 @@ def geometry(d: Design) -> dict | None:
     kv = 60 / (2 * math.pi * ke_line)
     return {"winding": w, "k_carter": k_carter, "bg20": bg20, "w_tooth": w_tooth, "h_yoke": h_yoke, "h_slot": h_slot,
             "r_bore": r_bore, "a_slot": a_slot, "r_mag_in": r_mag_in, "r_mag_out": r_mag_out, "h_rotor_yoke": h_ry, "r_out": r_out,
-            "a_cond": a_cond, "l_turn": l_turn, "overhang": overhang, "n_series": n_series, "ke_line_20": ke_line, "kv": kv,
+            "a_cond": a_cond, "a_cond_ideal": a_ideal, "l_turn": l_turn, "overhang": overhang, "n_series": n_series, "ke_line_20": ke_line, "kv": kv,
             "phi_pole": phi_pole, "tau_p": tau_p, "slot_w_bottom": slot_w_bottom}
+
+
+WIRE_DIAMETERS_MM = (0.25, 0.28, 0.30, 0.32, 0.35, 0.38, 0.40, 0.45, 0.50, 0.55, 0.60)   # alambre esmaltado estándar
+
+
+def wire_choice(a_cond_m2: float, max_strands: int = 8) -> dict:
+    """Hilos en paralelo y diámetro estándar con la mayor sección de cobre que NO pasa la del diseño (+2 %: cabe en la ranura).
+    Bobinado a mano: hilo ≤ 0.6 mm. Devuelve también cuánto sube la resistencia contra la del diseño."""
+    opts = [(n * math.pi * (dw * 1e-3) ** 2 / 4, n, dw) for dw in WIRE_DIAMETERS_MM for n in range(1, max_strands + 1)]
+    opts = [o for o in opts if o[0] <= a_cond_m2 * 1.02]
+    best = None
+    if opts:
+        top = max(o[0] for o in opts)
+        # a mano conviene la menor cantidad de hilos: entre las que pierden ≤ 3 % de cobre, la de menos hilos (y más cobre)
+        best = min((o for o in opts if o[0] >= 0.97 * top), key=lambda o: (o[1], -o[0]))
+    if best is None:                                               # ni un hilo del más fino cabe: no se puede bobinar
+        return {"strands": 0, "d_mm": 0.0, "area_m2": 0.0, "r_factor": math.inf, "label": "no cabe"}
+    area, n, dw = best
+    return {"strands": n, "d_mm": dw, "area_m2": area, "r_factor": a_cond_m2 / area,
+            "label": f"{n} × Ø{dw:.2f} mm en paralelo" if n > 1 else f"1 × Ø{dw:.2f} mm"}
 
 
 def resistance_line(d: Design, g: dict, t_c: float = 20.0) -> float:
@@ -231,7 +259,7 @@ def demag_margin(d: Design, g: dict, i_peak: float, t_mag: float) -> float:
     i_coil = i_peak / (math.sqrt(3) if d.delta else 1)
     h_rev = d.turns * i_coil * 1.5 / (2 * (d.h_magnet + mag.mu_rec * d.gap))      # ×1.5: pico de corriente en conmutación
     h_magnet = mag.br(t_mag) / (MU0 * mag.mu_rec) * (d.gap / (d.h_magnet + d.gap))  # campo propio de trabajo (desmagnetizante)
-    return (h_rev + h_magnet) / (mag.hcj(t_mag) * 1e3)
+    return K_DEMAG * (h_rev + h_magnet) / (mag.hcj(t_mag) * 1e3)
 
 
 def summary(d: Design) -> dict:
@@ -243,10 +271,11 @@ def summary(d: Design) -> dict:
             "r_line_20": resistance_line(d, g, 20.0)}
 
 
-# MN4006 reconstruido desde su ficha (18N24P, estator 40×6 mm, Ø44.35 mm, Kv 380, 194 mΩ): láminas de 0.2 mm, dientes a 1.9 T
-MN4006_RECON = Design("DS-I", 18, 12, 40e-3, 6e-3, 0.3e-3, 1.0e-3, 0.30, 1.9, 1.5, 10, False, steel="NO20", fill=0.42)
+# MN4006 reconstruido desde su ficha (18N24P, estator 40×6 mm, Ø44.35 mm, Kv 380, 194 mΩ): láminas de 0.2 mm, dientes a 1.95 T,
+# relleno de fábrica 0.45
+MN4006_RECON = Design("DS-I", 18, 12, 40e-3, 6e-3, 0.3e-3, 0.9e-3, 0.28, 1.95, 1.5, 10, False, steel="NO20", fill=0.45)
 # M6C12 reconstruido (24N28P, estator 62×12 mm, Ø72 mm, Kv 150, 90 mΩ). Sin tabla de banco: solo ficha.
-M6C12_RECON = Design("DS-D", 24, 14, 62e-3, 12e-3, 0.4e-3, 2.0e-3, 0.25, 1.75, 1.5, 5, False, steel="NO20", fill=0.42)
+M6C12_RECON = Design("DS-D", 24, 14, 62e-3, 12e-3, 0.4e-3, 1.8e-3, 0.25, 1.8, 1.5, 5, False, steel="NO20", fill=0.42)
 RECON = {"DS-I": MN4006_RECON, "DS-D": M6C12_RECON}
 
 
