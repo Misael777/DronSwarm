@@ -1,0 +1,18 @@
+{
+  "drones": [
+    "ds_i_0",
+    "ds_i_1",
+    "ds_i_2",
+    "ds_i_3",
+    "ds_i_4",
+    "ds_i_5"
+  ],
+  "samples": 6596,
+  "collisions": 0,
+  "contacts": [],
+  "min_separation_m": 2.43,
+  "min_separation_pair": "ds_i_4|ds_i_5",
+  "min_separation_t_s": 86.7,
+  "min_obstacle_clearance_m": 3.29,
+  "max_altitude_m": 11.5
+}

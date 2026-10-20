@@ -1,0 +1,114 @@
+{
+  "n": 6,
+  "completed": true,
+  "aborted": false,
+  "duration_s": 69.6,
+  "phases": [
+    {
+      "phase": "formar_v",
+      "t_start": 0.0,
+      "timed_out": false,
+      "form_error_end_m": 0.28,
+      "t_end": 6.3,
+      "duration_s": 6.3
+    },
+    {
+      "phase": "transito_v",
+      "t_start": 6.3,
+      "timed_out": false,
+      "form_error_end_m": 0.39,
+      "t_end": 27.8,
+      "duration_s": 21.5
+    },
+    {
+      "phase": "circulo",
+      "t_start": 27.8,
+      "timed_out": false,
+      "form_error_end_m": 0.3,
+      "t_end": 33.7,
+      "duration_s": 5.9
+    },
+    {
+      "phase": "cruce",
+      "t_start": 33.7,
+      "timed_out": false,
+      "form_error_end_m": 1.25,
+      "t_end": 45.8,
+      "duration_s": 12.2
+    },
+    {
+      "phase": "linea_regreso",
+      "t_start": 45.8,
+      "timed_out": false,
+      "form_error_end_m": 0.26,
+      "t_end": 69.5,
+      "duration_s": 23.6
+    }
+  ],
+  "formation_error_p50_m": 1.09,
+  "formation_error_p95_m": 2.76,
+  "landed": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "lost_link": [],
+  "ok": 6,
+  "distributed": true,
+  "nodes_with_log": 6,
+  "radio": {
+    "model": "mesh_900",
+    "extra_loss": 0.3,
+    "packets_sent": 3983,
+    "dropped_by_radio": 5566
+  },
+  "nodes": [
+    {
+      "id": 0,
+      "lost_link": false,
+      "min_neighbors": 4,
+      "dropped_by_radio": 932,
+      "ground_timeout": false
+    },
+    {
+      "id": 1,
+      "lost_link": false,
+      "min_neighbors": 4,
+      "dropped_by_radio": 989,
+      "ground_timeout": false
+    },
+    {
+      "id": 2,
+      "lost_link": true,
+      "min_neighbors": 0,
+      "dropped_by_radio": 663,
+      "ground_timeout": true
+    },
+    {
+      "id": 3,
+      "lost_link": false,
+      "min_neighbors": 4,
+      "dropped_by_radio": 998,
+      "ground_timeout": false
+    },
+    {
+      "id": 4,
+      "lost_link": false,
+      "min_neighbors": 4,
+      "dropped_by_radio": 976,
+      "ground_timeout": false
+    },
+    {
+      "id": 5,
+      "lost_link": false,
+      "min_neighbors": 4,
+      "dropped_by_radio": 1008,
+      "ground_timeout": false
+    }
+  ],
+  "drop_out": "2:40",
+  "passed": true
+}

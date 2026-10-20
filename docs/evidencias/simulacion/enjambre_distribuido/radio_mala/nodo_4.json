@@ -1,0 +1,27 @@
+{
+  "id": 4,
+  "events": [
+    [
+      1792463029.73,
+      "conectado a PX4; esperando START de tierra"
+    ],
+    [
+      1792463040.54,
+      "en el aire, offboard"
+    ],
+    [
+      1792463113.21,
+      "fin: LAND"
+    ],
+    [
+      1792463132.23,
+      "en tierra"
+    ]
+  ],
+  "min_neighbors": 4,
+  "ground_timeout": false,
+  "sent": 736,
+  "received": 2981,
+  "dropped_by_radio": 976,
+  "lost_link": false
+}

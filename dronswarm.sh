@@ -349,8 +349,9 @@ act_ours() {
     fi
     while true; do
         opt="$(wt --title "Nuestros drones (S05-S06)" --default-item "${opt:-enjambre}" --menu \
-            "Modelos generados desde el dimensionamiento del S04 (peso, inercias, motores a 4,500 msnm):" "$H" "$W" 18 \
+            "Modelos generados desde el dimensionamiento del S04 (peso, inercias, motores a 4,500 msnm):" "$H" "$W" 19 \
             enjambre "Enjambre de 6 DS-I: formación en V, torre, círculo, cruce y regreso (S06)" \
+            enjambre_dist "Enjambre DISTRIBUIDO: un proceso por dron, como en las computadoras a bordo (S13)" \
             enjambre_radio "Enjambre con radio mala: 30 % de pérdida y un dron que se queda sin radio" \
             sectores "HU-08: 6 drones levantan un área por sectores y 'abortar todo'" \
             montecarlo "Simulador rápido sin Gazebo: 50 corridas del enjambre (≈ 1 min)" \
@@ -390,6 +391,9 @@ act_ours() {
             enjambre) run_ours "Enjambre de 6 DS-I" "Consenso + evitación + radio simulada. Forman en V, pasan una torre de iluminación, hacen un círculo, cruzan todos por el centro y vuelven en línea (≈ 5 min)." \
                           SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i
                       show_swarm_plot ;;
+            enjambre_dist) run_ours "Enjambre distribuido (6 nodos + tierra)" "Cada dron corre su propio nodo y se comunica por la red con la radio emulada; la tierra solo secuencia las fases (≈ 6 min)." \
+                               SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i MISSION=swarm_dist
+                           show_swarm_plot ;;
             enjambre_radio) run_ours "Enjambre con radio mala" "30 % de paquetes perdidos y el dron 2 se queda sin radio a los 40 s: se detiene, sube 8 m y los demás lo esquivan (≈ 5 min)." \
                                 SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i MISSION_ARGS="--loss 0.3 --drop-out 2:40"
                             show_swarm_plot ;;

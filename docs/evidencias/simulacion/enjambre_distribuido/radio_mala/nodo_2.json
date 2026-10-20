@@ -1,0 +1,35 @@
+{
+  "id": 2,
+  "events": [
+    [
+      1792463030.76,
+      "conectado a PX4; esperando START de tierra"
+    ],
+    [
+      1792463040.53,
+      "en el aire, offboard"
+    ],
+    [
+      1792463071.25,
+      "RADIO CAÍDA (emulada)"
+    ],
+    [
+      1792463081.16,
+      "sin enlace con tierra por 10 s → RTL"
+    ],
+    [
+      1792463081.16,
+      "fin: ABORT → RTL"
+    ],
+    [
+      1792463141.55,
+      "en tierra"
+    ]
+  ],
+  "min_neighbors": 0,
+  "ground_timeout": true,
+  "sent": 310,
+  "received": 1820,
+  "dropped_by_radio": 663,
+  "lost_link": true
+}

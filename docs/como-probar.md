@@ -20,6 +20,7 @@ carga cooperativa de 10 kg. A mano:
 ```bash
 GUI=1 SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i bash tools/sitl/run_gz_multi.sh       # enjambre S06 (≈ 5 min)
 MISSION_ARGS="--loss 0.3 --drop-out 2:40" SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i bash tools/sitl/run_gz_multi.sh
+SCENE=swarm MODELS=ds_i,ds_i,ds_i,ds_i,ds_i,ds_i MISSION=swarm_dist bash tools/sitl/run_gz_multi.sh   # S13: un proceso nodo por dron + tierra (≈ 6 min)
 GUI=1 SCENE=swarm MODEL=ds_d MISSION=fault MISSION_ARGS="--case motor" bash tools/sitl/run_gz_multi.sh 1   # motor | gps | battery | link
 .venv/bin/python -m control.swarm.sim_kinematic --runs 50          # simulador rápido sin Gazebo (≈ 1 min)
 .venv/bin/python -m control.swarm.campaign --runs 200 --out /tmp/campana   # campaña Monte Carlo completa (≈ 20 min)

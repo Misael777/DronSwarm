@@ -1,0 +1,59 @@
+{
+  "n": 6,
+  "completed": true,
+  "aborted": false,
+  "duration_s": 67.3,
+  "phases": [
+    {
+      "phase": "formar_v",
+      "t_start": 0.0,
+      "timed_out": false,
+      "form_error_end_m": 0.22,
+      "t_end": 7.1,
+      "duration_s": 7.1
+    },
+    {
+      "phase": "transito_v",
+      "t_start": 7.1,
+      "timed_out": false,
+      "form_error_end_m": 0.28,
+      "t_end": 28.6,
+      "duration_s": 21.5
+    },
+    {
+      "phase": "circulo",
+      "t_start": 28.6,
+      "timed_out": false,
+      "form_error_end_m": 0.26,
+      "t_end": 34.2,
+      "duration_s": 5.6
+    },
+    {
+      "phase": "cruce",
+      "t_start": 34.2,
+      "timed_out": false,
+      "form_error_end_m": 0.27,
+      "t_end": 44.0,
+      "duration_s": 9.8
+    },
+    {
+      "phase": "linea_regreso",
+      "t_start": 44.0,
+      "timed_out": false,
+      "form_error_end_m": 0.15,
+      "t_end": 67.2,
+      "duration_s": 23.2
+    }
+  ],
+  "formation_error_p50_m": 0.95,
+  "formation_error_p95_m": 2.47,
+  "landed": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "lost_link": []
+}

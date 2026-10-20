@@ -89,6 +89,15 @@ def write() -> Path:
     elif sitl1:
         rows.append(f"| HU-08 | Enjambre de 6 en formación cerrada (PX4 + Gazebo, 1 corrida) | separación mínima {sitl1['min_separation_m']} m, "
                     f"colisiones {sitl1['collisions']} | 0 colisiones en 20 corridas | 🟡 campaña pendiente |")
+    for case, label, crit in (("nominal", "un proceso nodo por dron + tierra, como en las computadoras a bordo", "igual que el S06 centralizado"),
+                              ("radio_mala", "30 % de pérdida y el dron 2 sin radio a los 40 s",
+                               "sin colisiones; el dron sin radio vuelve solo a casa y los demás siguen")):
+        dist = SIM / "enjambre_distribuido" / case
+        r, sg = j(dist / "resultado.json"), j(dist / "seguridad.json")
+        if r and sg:
+            rows.append(f"| HU-08 | Enjambre **distribuido** (S13): {label} | {r['ok']} de {r['n']} en tierra; error de formación p50 "
+                        f"{r['formation_error_p50_m']} m; separación mínima {sg['min_separation_m']} m; colisiones {sg['collisions']}; "
+                        f"{r['radio']['dropped_by_radio']} paquetes perdidos | {crit} | {ok(r['passed'] and sg['collisions'] == 0)} |")
     if nominal:
         rows.append(f"| HU-08 | Simulador rápido: {kin_runs} corridas en 8 condiciones (radio con 30-50 % de pérdida, caída de radio, viento) | "
                     f"{kin_coll} corridas con colisión; separación mínima {min(v['min_separation_m']['min'] for k, v in kin.items() if k != 'sin_evitacion')} m | "
@@ -161,7 +170,7 @@ def write() -> Path:
         "",
         "## Carpetas",
         "",
-        "- `enjambre_cinematico/` campaña Monte Carlo · `enjambre_sitl/` enjambre en PX4 + Gazebo · `hu08_sectores/` levantamiento por sectores",
+        "- `enjambre_cinematico/` campaña Monte Carlo · `enjambre_sitl/` enjambre en PX4 + Gazebo · `enjambre_distribuido/` un nodo por dron (S13) · `hu08_sectores/` levantamiento por sectores",
         "- `fallas/<caso>/` inyección de fallas · `calculo_vs_sim/` métricas de vuelo contra el dimensionamiento",
         "- Misiones del S05 (inspección, entrega, carga cooperativa): `docs/evidencias/sitl/`",
         "- Para verlo en vivo: `./dronswarm.sh` → **N** (con ventana de Gazebo).",

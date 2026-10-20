@@ -14,6 +14,8 @@ Todo esto es **simulación**: PX4 real (el mismo autopiloto que volará) con dro
 | (pedido) | Carga cooperativa: 3 DS-D levantan 10 kg (S05) | caja a 3.37 m, trasladada 15.7 m | levantar, trasladar y aterrizar | ✅ vista previa (reparto de carga: v2) |
 | HU-08 | 6 DS-I levantan un área por sectores y 'abortar todo' (PX4 + Gazebo) | sectores asignados, capas 30-80 m, separación mínima 3D 11.77 m, todos en casa 107.2 s después de abortar | sectores, altitudes separadas, nunca < 10 m, abortar con un botón | ✅ cumple |
 | HU-08 | Enjambre de 6 en formación cerrada: V, torre, círculo, cruce, regreso (PX4 + Gazebo, 20 corridas) | 0 corridas con colisión; separación mínima 2.23 m; torre a 3.11 m | 0 colisiones en 20 corridas (S06-03) | ✅ cumple |
+| HU-08 | Enjambre **distribuido** (S13): un proceso nodo por dron + tierra, como en las computadoras a bordo | 6 de 6 en tierra; error de formación p50 0.95 m; separación mínima 2.43 m; colisiones 0; 0 paquetes perdidos | igual que el S06 centralizado | ✅ cumple |
+| HU-08 | Enjambre **distribuido** (S13): 30 % de pérdida y el dron 2 sin radio a los 40 s | 6 de 6 en tierra; error de formación p50 1.09 m; separación mínima 2.79 m; colisiones 0; 5566 paquetes perdidos | sin colisiones; el dron sin radio vuelve solo a casa y los demás siguen | ✅ cumple |
 | HU-08 | Simulador rápido: 1600 corridas en 8 condiciones (radio con 30-50 % de pérdida, caída de radio, viento) | 0 corridas con colisión; separación mínima 1.31 m | 0 colisiones | ✅ cumple |
 | HU-09 | Motor caído en DS-D con detección (ESC con telemetría) | aterrizó a 50.1 m de casa y a 0.0 m del punto de la falla; llegada al suelo 0.77 m/s; inclinación máx. 11.4°; modos PX4: HOLD → TAKEOFF → HOLD → LAND → HOLD; perdió 6.8 m de altura en 10 s | se sostiene y aterriza sin golpe | ✅ cumple |
 | HU-09 | Motor caído en DS-H (8 motores) con detección | aterrizó a 50.2 m de casa y a 0.2 m del punto de la falla; llegada al suelo 0.74 m/s; inclinación máx. 12.6°; modos PX4: HOLD → TAKEOFF → HOLD → LAND → HOLD; perdió 6.8 m de altura en 10 s | se sostiene y aterriza sin golpe | ✅ cumple |
@@ -63,7 +65,7 @@ Coherencia del modelo del simulador con el diseño (mismas constantes); la valid
 
 ## Carpetas
 
-- `enjambre_cinematico/` campaña Monte Carlo · `enjambre_sitl/` enjambre en PX4 + Gazebo · `hu08_sectores/` levantamiento por sectores
+- `enjambre_cinematico/` campaña Monte Carlo · `enjambre_sitl/` enjambre en PX4 + Gazebo · `enjambre_distribuido/` un nodo por dron (S13) · `hu08_sectores/` levantamiento por sectores
 - `fallas/<caso>/` inyección de fallas · `calculo_vs_sim/` métricas de vuelo contra el dimensionamiento
 - Misiones del S05 (inspección, entrega, carga cooperativa): `docs/evidencias/sitl/`
 - Para verlo en vivo: `./dronswarm.sh` → **N** (con ventana de Gazebo).

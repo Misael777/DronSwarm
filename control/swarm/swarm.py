@@ -95,7 +95,7 @@ class Scenario:
 
         Las fases las secuencia la estación de tierra; `alive` excluye a los drones fuera de la formación (sin enlace,
         con falla) para que el resto pueda seguir."""
-        alive = np.ones(len(positions), dtype=bool) if alive is None else alive
+        alive = np.ones(len(positions), dtype=bool) if alive is None or not np.any(alive) else alive
         ph = self.phase
         if ph is None:
             return self.ref, np.zeros(2)

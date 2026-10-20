@@ -250,6 +250,7 @@ mission_script="$REPO/tools/sitl/multi_takeoff.py"
 [[ "${MISSION:-}" == "swarm" ]] && mission_script="$REPO/control/swarm/sitl_swarm.py"
 [[ "${MISSION:-}" == "fault" ]] && mission_script="$REPO/simulation/xtdrone/scripts/fault_injection.py"
 [[ "${MISSION:-}" == "sector" ]] && mission_script="$REPO/control/missions/sector_survey.py"
+[[ "${MISSION:-}" == "swarm_dist" ]] && mission_script="$REPO/control/swarm/dist_launch.py"
 # MISSION_ARGS: opciones extra de la misión, p. ej. MISSION_ARGS="--loss 0.3 --drop-out 2:40"
 # shellcheck disable=SC2086
 "$PY" "$mission_script" --n "$N" --hold "${HOLD:-15}" --out "$OUT/takeoff.json" ${MISSION_ARGS:-} || status=$?
