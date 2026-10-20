@@ -212,3 +212,25 @@ transportarlo en una camioneta. Con los empujes de diseño (FS 2.5), el momento 
 - Montar el dron toma ~2 min (6 brazos), contra ~30 s de un plegable.
 - El mecanismo de liberación es un concepto verificado por FEA (gancho FS 9.6): se valida con un prototipo impreso
   y ciclos de carga en el banco (S10).
+
+---
+
+## ADR-013 · Adelantar el diseño del motor propio y evaluar reductores
+- Estado: **Propuesta** (2026-10-20, pedido del usuario). **Se aparta de la ADR-004**, que dejaba el motor propio para después del G4 (S17-S19): decide el usuario.
+
+### Contexto
+Los motores comerciales cuestan el 16 % del DS-I (US$300) y el 25 % del DS-D (US$1,020); la propulsión completa,
+el 22 % y el 45 %. El usuario tiene impresora 3D y cortadora láser para láminas de acero, así que solo habría que
+comprar materiales. Pidió además evaluar un reductor (cicloidal, armónico u otro).
+
+### Decisión
+- El diseño del motor (cálculo, simulación, CAD, lista de materiales, guía didáctica) se hace **ya**, en paralelo con
+  los prototipos comerciales, en la carpeta `motor/` (plan en `motor/PLAN.md`).
+- El diseño se hace contra la spec v1 actual y se **revalida en el G4** con los datos de vuelo.
+- La fabricación y las pruebas (M8) siguen después de caracterizar el comercial en el banco (S10), para tener contra qué comparar.
+- El reductor no se presupone: se decide con un estudio de autonomía, masa y respuesta del dron completo (fase M3).
+
+### Consecuencias
+- Los prototipos v1 siguen con motores comerciales; nada del frame cambia (el motor propio respeta la interfaz DMI, ADR-011).
+- Las tareas S17-S19 del plan se reescriben con las fases M0-M8 de `motor/PLAN.md`.
+- El Gate G5 (fabricar o comprar) usa los criterios del §2 de `motor/PLAN.md`.
