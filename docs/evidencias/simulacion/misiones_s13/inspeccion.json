@@ -1,0 +1,19 @@
+{
+  "n": 1,
+  "ok": 1,
+  "plan": {
+    "height_m": 67.45263157894738,
+    "gsd_cm": 3.0,
+    "line_spacing_m": 40.31999999999999,
+    "photo_spacing_m": 16.2,
+    "path_length_m": 1507.68
+  },
+  "photos": 90,
+  "photo_error_mean_m": 0.68,
+  "photo_error_max_m": 3.35,
+  "grid_time_s": 261,
+  "orbit_min_alt_m": -15.044000625610352,
+  "duration_s": 493,
+  "captures": [],
+  "passed": true
+}

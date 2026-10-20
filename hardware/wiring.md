@@ -47,7 +47,8 @@ El tope de corriente se fija por software (`MPC_THR_MAX`), así que los conector
  Regulador 12S → 5.3 V / 3 A ──► Pixhawk 6C            Regulador 12S → 5 V / 5 A ──► Raspberry Pi 5
  Regulador 12S → 12 V / 3 A ──► SIYI A8 mini (opcional), cámara FPV, 4 LED     Regulador 12S → 7.4 V / 5 A ──► servo de liberación
  Pixhawk 6C: UART1 ↔ Raspberry Pi 5 · UART2 ↔ RFD900x · UART4 ← ExpressLRS · CAN1 ↔ GNSS F9P · I2C ← MTF-01P
-             AUX 7 → servo de liberación · entrada GPIO ← micro-interruptor "gancho cerrado" · AUX 8 → LED (relé)
+             AUX 7 → servo de liberación (función Gripper) · AUX 8 → LED (relé)
+ Raspberry Pi 5: GPIO 17 ← micro-interruptor "gancho cerrado" (a masa = cerrado; confirma la entrega, S13-04)
 ```
 
 ## 3. Presupuesto de potencia de la aviónica

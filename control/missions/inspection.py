@@ -29,7 +29,7 @@ EARTH_R = 6_378_137.0
 
 @dataclass(frozen=True)
 class Camera:
-    """Cámara de inspección del DS-I (supuesto del PRD: sensor 1", 20 MP)."""
+    """Cámara de inspección del DS-I (por defecto: el supuesto del PRD, sensor 1", 20 MP)."""
     sensor_w_mm: float = 13.2
     sensor_h_mm: float = 8.8
     focal_mm: float = 8.8
@@ -57,6 +57,13 @@ class SurveyPlan:
     lines: list            # [[(x0, y0), (x1, y1)], ...] en metros ENU desde la base
     photos: list           # [(x, y), ...]
     path_length_m: float
+
+
+# Cámaras disponibles (S09): la SIYI A8 mini es la del prototipo; la de 1" es la opción de mapeo de la HU-01
+CAMERAS = {
+    "siyi_a8_mini": Camera(sensor_w_mm=7.6, sensor_h_mm=4.275, focal_mm=4.45, px_w=3840, px_h=2160),
+    "1in_20mp": Camera(),
+}
 
 
 def plan_grid(area: tuple[float, float, float, float], cam: Camera, gsd_m: float,
@@ -90,19 +97,30 @@ def latlon_to_enu(home, lat: float, lon: float) -> tuple[float, float]:
     return east, north
 
 
-async def fly(plan: SurveyPlan, pit: dict, speed: float, orbit_r: float, orbit_depth: float) -> dict:
+async def fly(plan: SurveyPlan, pit: dict, speed: float, orbit_r: float, orbit_depth: float,
+              connect_url: str | None = None) -> dict:
     from mavsdk_grpc.action import OrbitYawBehavior
     from mavsdk_grpc.mission import MissionItem, MissionPlan
 
-    d = await connect(0)
+    if connect_url:
+        from mavsdk_grpc import System
+        d = System(port=50051)
+        await d.connect(system_address=connect_url)
+        await first(d.core.connection_state(), lambda s: s.is_connected, 90)
+        await first(d.telemetry.health(), lambda h: h.is_global_position_ok and h.is_home_position_ok, 180)
+    else:
+        d = await connect(0)
     home = await anext(d.telemetry.home())
     items = []
+    CA = MissionItem.CameraAction
     for a, b in plan.lines:
-        for x, y in (a, b):
+        # cada línea: al llegar al inicio, disparo por distancia; al final, se corta. Cámara a nadir (−90°).
+        for k, (x, y) in enumerate((a, b)):
             lat, lon = enu_to_latlon(home, x, y)
-            items.append(MissionItem(lat, lon, plan.height_m, speed, True, float("nan"), float("nan"),
-                                     MissionItem.CameraAction.NONE, float("nan"), float("nan"), 3.0, float("nan"),
-                                     float("nan"), MissionItem.VehicleAction.NONE))
+            action = CA.START_PHOTO_DISTANCE if k == 0 else CA.STOP_PHOTO_DISTANCE
+            items.append(MissionItem(lat, lon, plan.height_m, speed, True, -90.0, float("nan"), action,
+                                     float("nan"), float("nan"), 3.0, float("nan"),
+                                     plan.photo_spacing_m if k == 0 else float("nan"), MissionItem.VehicleAction.NONE))
     await d.mission.set_return_to_launch_after_mission(False)
     await d.mission.upload_mission(MissionPlan(items))
     for attempt in range(30):
@@ -116,7 +134,14 @@ async def fly(plan: SurveyPlan, pit: dict, speed: float, orbit_r: float, orbit_d
     t0 = time.monotonic()
     track: list = []
     print(f"→ grilla: {len(plan.lines)} líneas a {plan.height_m:.0f} m (GSD {plan.gsd_cm:.1f} cm/px), {len(plan.photos)} fotos", flush=True)
-    await d.mission.start_mission()
+    for attempt in range(15):                        # PX4 la rechaza mientras el estimador no converge
+        try:
+            await d.mission.start_mission()
+            break
+        except Exception:
+            if attempt == 14:
+                raise
+            await asyncio.sleep(2)
 
     async def record():
         last = -1.0
@@ -126,7 +151,19 @@ async def fly(plan: SurveyPlan, pit: dict, speed: float, orbit_r: float, orbit_d
                 track.append((now, *latlon_to_enu(home, p.latitude_deg, p.longitude_deg), p.relative_altitude_m))
                 last = now
 
+    captures: list = []
+
+    async def camera_feedback():                     # cámara real: cada foto confirmada con su posición (RTK)
+        try:
+            async for c in d.camera.capture_info():
+                captures.append({"index": c.index, "file": c.file_url, "lat": c.position.latitude_deg,
+                                 "lon": c.position.longitude_deg, "alt_amsl": c.position.absolute_altitude_m,
+                                 "ok": c.is_success})
+        except Exception:                            # SITL sin cámara: no hay retorno
+            return
+
     rec = asyncio.create_task(record())
+    cam = asyncio.create_task(camera_feedback())
     await first(d.mission.mission_progress(), lambda m: m.total > 0 and m.current >= m.total, 900)
     t_grid = time.monotonic() - t0
     print(f"✔ grilla completa en {t_grid:.0f} s", flush=True)
@@ -147,6 +184,7 @@ async def fly(plan: SurveyPlan, pit: dict, speed: float, orbit_r: float, orbit_d
     await d.action.land()
     await first(d.telemetry.armed(), lambda a: not a, 180)
     rec.cancel()
+    cam.cancel()
 
     # Geoetiquetas: posición real más cercana a cada foto planificada (solo el tramo de la grilla)
     grid_track = [p for p in track if p[0] <= t_grid]
@@ -161,9 +199,19 @@ async def fly(plan: SurveyPlan, pit: dict, speed: float, orbit_r: float, orbit_d
     return {"n": 1, "ok": 1, "plan": {k: v for k, v in asdict(plan).items() if k not in ("lines", "photos")},
             "photos": len(plan.photos), "photo_error_mean_m": round(sum(errors) / len(errors), 2),
             "photo_error_max_m": round(max(errors), 2), "grid_time_s": round(t_grid), "orbit_min_alt_m": min_alt,
-            "duration_s": round(time.monotonic() - t0), "geotags": tags,
+            "duration_s": round(time.monotonic() - t0), "geotags": tags, "captures": captures,
             "track": [[round(v, 1) for v in p] for p in track[::5]], "lines": plan.lines,
             "passed": max(errors) < 10 and (min_alt is not None and min_alt < -orbit_depth + 5)}
+
+
+def write_odm_geo(captures: list[dict], path: Path) -> None:
+    """geo.txt de OpenDroneMap: proyección y una línea por foto (archivo, lon, lat, altitud)."""
+    lines = ["EPSG:4326"]
+    for c in captures:
+        if c["ok"]:
+            name = Path(c["file"]).name or f"IMG_{c['index']:04d}.JPG"
+            lines.append(f"{name} {c['lon']:.8f} {c['lat']:.8f} {c['alt_amsl']:.2f}")
+    path.write_text("\n".join(lines) + "\n")
 
 
 def plot(result: dict, layout: dict, png: Path) -> None:
@@ -203,6 +251,8 @@ def plot(result: dict, layout: dict, png: Path) -> None:
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--gsd", type=float, default=0.03, help="GSD objetivo [m/px] (PRD: ≤ 3 cm)")
+    ap.add_argument("--camera", choices=list(CAMERAS), default="siyi_a8_mini")
+    ap.add_argument("--connect", help="URL de MAVSDK del dron real (p. ej. udpin://0.0.0.0:14550); SITL por defecto")
     ap.add_argument("--speed", type=float, default=10.0)
     ap.add_argument("--orbit-radius", type=float, default=45.0)
     ap.add_argument("--orbit-depth", type=float, default=15.0, help="metros bajo el borde del tajo")
@@ -215,14 +265,16 @@ def main():
     half_x = 98.0
     area = (pit["center"][0] - half_x, pit["center"][0] + half_x,
             pit["center"][1] - half_x * pit["aspect"], pit["center"][1] + half_x * pit["aspect"])
-    plan = plan_grid(area, Camera(), a.gsd)
-    res = asyncio.run(fly(plan, pit, a.speed, a.orbit_radius, a.orbit_depth))
+    plan = plan_grid(area, CAMERAS[a.camera], a.gsd)
+    res = asyncio.run(fly(plan, pit, a.speed, a.orbit_radius, a.orbit_depth, a.connect))
     summary = {k: v for k, v in res.items() if k not in ("geotags", "track", "lines")}
     print(json.dumps(summary, indent=2, ensure_ascii=False))
     if a.out:
         a.out.parent.mkdir(parents=True, exist_ok=True)
         a.out.write_text(json.dumps(summary, indent=2, ensure_ascii=False) + "\n")
         (a.out.parent / "geotags.json").write_text(json.dumps(res["geotags"], indent=1) + "\n")
+        if res["captures"]:                          # HU-01: geoetiquetas para OpenDroneMap
+            write_odm_geo(res["captures"], a.out.parent / "geo.txt")
         plot(res, layout, a.out.parent / "inspeccion.png")
     raise SystemExit(0 if res["passed"] else 1)
 

@@ -49,7 +49,30 @@ def release_hook() -> bool:
     return r.returncode == 0
 
 
-async def run(target: tuple[float, float, float], cruise: float, speed: float) -> dict:
+async def release(d, backend: str) -> bool:
+    """S13-04: en SITL se suelta la cuerda de Gazebo; en el dron, el mecanismo del DS-D por el Gripper de PX4."""
+    if backend == "gz":
+        return release_hook()
+    from mavsdk_grpc.gripper import GripperError
+    try:
+        await d.gripper.release(1)
+        return True
+    except GripperError as e:
+        print(f"✘ el gripper rechazó la orden: {e}", flush=True)
+        return False
+
+
+def hook_closed_gpio(pin: int) -> bool | None:
+    """Micro-interruptor "gancho cerrado" en un GPIO de la Raspberry Pi (cerrado = nivel bajo). None si no hay GPIO."""
+    try:
+        from gpiozero import Button
+    except ImportError:
+        return None
+    return Button(pin, pull_up=True).is_pressed
+
+
+async def run(target: tuple[float, float, float], cruise: float, speed: float, backend: str = "gz",
+              switch_pin: int | None = None) -> dict:
     d = await connect(0)
     await d.param.set_param_float("MPC_XY_CRUISE", speed)
     await d.param.set_param_float("MPC_Z_VEL_MAX_DN", 1.5)
@@ -87,9 +110,13 @@ async def run(target: tuple[float, float, float], cruise: float, speed: float) -
     await first(d.telemetry.position(), lambda p: p.relative_altitude_m <= drop_alt + 0.5, 240)
     await asyncio.sleep(5)
     print("■ gancho liberado", flush=True)
-    released = release_hook()
+    released = await release(d, backend)
     await asyncio.sleep(4)
-    dropped = box_position()
+    dropped = box_position() if backend == "gz" else None
+    hook = hook_closed_gpio(switch_pin) if switch_pin is not None else None
+    if hook is not None:                              # dron real: el interruptor confirma que el gancho abrió
+        released = released and not hook
+        print(f"   interruptor del gancho: {'ABIERTO (entrega confirmada)' if not hook else 'sigue CERRADO'}", flush=True)
 
     print("↑ ascenso y regreso a la base", flush=True)
     await d.action.goto_location(lat, lon, cruise_abs, float("nan"))
@@ -98,16 +125,23 @@ async def run(target: tuple[float, float, float], cruise: float, speed: float) -
     await first(d.telemetry.position(), lambda p: math.hypot(*latlon_to_enu(home, p.latitude_deg, p.longitude_deg)) < 2, 300)
     await d.action.land()
     await first(d.telemetry.armed(), lambda a: not a, 180)
-    final_box = box_position()
+    final_box = box_position() if backend == "gz" else None
 
     err = math.hypot(final_box[0] - tx, final_box[1] - ty) if final_box else None
     on_ground = final_box is not None and abs(final_box[2] - (tz + BOX_HALF)) < 0.3
     res = {"n": 1, "ok": 1, "released": released, "box_start": start_box, "box_after_release": dropped,
            "box_final": final_box, "delivery_error_m": round(err, 2) if err is not None else None,
            "box_on_ground_at_target": on_ground, "duration_s": round(time.monotonic() - t0)}
-    res["passed"] = bool(released and on_ground and err is not None and err < 3)
-    print(f"✔ caja entregada a {err:.1f} m del punto objetivo, en el suelo" if res["passed"]
-          else "✘ la entrega no cumplió (ver box_final)", flush=True)
+    if backend == "gz":
+        res["passed"] = bool(released and on_ground and err is not None and err < 3)
+    else:                                             # dron real: gancho abierto (confirmado si hay interruptor) y aterrizado
+        res["passed"] = bool(released)
+        res["hook_switch_confirmed"] = hook is not None
+    if backend == "gz":
+        print(f"✔ caja entregada a {err:.1f} m del punto objetivo, en el suelo" if res["passed"]
+              else "✘ la entrega no cumplió (ver box_final)", flush=True)
+    else:
+        print("✔ gancho abierto en destino" if res["passed"] else "✘ el gancho no abrió", flush=True)
     return res
 
 
@@ -117,10 +151,12 @@ def main():
     ap.add_argument("--speed", type=float, default=6.0)
     ap.add_argument("--n", type=int, default=1, help="(compatibilidad con run_gz_multi.sh)")
     ap.add_argument("--hold", type=float, default=0.0, help="(compatibilidad con run_gz_multi.sh)")
+    ap.add_argument("--release", choices=["gz", "px4"], default="gz", help="gz = SITL; px4 = Gripper del DS-D real")
+    ap.add_argument("--switch-gpio", type=int, help="GPIO de la Raspberry Pi con el micro-interruptor del gancho")
     ap.add_argument("--out", type=Path)
     a = ap.parse_args()
     layout = json.loads((ROOT / "simulation/xtdrone/worlds/mine_layout.json").read_text())
-    res = asyncio.run(run(tuple(layout["delivery"]["target"]), a.cruise, a.speed))
+    res = asyncio.run(run(tuple(layout["delivery"]["target"]), a.cruise, a.speed, a.release, a.switch_gpio))
     print(json.dumps(res, indent=2))
     if a.out:
         a.out.parent.mkdir(parents=True, exist_ok=True)
