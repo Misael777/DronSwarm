@@ -1,0 +1,11 @@
+# /etc/systemd/system/dronswarm-watchdog.service · reinicia el nodo si se cuelga (S13-05)
+[Unit]
+Description=DronSwarm - watchdog del nodo
+After=dronswarm-node.service
+
+[Service]
+ExecStart=/opt/dronswarm/.venv/bin/python /opt/dronswarm/control/mavsdk_nodes/watchdog.py --heartbeat /run/dronswarm/node.hb
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

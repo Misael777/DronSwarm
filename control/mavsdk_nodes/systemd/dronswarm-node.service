@@ -1,0 +1,16 @@
+# /etc/systemd/system/dronswarm-node.service · nodo del enjambre (S13-05). DRONE_ID y ORIGIN en /etc/dronswarm/node.env
+[Unit]
+Description=DronSwarm - nodo del enjambre
+After=network-online.target mavlink-router.service chrony.service
+Wants=network-online.target
+
+[Service]
+EnvironmentFile=/etc/dronswarm/node.env
+RuntimeDirectory=dronswarm
+ExecStart=/opt/dronswarm/.venv/bin/python /opt/dronswarm/control/swarm/node.py --id ${DRONE_ID} --connect udpin://0.0.0.0:14540 --origin ${ORIGIN} --heartbeat /run/dronswarm/node.hb --log /var/log/dronswarm/node.json
+Restart=always
+RestartSec=1
+Nice=-5
+
+[Install]
+WantedBy=multi-user.target

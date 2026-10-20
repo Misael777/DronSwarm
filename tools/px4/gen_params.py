@@ -97,6 +97,8 @@ def params(vehicle: str) -> list[tuple[str, float | int, str]]:
     add("MPC_XY_VEL_MAX", 15.0 if vehicle == "DS-I" else 10.0, "envolvente del target (DS-I ≥ 15 m/s)")
     add("MPC_XY_CRUISE", 10.0 if vehicle == "DS-I" else 8.0, "")
     add("MPC_TILTMAX_AIR", 35.0 if vehicle == "DS-I" else 30.0, "")
+    add("COM_OF_LOSS_T", 1.0, "1 s sin órdenes del nodo de enjambre = pérdida de offboard")
+    add("COM_OBL_RC_ACT", 5, "pérdida de offboard → Hold: el watchdog reinicia el nodo y éste retoma (S13-05)")
     add("SDLOG_PROFILE", 3, "logs con estimador y alta frecuencia (análisis de vibración y autonomía)")
     if vehicle == "DS-D":
         add("CA_FAILURE_MODE", 1, "motor caído: lo saca de la asignación (requiere telemetría de corriente, S06)")
