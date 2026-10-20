@@ -1,0 +1,32 @@
+id,motor,categoria,descripcion,uso,unidad,presentacion,por_presentacion,precio,proveedor,plazo,fuente,estimado
+I01,DS-I,estator,"Acero al silicio no orientado 0.20 mm (NO20: B20AT1500 / 20JNEH1200), aislado C5. Láminas Ø43.9 mm, 24 ranuras (cad/exports/motor/ds-i/lamina_estator.dxf)",29,láminas,plancha 300×300 mm (36 láminas),36,15.0,AliExpress / distribuidor de acero eléctrico,3,"estimado. Referencias 2026: RS UK, plancha 0.30 mm 300×300 a £26 (minorista); mayorista China 0.5 mm ≈ US$0.6/kg. Para la flota, cotizar 10-25 kg de 0.2 mm cortado a 300×300: puede bajar a US$1-3 por plancha",True
+I02,DS-I,rotor,Acero laminado en frío DC01/SPCC 1.0 mm. Anillos Ø49.5/Ø46.9 mm (anillo_rotor.dxf); se apilan 9,9,anillos,plancha 300×300 mm (25 anillos),25,4.0,ferretería industrial local,1,estimado: chapa negra 1 mm,True
+I03,DS-I,rotor,"Imán de neodimio N48SH (150 °C), bloque 4.6 × 6.2 × 1.0 mm (ancho × largo × espesor), magnetizado en el espesor, níquel-cobre-níquel",27,imanes,lote de 200 piezas a medida,200,28.0,fabricante de imanes (Ningbo/Hangzhou) o AliExpress a medida,4,estimado: US$0.12-0.35 por pieza; pedido mínimo 100-500,True
+I04,DS-I,bobinado,"Alambre esmaltado clase H (200 °C, poliéster-imida + poliamida-imida) Ø0.60 mm; 1 hilos en paralelo, 8 vueltas por diente, estrella",5.3,m,bobina de 250 g (≈ 99 m),99,12.0,AliExpress / Amazon (magnet wire 0.60 mm 200C),2,estimado,True
+I05,DS-I,mecánica,"Rodamiento 694ZZ (4×11×4 mm), preferible ABEC-5 / marca (EZO, NSK) para el lote final",2,u,paquete de 10,10,8.0,AliExpress / tienda de rodamientos,2,estimado: genérico; EZO ≈ US$4-6 c/u,True
+I06,DS-I,mecánica,"Eje de acero plata (o 4140) Ø4 mm h6, cortado a 28 mm, con ranuras para anillo E",28.0,mm,barra de 330 mm,330,3.0,ferretería industrial / AliExpress,2,estimado,True
+I07,DS-I,mecánica,Anillo de retención E DIN 6799 para eje Ø4 mm,2,u,paquete de 100,100,3.0,ferretería,1,estimado,True
+I08,DS-I,mecánica,Prisionero M3×4 (fija la tapa al eje),1,u,paquete de 50,50,3.0,ferretería,1,estimado,True
+I09,DS-I,mecánica,Tornillos M3×8 cabeza allen (hélice ×4 y base al soporte DMI ×4),8,u,paquete de 100,100,4.0,ferretería,1,estimado,True
+I10,DS-I,conexión,Cable de silicona 18 AWG (3 fases × 10 cm),0.3,m,juego de 3 m (3 colores),3,6.0,tienda de RC / AliExpress,2,estimado,True
+I11,DS-I,conexión,"Conector bala 3.5 mm (macho, lado motor)",3,u,10 pares,10,5.0,tienda de RC,2,estimado,True
+I12,DS-I,impresión,"Filamento PETG para tapa y base (ASA o PA-CF para más margen térmico, ver M5); 16 g por motor",16.0,g,bobina de 1 kg,1000,20.0,local,1,estimado,True
+D01,DS-D,estator,"Acero al silicio no orientado 0.20 mm (NO20: B20AT1500 / 20JNEH1200), aislado C5. Láminas Ø69.7 mm, 36 ranuras (cad/exports/motor/ds-d/lamina_estator.dxf)",40,láminas,plancha 300×300 mm (16 láminas),16,15.0,AliExpress / distribuidor de acero eléctrico,3,"estimado. Referencias 2026: RS UK, plancha 0.30 mm 300×300 a £26 (minorista); mayorista China 0.5 mm ≈ US$0.6/kg. Para la flota, cotizar 10-25 kg de 0.2 mm cortado a 300×300: puede bajar a US$1-3 por plancha",True
+D02,DS-D,rotor,Acero laminado en frío DC01/SPCC 1.0 mm. Anillos Ø77.6/Ø74.0 mm (anillo_rotor.dxf); se apilan 11,11,anillos,plancha 300×300 mm (9 anillos),9,4.0,ferretería industrial local,1,estimado: chapa negra 1 mm,True
+D03,DS-D,rotor,"Imán de neodimio N48SH (150 °C), bloque 5.9 × 8.4 × 1.5 mm (ancho × largo × espesor), magnetizado en el espesor, níquel-cobre-níquel",33,imanes,lote de 200 piezas a medida,200,70.0,fabricante de imanes (Ningbo/Hangzhou) o AliExpress a medida,4,estimado: US$0.12-0.35 por pieza; pedido mínimo 100-500,True
+D04,DS-D,bobinado,"Alambre esmaltado clase H (200 °C, poliéster-imida + poliamida-imida) Ø0.32 mm; 7 hilos en paralelo, 6 vueltas por diente, estrella",47.0,m,bobina de 250 g (≈ 347 m),347,12.0,AliExpress / Amazon (magnet wire 0.32 mm 200C),2,estimado,True
+D05,DS-D,mecánica,"Rodamiento 696ZZ (6×15×5 mm), preferible ABEC-5 / marca (EZO, NSK) para el lote final",2,u,paquete de 10,10,10.0,AliExpress / tienda de rodamientos,2,estimado: genérico; EZO ≈ US$4-6 c/u,True
+D06,DS-D,mecánica,"Eje de acero plata (o 4140) Ø6 mm h6, cortado a 32 mm, con ranuras para anillo E",32.0,mm,barra de 330 mm,330,4.0,ferretería industrial / AliExpress,2,estimado,True
+D07,DS-D,mecánica,Anillo de retención E DIN 6799 para eje Ø6 mm,2,u,paquete de 100,100,3.0,ferretería,1,estimado,True
+D08,DS-D,mecánica,Prisionero M3×4 (fija la tapa al eje),1,u,paquete de 50,50,3.0,ferretería,1,estimado,True
+D09,DS-D,mecánica,Tornillos M4×10 cabeza allen (hélice ×4 y base al soporte DMI ×4),8,u,paquete de 100,100,5.0,ferretería,1,estimado,True
+D10,DS-D,conexión,Cable de silicona 14 AWG (3 fases × 10 cm),0.3,m,juego de 3 m (3 colores),3,8.0,tienda de RC / AliExpress,2,estimado,True
+D11,DS-D,conexión,"Conector bala 5.5 mm (macho, lado motor)",3,u,10 pares,10,7.0,tienda de RC,2,estimado,True
+D12,DS-D,impresión,"Filamento PETG para tapa y base (ASA o PA-CF para más margen térmico, ver M5); 54 g por motor",54.0,g,bobina de 1 kg,1000,20.0,local,1,estimado,True
+C01,común,consumible,"Epoxi estructural de alta temperatura (p. ej. JB Weld Original, 2 × 57 g): apilado de láminas, anillos e imanes",4,g,kit de 114 g,114,9.0,ferretería,1,estimado,True
+C02,común,consumible,Barniz de impregnación clase H para bobinados (p. ej. Elantas / Electrolube) 100 ml,3,ml,frasco de 100 ml,100,12.0,electrónica industrial,2,estimado,True
+C03,común,consumible,Papel aislante Nomex 410 de 0.08 mm (forro de ranuras),0.08,hoja A4,hoja A4,1,3.0,AliExpress,3,estimado,True
+C04,común,consumible,Cinta Kapton 10 mm (aislar salidas y cruces),0.4,m,rollo de 33 m,33,4.0,electrónica,1,estimado,True
+C05,común,consumible,Termocontraíble surtido,4,piezas,surtido de 120 piezas,120,5.0,electrónica,1,estimado,True
+C06,común,consumible,Fijador de roscas de resistencia media (azul) 10 ml,0.05,ml,frasco de 10 ml,10,5.0,ferretería,1,estimado,True
+C07,común,consumible,Alcohol isopropílico (limpiar láminas antes de pegar) 500 ml,10,ml,botella de 500 ml,500,5.0,farmacia,1,estimado,True
