@@ -2,6 +2,8 @@
 
 > Generado por `tools/bom/gen_bom.py` desde la selección COTS. Detalle línea por línea en `bom_prototipo_v1.csv` (cantidades, precios, fase de compra, plazos, 2 proveedores por ítem). Los precios marcados como estimados se reemplazan con las cotizaciones del S10.
 
+**Para revisar y seguir las compras:** `Lista_de_Compras_Prototipo_v1.xlsx` (resumen, compras con estado y cotizaciones, lista de armado de cada dron), generado por `tools/bom/gen_bom_xlsx.py`.
+
 ## Costo por dron (sin repuestos ni equipo de tierra)
 
 | | Prototipo v1 (componentes de marca, compra unitaria) | Presupuesto del S04 | Diferencia |
@@ -20,7 +22,7 @@
 | equipo de tierra y banco | US$1,250 |
 | **Total** | **US$17,749** |
 
-**Fase A (validación, pedir ya):** ≈ US$3,810. Incluye baterías, cargadores, banco de empuje, 2 motores de cada tipo, 1 ESC de cada tipo y hélices. **Fase B (flota):** el resto, cuando el banco confirme los motores (S10).
+**Fase A (validación, pedir ya):** ≈ US$3,855. Incluye baterías, cargadores, banco de empuje, 2 motores de cada tipo, 1 ESC de cada tipo y hélices. **Fase B (flota):** el resto, cuando el banco confirme los motores (S10).
 
 ## Por qué el prototipo cuesta más que el objetivo
 

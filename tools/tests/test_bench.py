@@ -49,3 +49,13 @@ def test_altitude_needs_more_rpm(runs):
     low = analyze.at_altitude(fit, 380, d, 1.2, 6.0, 22.0)
     high = analyze.at_altitude(fit, 380, d, 0.74, 6.0, 22.0)
     assert high["rpm"] > low["rpm"] and high["p_bat_w"] > low["p_bat_w"]
+
+
+def test_bom_xlsx_phase_a():
+    from tools.bom.gen_bom_xlsx import fase_a_qty
+    base = {"categoria": "propulsión", "fase": "A+B", "cant_total": "17"}
+    assert fase_a_qty({**base, "descripcion": "Motor X"}) == 2
+    assert fase_a_qty({**base, "descripcion": "Hélice 15\""}) == 2
+    assert fase_a_qty({**base, "descripcion": "ESC 4 en 1"}) == 1
+    assert fase_a_qty({**base, "fase": "A", "descripcion": "Pack"}) == 17
+    assert fase_a_qty({**base, "fase": "B", "descripcion": "Pixhawk"}) == 0

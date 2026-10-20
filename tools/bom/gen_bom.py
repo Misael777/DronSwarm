@@ -123,9 +123,9 @@ def write_summary(rows, sel):
     per_drone = {v: sum(r["precio_unit_usd"] * r["cant_por_dron"] for r in rows if r["dron"] == v) for v in ("DS-I", "DS-D")}
     budget = {"DS-I": json.loads((ROOT / "engineering/data/results/ds-i_sizing.json").read_text())["bom_cost_usd"],
               "DS-D": json.loads((ROOT / "engineering/data/results/ds-d_sizing.json").read_text())["bom_cost_usd"]}
-    phase_a = tot(lambda r: r["fase"] == "A") + sum(r["precio_unit_usd"] * (2 if "Motor" in r["descripcion"] else 1)
-                                                  for r in rows if r["fase"] == "A+B" and r["categoria"] == "propulsión"
-                                                  and ("Motor" in r["descripcion"] or "ESC" in r["descripcion"] or "APD" in r["descripcion"]))
+    # fase A: todo lo de fase A + del banco de empuje 2 motores, 1 ESC y 1 par de hélices de cada tipo (= gen_bom_xlsx.py)
+    phase_a = tot(lambda r: r["fase"] == "A") + sum(r["precio_unit_usd"] * (2 if r["descripcion"].startswith(("Motor", "Hélice")) else 1)
+                                                  for r in rows if r["fase"] == "A+B" and r["categoria"] == "propulsión")
     cats = {}
     for r in rows:
         cats[r["categoria"]] = cats.get(r["categoria"], 0) + r["total_usd"]
@@ -133,6 +133,8 @@ def write_summary(rows, sel):
          "> Generado por `tools/bom/gen_bom.py` desde la selección COTS. Detalle línea por línea en `bom_prototipo_v1.csv` "
          "(cantidades, precios, fase de compra, plazos, 2 proveedores por ítem). Los precios marcados como estimados se "
          "reemplazan con las cotizaciones del S10.", "",
+         "**Para revisar y seguir las compras:** `Lista_de_Compras_Prototipo_v1.xlsx` (resumen, compras con estado y "
+         "cotizaciones, lista de armado de cada dron), generado por `tools/bom/gen_bom_xlsx.py`.", "",
          "## Costo por dron (sin repuestos ni equipo de tierra)", "",
          "| | Prototipo v1 (componentes de marca, compra unitaria) | Presupuesto del S04 | Diferencia |", "|---|---|---|---|",
          *[f"| {v} | US${per_drone[v]:,.0f} | US${budget[v]:,.0f} | {per_drone[v] / budget[v] - 1:+.0%} |" for v in ("DS-I", "DS-D")],
