@@ -14,6 +14,7 @@ Plan, fases y criterios: [PLAN.md](PLAN.md) · decisión: ADR-013 en [docs/decis
 | M4 · FEM 2D | ✅ | [informes/M4_fem.md](informes/M4_fem.md): Kv dentro de 3 %, cogging ≈ 0.1 %, sin desmagnetización (2 vueltas FEM → cálculo) |
 | M5 · Térmico y mecánico | ✅ | [informes/M5_termico_mecanico.md](informes/M5_termico_mecanico.md): bobinado ≤ 51 / 96 °C a empuje máximo continuo, todo con FS ≥ 3.6 |
 | M6 · Fabricación y compras | ✅ | Diseño mecánico completo (rodamientos en X con precarga, anillos E, insertos roscados, ajustes y chaflanes): [planos PDF](fabricacion/planos/), [tolerancias.md](fabricacion/tolerancias.md), [fabricacion/README.md](fabricacion/README.md), [valores.md](fabricacion/valores.md) y [bom/Lista_Materiales_Motor.xlsx](bom/Lista_Materiales_Motor.xlsx): **US$25 (DS-I) y US$65 (DS-D) de material por motor** |
+| Presupuesto | ✅ | [bom/Presupuesto_Motor_Propio.xlsx](bom/Presupuesto_Motor_Propio.xlsx): costo por motor en 5 escalas (DS-I US$25 en la flota → US$13 a 500; DS-D US$55 → US$27) y la flota de prototipos con motores propios (−US$1,886, −11 %) |
 | M7 · Guía didáctica | ✅ | [docs/partes.html](docs/partes.html) (abrir en el navegador) |
 | M8 · Prototipos y banco | pendiente (hardware) | fabricar 2 + 2, caracterizar en el banco del S10 y decidir en el Gate G5 |
 
