@@ -14,6 +14,7 @@ $PY -m motor.calculo.m5                    # M5
 $PY motor/fabricacion/gen_cad.py           # M6 (CAD → DXF/STL, ~4 min)
 $PY motor/bom/gen_bom_motor.py             # M6 (lista de materiales)
 $PY motor/bom/gen_presupuesto.py           # presupuesto por motor y de la flota con motores propios
+$PY motor/bom/gen_detalle.py               # detalle simple del costo de los materiales de un motor
 $PY motor/fabricacion/gen_valores.py       # M6 (valores de fabricación y control de calidad)
 $PY motor/fabricacion/gen_tolerancias.py   # M6 (ajustes y cadenas de tolerancias)
 $PY motor/fabricacion/gen_planos.py        # M6 (planos PDF)
