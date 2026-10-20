@@ -98,7 +98,7 @@
       "hover_efficiency_cots_selection": 0.849
     },
     "targets": {
-      "hover_efficiency_min": 0.88,
+      "efficiency_gain_min_points": 2.0,
       "mass_max_kg": 0.075,
       "material_cost_max_usd": 22.5
     },
@@ -212,7 +212,7 @@
       "hover_efficiency_cots_selection": 0.862
     },
     "targets": {
-      "hover_efficiency_min": 0.88,
+      "efficiency_gain_min_points": 2.0,
       "mass_max_kg": 0.283,
       "material_cost_max_usd": 51.0
     },

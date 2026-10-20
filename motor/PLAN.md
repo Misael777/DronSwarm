@@ -34,7 +34,8 @@ con la hélice real y el aire de 5,000 msnm.
 
 | Criterio | Meta |
 |---|---|
-| Eficiencia en hover (motor, o motor + reductor) | ≥ 88 % (el comercial da 84-86 %) |
+| Eficiencia ponderada en los puntos de vuelo (motor, o motor + reductor) | ≥ comercial + 2 puntos, evaluados con el **mismo** modelo y luego en el **mismo** banco (M1/M2: el comercial da 85.2 % en el DS-I y 88.6 % en el DS-D) |
+| Autonomía del dron | Mayor que con el comercial (la masa cuenta: potencia de hover ∝ peso^1.5) |
 | Masa | ≤ la del comercial + 10 %. Con reductor cuenta el conjunto. |
 | Temperatura del bobinado a potencia máxima continua, 5,000 msnm, 20 °C de ambiente | < 120 °C |
 | Costo de materiales por motor | ≤ 30 % del comercial: DS-I ≤ US$22, DS-D ≤ US$50 |

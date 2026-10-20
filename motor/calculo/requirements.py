@@ -91,7 +91,7 @@ def vehicle_requirements(vehicle: str) -> dict:
         "reference_cots": {"name": cots.name, "kv": cots.kv, "rm_ohm": cots.rm, "i0_a": cots.i0, "i_max_a": cots.i_max,
                            "mass_kg": cots.mass_kg, "cost_usd": cots.cost_usd, "mount": cots.mount,
                            "hover_efficiency_cots_selection": sel["hover_motor_efficiency"]},
-        "targets": {"hover_efficiency_min": 0.88, "mass_max_kg": round(cots.mass_kg * 1.10, 3),
+        "targets": {"efficiency_gain_min_points": 2.0, "mass_max_kg": round(cots.mass_kg * 1.10, 3),
                     "material_cost_max_usd": round(cots.cost_usd * 0.30, 1)},
         "check_vs_s09": {"hover_current_a": [round(h1["current"], 2), sel["hover_current_per_motor_a"]],
                          "hover_efficiency": [round(h1["efficiency"], 4), sel["hover_motor_efficiency"]]},
@@ -117,7 +117,8 @@ def write_report(res: dict) -> None:
               f"⇒ Kv ≥ {c['kv_min_rpm_per_v']} rpm/V; torque pico {c['torque_peak_nm']} N·m; bobinado < {c['winding_t_max_c']} °C; "
               f"imanes < {c['magnet_t_max_c']} °C; montaje {c['mount']}, Ø ≤ {c['max_diameter_mm']} mm, alto ≤ {c['max_height_mm']} mm; "
               f"ESC hasta {c['erpm_max_esc']:,} eRPM.",
-              f"- **Metas (G5):** eficiencia ponderada ≥ {r['targets']['hover_efficiency_min']:.0%}; masa ≤ {r['targets']['mass_max_kg'] * 1000:.0f} g; "
+              f"- **Metas (G5):** eficiencia ponderada ≥ comercial + {r['targets']['efficiency_gain_min_points']:.0f} puntos (mismo modelo, "
+              f"mismo banco); más autonomía del dron; masa ≤ {r['targets']['mass_max_kg'] * 1000:.0f} g; "
               f"materiales ≤ US${r['targets']['material_cost_max_usd']:.0f} por motor.",
               f"- **A superar:** {r['reference_cots']['name']} ({r['reference_cots']['mass_kg'] * 1000:.0f} g, US${r['reference_cots']['cost_usd']}).",
               f"- Verificación contra el S09: corriente en hover {r['check_vs_s09']['hover_current_a'][0]} A "

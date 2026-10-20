@@ -33,3 +33,39 @@ def test_requirements_match_s09():
 def test_mn4006_reference_within_two_points():
     _, info = build("DS-I")
     assert info["eff_error_rms_points"] <= 2.0
+
+
+def test_winding_factors_match_literature():
+    from motor.calculo.winding import layout
+    for ns, p, kw in ((12, 7, 0.933), (18, 8, 0.945), (18, 12, 0.866), (24, 11, 0.949), (24, 14, 0.933)):
+        assert abs(layout(ns, p)["kw"] - kw) < 0.001
+    assert layout(12, 6) is None
+
+
+def test_design_model_reconstructs_cots():
+    from motor.calculo.design import RECON, geometry, masses, resistance_line
+    for d, kv, r, m in ((RECON["DS-I"], 380, 0.194, 0.068), (RECON["DS-D"], 150, 0.090, 0.257)):
+        g = geometry(d)
+        assert abs(g["kv"] - kv) / kv < 0.05
+        assert abs(resistance_line(d, g) - r) / r < 0.10
+        assert 0.95 < masses(d, g)["total"] / m < 1.20       # el modelo es algo pesado (campanas de aluminio fino)
+
+
+def test_design_model_matches_mn4006_bench():
+    from pathlib import Path
+
+    from motor.calculo.design import calibrate_with_mn4006, thermal_calibration
+    from motor.calculo.loss_model import read_bench
+    bench = read_bench(Path(__file__).resolve().parents[1] / "requisitos" / "datos_cots" / "mn4006_kv380_15x5.csv")
+    assert calibrate_with_mn4006(bench)["current_error_rms_pct"] < 3.0
+    assert abs(thermal_calibration()["t_case_model_c"] - 46.0) < 2.0
+
+
+def test_chosen_designs_beat_cots():
+    import json
+    from pathlib import Path
+    chosen = json.loads((Path(__file__).resolve().parents[1] / "informes" / "M2_elegidos.json").read_text())
+    for c in chosen.values():
+        assert c["eta_weighted"] - c["reference"]["weighted_efficiency"] >= 0.02
+        assert c["endurance_rel"] > 1.0
+        assert c["ops"]["maniobra_twr15"]["t_winding"] < 120

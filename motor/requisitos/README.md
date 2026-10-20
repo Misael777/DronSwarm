@@ -15,7 +15,7 @@ Lo que tiene que entregar **un** motor en cada condición. La eficiencia del com
 | maximo_twr20 — empuje = 2 × peso a 5,000 msnm: requisito de empuje/peso (corto, < 30 s) | restricción | 5,734 | 0.296 N·m | 178 W | 12.1 A | 84.4% |
 
 - **Restricciones:** 5,734 rpm con la batería vacía (19.8 V) ⇒ Kv ≥ 324.5 rpm/V; torque pico 0.296 N·m; bobinado < 120 °C; imanes < 100 °C; montaje DMI-S: 4×M3 en Ø19/Ø25, Ø ≤ 50 mm, alto ≤ 32 mm; ESC hasta 200,000 eRPM.
-- **Metas (G5):** eficiencia ponderada ≥ 88%; masa ≤ 75 g; materiales ≤ US$22 por motor.
+- **Metas (G5):** eficiencia ponderada ≥ comercial + 2 puntos (mismo modelo, mismo banco); más autonomía del dron; masa ≤ 75 g; materiales ≤ US$22 por motor.
 - **A superar:** T-Motor MN4006 KV380 (AntiGravity) (68 g, US$75).
 - Verificación contra el S09: corriente en hover 6.36 A (S09: 6.4 A).
 
@@ -30,6 +30,6 @@ Lo que tiene que entregar **un** motor en cada condición. La eficiencia del com
 | maximo_twr20 — empuje = 2 × peso a 5,000 msnm: requisito de empuje/peso (corto, < 30 s) | restricción | 3,876 | 1.986 N·m | 806 W | 32.1 A | 86.5% |
 
 - **Restricciones:** 3,876 rpm con la batería vacía (39.6 V) ⇒ Kv ≥ 109.7 rpm/V; torque pico 1.986 N·m; bobinado < 120 °C; imanes < 100 °C; montaje DMI-L: 4×M4 en Ø35, Ø ≤ 80 mm, alto ≤ 45 mm; ESC hasta 120,000 eRPM.
-- **Metas (G5):** eficiencia ponderada ≥ 88%; masa ≤ 283 g; materiales ≤ US$51 por motor.
+- **Metas (G5):** eficiencia ponderada ≥ comercial + 2 puntos (mismo modelo, mismo banco); más autonomía del dron; masa ≤ 283 g; materiales ≤ US$51 por motor.
 - **A superar:** MAD M6C12 EEE KV150 (257 g, US$170).
 - Verificación contra el S09: corriente en hover 16.82 A (S09: 16.8 A).
