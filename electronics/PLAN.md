@@ -53,7 +53,7 @@ lista de materiales y archivos de posición generados por KiCad.
 
 | Placa | Criterio |
 |---|---|
-| ESC | eficiencia ≥ comercial + 1.5 puntos en hover (banco, mismo motor), temperatura ≤ 85 °C a empuje máximo 60 s a 5,000 msnm (simulado en banco), sin desincronización en 10 h, costo ≤ meta |
+| ESC | eficiencia ≥ comercial − 0.3 puntos en hover (banco, mismo motor; E1 predice +0.5: el beneficio es el costo), temperatura ≤ 85 °C a empuje máximo 60 s a 5,000 msnm (simulado en banco), sin desincronización en 10 h, costo ≤ meta |
 | Controladora | PX4 estable, IMU con vibración ≤ la de la Pixhawk 6C en el mismo frame, HITL y vuelo sin regresiones en los tests de S13 |
 | GNSS | RTK fijo en ≤ 60 s, error horizontal ≤ 2 cm (estático, 1 h) con la base del proyecto |
 
