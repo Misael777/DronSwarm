@@ -174,8 +174,9 @@ def _grad(m: Model):
     return b, c, area
 
 
-def solve(m: Model, coil_current: np.ndarray | None, t_magnet: float = 20.0, iters: int = 40) -> dict:
-    """coil_current[2·ranura + lado] = amper-vueltas (con signo) del lado de bobina. Devuelve A, B por elemento y torque."""
+def solve(m: Model, coil_current: np.ndarray | None, t_magnet: float = 20.0, iters: int = 40, magnets: bool = True) -> dict:
+    """coil_current[2·ranura + lado] = amper-vueltas (con signo) del lado de bobina. Devuelve A, B por elemento y torque.
+    magnets=False: imanes sin magnetizar (para calcular inductancias)."""
     p = m.params
     b, c, area = _grad(m)
     n = len(m.nodes)
@@ -190,7 +191,8 @@ def solve(m: Model, coil_current: np.ndarray | None, t_magnet: float = 20.0, ite
     mm = m.region == MAGNET
     sign = np.where(m.sub[mm] % 2 == 0, 1.0, -1.0)
     mx, my = sign * cx[mm] / rc[mm], sign * cy[mm] / rc[mm]
-    np.add.at(rhs, m.tri[mm], (nu_m * br * (mx[:, None] * c[mm] - my[:, None] * b[mm]) / 2))
+    if magnets:
+        np.add.at(rhs, m.tri[mm], (nu_m * br * (mx[:, None] * c[mm] - my[:, None] * b[mm]) / 2))
     # bobinas: densidad de corriente uniforme en cada mitad de ranura
     if coil_current is not None:
         cm = m.region == COIL

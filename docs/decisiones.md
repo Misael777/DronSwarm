@@ -76,7 +76,7 @@ El PDF eligió XTDrone como simulador principal. XTDrone v1 está hecho para Ubu
 - Estado: **Aceptada** (decisión del usuario, 2026-10-17)
 
 ### Decisión
-Los prototipos (S09-S12) usan motores, ESC, controladora y baterías comerciales. Con datos de vuelo y campo se congelan las especificaciones (Gate G4, S16); recién entonces se diseñan motor (S17-S19), electrónica y baterías propias (S20-S21), y se abordan calidad y regulación (S22). Cada componente propio debe superar al comercial (Gates G5 y G6).
+Los prototipos (S09-S12) usan motores, ESC, controladora y baterías comerciales. Con datos de vuelo y campo se congelan las especificaciones (Gate G4, S16); recién entonces se diseñan motor (S17-S19), electrónica y baterías propias (S20-S21, Gate G6 en S22), y se abordan calidad y regulación (S22). Cada componente propio debe superar al comercial (Gates G5 y G6).
 
 ### Consecuencias
 - El frame fija desde S07 una interfaz de montaje de motor estándar y una envolvente de masa para no rediseñar después.
@@ -257,3 +257,26 @@ modelo de M2 (calibrado con la FEM de M4), y se comparó el conjunto a nivel dro
 ### Consecuencias
 - M4-M8 siguen con los motores directos elegidos en M2.
 - Se revisa solo si aparece un planetario liviano, durable y barato, o para un DS-H con hélices de 30" o más.
+
+---
+
+## ADR-015 · Electrónica propia: ESC de nitruro de galio, controladora FMU y GNSS RTK
+- Estado: **Aceptada** (2026-10-25, decisión del usuario). Adelanta y redefine el alcance de electrónica de S20-S21 (el Gate G6 pasa a S22).
+
+### Contexto
+Con el motor propio, lo que más pesa en el costo del dron es la electrónica: aviónica 58 % del DS-I; en el DS-D, 6 ESC
+de 120 A (US$720) son tanto como los motores. El usuario pidió ESC propios de nitruro de galio para los dos drones,
+controladora propia y GNSS RTK propio; la cámara queda para más adelante.
+
+### Decisión
+- Subproyecto `electronics/` (plan en `electronics/PLAN.md`), con herramientas libres: **SKIDL** (esquemas como código)
+  y **KiCad** (placas); firmware abierto **AM32** (ESC) y **PX4** (controladora).
+- **ESC GaN** (EPC de 100 V, STM32G071 con AM32): uno por motor en el DS-D; 4 en 1 en el DS-I si resulta más barato
+  que el comercial (si no, el DS-I sigue con el comercial).
+- **Controladora** según el estándar abierto Pixhawk FMUv6 (STM32H743) con un target propio de PX4.
+- **GNSS RTK** con módulo multibanda de menor costo (LG290P o UM980) tras verificar el soporte de PX4.
+- Cada placa se valida en banco y en vuelo contra la comercial (Gate G6); si no gana, se sigue con la comercial.
+
+### Consecuencias
+- Los prototipos siguen volando con electrónica comercial hasta el G6.
+- El montaje SMD de las placas se hace por servicio (QFN, BGA): se presupuesta en E7.

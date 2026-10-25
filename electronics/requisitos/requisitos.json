@@ -1,0 +1,110 @@
+{
+ "esc": {
+  "DS-I": {
+   "motores_por_dron": 4,
+   "formato": "4 en 1",
+   "bus_v_nominal": 21.6,
+   "bus_v_max": 25.200000000000003,
+   "bus_v_min": 19.8,
+   "transistor_vds_min": 50,
+   "i_hover_a": 5.46,
+   "i_continua_a": 8.07,
+   "i_pico_30s_a": 10.6,
+   "i_diseno_continua_a": 10.5,
+   "i_diseno_pico_a": 13.8,
+   "pares_de_polos": 13,
+   "erpm_max": 89450,
+   "f_electrica_max_hz": 1491,
+   "p_motor_hover_w": 68.6,
+   "p_motor_max_w": 202.6,
+   "conexion": "estrella",
+   "protocolo": "DShot600 bidireccional + telemetría (AM32)",
+   "sensores_hall": false,
+   "medicion": [
+    "corriente del bus (telemetría y límite)",
+    "tensión del bus",
+    "temperatura de los transistores (NTC)"
+   ],
+   "ambiente": "5,000 msnm, −10 a 40 °C, polvo (IP54 en el dron)"
+  },
+  "DS-D": {
+   "motores_por_dron": 6,
+   "formato": "1 por motor",
+   "bus_v_nominal": 43.2,
+   "bus_v_max": 50.400000000000006,
+   "bus_v_min": 39.6,
+   "transistor_vds_min": 100,
+   "i_hover_a": 13.7,
+   "i_continua_a": 20.46,
+   "i_pico_30s_a": 27.24,
+   "i_diseno_continua_a": 26.6,
+   "i_diseno_pico_a": 35.4,
+   "pares_de_polos": 16,
+   "erpm_max": 74419,
+   "f_electrica_max_hz": 1240,
+   "p_motor_hover_w": 302.6,
+   "p_motor_max_w": 912.9,
+   "conexion": "estrella",
+   "protocolo": "DShot600 bidireccional + telemetría (AM32)",
+   "sensores_hall": false,
+   "medicion": [
+    "corriente del bus (telemetría y límite)",
+    "tensión del bus",
+    "temperatura de los transistores (NTC)"
+   ],
+   "ambiente": "5,000 msnm, −10 a 40 °C, polvo (IP54 en el dron)"
+  }
+ },
+ "motor_inductancia": {
+  "DS-I": {
+   "L_phase_h": 3.356727432152468e-05,
+   "M_h": -1.278159816939871e-06,
+   "L_loop_h": 6.969086827692911e-05,
+   "note": "FEM 2D sin cabezas de bobina: la real es ~10-25 % mayor"
+  },
+  "DS-D": {
+   "L_phase_h": 3.952136667352217e-05,
+   "M_h": -3.1278845070938563e-06,
+   "L_loop_h": 8.529850236123205e-05,
+   "note": "FEM 2D sin cabezas de bobina: la real es ~10-25 % mayor"
+  }
+ },
+ "fc": {
+  "estandar": "Pixhawk FMUv6 (abierto) · PX4 v1.15",
+  "mcu": "STM32H743 (480 MHz, 2 MB flash)",
+  "imu": "2 IMU distintas (redundancia), con aislación de vibración y calefacción a 45 °C (frío de altura)",
+  "barometro": "1 (con espuma; ventilado dentro de la carcasa IP54)",
+  "memoria": "FRAM SPI (parámetros) + microSD (logs)",
+  "interfaces": {
+   "UART": [
+    "TELEM1: Raspberry Pi (MAVLink)",
+    "TELEM2: RFD900x",
+    "GPS1: GNSS RTK",
+    "RC: ExpressLRS (CRSF)",
+    "TELEM3: cámara SIYI",
+    "UART5: flujo óptico MTF-01P",
+    "consola de depuración"
+   ],
+   "CAN": [
+    "CAN1 (GNSS/ESC futuros)",
+    "CAN2"
+   ],
+   "I2C": [
+    "magnetómetro externo",
+    "expansión"
+   ],
+   "salidas": "8 DShot/PWM (6 motores DS-D + servo de liberación + luces)",
+   "USB": "USB-C (carga de firmware)"
+  },
+  "alimentacion": "5 V desde un BEC/PM redundante (2 entradas), medición de tensión y corriente de la batería (ADC)",
+  "tamano": "≤ 50 × 40 mm, montaje 30.5 mm (estándar)"
+ },
+ "gnss": {
+  "precision": "RTK: ≤ 2 cm horizontal con base propia; multibanda (L1/L2 o L1/L5) para fijar rápido en minas",
+  "interfaz": "UART a GPS1 (NMEA/RTCM o protocolo propio soportado por PX4) + I2C del magnetómetro",
+  "magnetometro": "IST8310 o LIS3MDL, lejos de los cables de potencia (mástil)",
+  "antena": "multibanda (helicoidal o parche con LNA), conector u.FL/SMA",
+  "alimentacion": "5 V desde la controladora; LDO 3.3 V de bajo ruido",
+  "tamano": "≤ 60 × 60 mm, carcasa impresa con tapa transparente a RF"
+ }
+}

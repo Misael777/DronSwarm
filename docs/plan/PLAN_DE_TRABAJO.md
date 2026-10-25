@@ -63,7 +63,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 ## Resumen del plan
 
 - 24 sprints de 14 días: 19/10/2026 → 19/09/2027.
-- 149 tareas técnicas, 1272 h estimadas (capacidad supuesta: 80 h/sprint).
+- 154 tareas técnicas, 1330 h estimadas (capacidad supuesta: 80 h/sprint).
 
 | Sprint | Fechas | Fase | Nombre | Horas | Gate |
 |---|---|---|---|---|---|
@@ -86,9 +86,9 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | S17 | 31/05–13/06/27 | F8 - Motor propio | Motor propio: requisitos, cálculo y reductores (motor/, ADR-013) | 42 |  |
 | S18 | 14/06–27/06/27 | F8 - Motor propio | Motor propio: simulación, CAD, fabricación y guía | 46 |  |
 | S19 | 28/06–11/07/27 | F8 - Motor propio | Motor propio: prototipos, pruebas y decisión | 51 | G5 |
-| S20 | 12/07–25/07/27 | F9 - Electrónica y baterías propias | Electrónica y baterías propias: diseño | 64 |  |
-| S21 | 26/07–08/08/27 | F9 - Electrónica y baterías propias | Electrónica y baterías propias: fabricación e integración | 45 | G6 |
-| S22 | 09/08–22/08/27 | F10 - Calidad y regulación | Calidad y regulación | 38 |  |
+| S20 | 12/07–25/07/27 | F9 - Electrónica y baterías propias | Electrónica propia: ESC GaN, controladora y GNSS RTK (diseño, electronics/, ADR-015) | 76 |  |
+| S21 | 26/07–08/08/27 | F9 - Electrónica y baterías propias | Electrónica propia: placas KiCad, fabricación, banco e integración | 78 |  |
+| S22 | 09/08–22/08/27 | F10 - Calidad y regulación | Validación de componentes propios (G6), calidad y regulación | 51 | G6 |
 | S23 | 23/08–05/09/27 | F11 - Paquete de fabricación y comercial | Planos y manuales de fabricación y ensamble | 80 |  |
 | S24 | 06/09–19/09/27 | F11 - Paquete de fabricación y comercial | BOM final, costeo y presupuestos (Release) | 37 | G7 |
 
@@ -102,7 +102,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | G3 | Prototipos validados en vuelo | S12 | DS-I y DS-D vuelan estables; carga 110 %; motor caído controlado; autonomía ±10 % del modelo. |
 | G4 | Validación de campo y specs congeladas | S16 | Targets de prioridad Alta cumplidos en altura; enjambre de 6 en campo; specs de motor, electrónica y baterías congeladas. |
 | G5 | Decisión make-vs-buy del motor | S19 | Motor propio ≥ 95 % de la eficiencia del COTS y menor costo a 100 unidades, o el producto sale con COTS. |
-| G6 | Componentes propios validados | S21 | PCB, baterías y (si aplica) motor propios no peores que COTS en más de 5 % y dentro del costo objetivo. |
+| G6 | Componentes propios validados | S22 | PCB, baterías y (si aplica) motor propios no peores que COTS en más de 5 % y dentro del costo objetivo. |
 | G7 | Release de fabricación | S24 | Planos Rev A, manuales, ATP, BOM final, costeo, presupuestos y expediente regulatorio aprobados. |
 
 ## Sprints y tareas
@@ -361,43 +361,48 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | S19-04 | M8 · Vuelo con motores propios | Instalar en un DS-I; comparar autonomía y temperaturas vs COTS. | `docs/evidencias/vuelos/motor_propio.md` | Alta | 6 | S19-03 |
 | S19-05 | Gate G5: decisión make-vs-buy del motor | ADR con datos de costo y rendimiento contra los criterios de motor/PLAN.md §2; si el propio no gana, se sigue con el COTS. | `docs/decisiones.md (ADR motor)` | Alta | 3 | S19-04 |
 
-### S20 · Electrónica y baterías propias: diseño
+### S20 · Electrónica propia: ESC GaN, controladora y GNSS RTK (diseño, electronics/, ADR-015)
 
-**Fase:** F9 - Electrónica y baterías propias · **Objetivo:** PCB, packs de batería y ESC propios diseñados contra la spec congelada; BOM dentro del target.
-
-| ID | Tarea | Detalle / criterio de aceptación | Entregable | Prio | h | Depende de |
-|---|---|---|---|---|---|---|
-| S20-01 | Arquitectura eléctrica de producto | Diagrama de bloques de potencia, señal y datos; qué se integra en placa propia y qué queda COTS. | `electronics/arquitectura.md` | Alta | 6 | S16-05 |
-| S20-02 | Decisión de controladora de vuelo | Mantener Pixhawk estándar vs controladora propia (hardware abierto FMU); ADR con costo. | `docs/decisiones.md (ADR FC)` | Alta | 6 | S20-01 |
-| S20-03 | PCB de distribución de potencia | KiCad: PDB + sensor de corriente/voltaje + BEC 5 V/12 V; reglas IPC y DRC limpio. | `electronics/kicad/pdb/` | Alta | 24 | S20-01 |
-| S20-04 | Packs de batería propios 21700 + BMS | 6S (DS-I) y 12S (DS-D); BMS con balanceo y protección; proceso de soldadura por puntos. | `electronics/battery/` | Alta | 12 | S16-05 |
-| S20-05 | ESC con firmware abierto (AM32) | Seleccionar o diseñar hardware compatible AM32/DShot; corriente = Imax medida × 1.3-1.5. | `electronics/esc/` | Alta | 8 | S19-05 |
-| S20-06 | Design-to-cost: cerrar la brecha del BOM de DS-I | BOM preliminar ≈ US$943 vs target US$600. Palancas: FC integrada, RTK como opción, cámara, computadora a bordo opcional. | `docs/negocio/design_to_cost_ds-i.md` | Alta | 8 | S20-02 |
-
-### S21 · Electrónica y baterías propias: fabricación e integración · Gate G6
-
-**Fase:** F9 - Electrónica y baterías propias · **Objetivo:** Componentes propios integrados en DS-I y DS-D y validados en vuelo.
+**Fase:** F9 - Electrónica y baterías propias · **Objetivo:** ESC de nitruro de galio, controladora FMU y GNSS RTK propios diseñados (SKIDL + KiCad) dentro de la meta de costo.
 
 | ID | Tarea | Detalle / criterio de aceptación | Entregable | Prio | h | Depende de |
 |---|---|---|---|---|---|---|
-| S21-01 | Fabricar y probar PCBs | Fabricación externa, ensamble y pruebas eléctricas. | `electronics/kicad/pdb/pruebas.md` | Alta | 8 | S20-03 |
-| S21-02 | Fabricar packs de batería | Soldadura por puntos, BMS, caja; pruebas de capacidad y ciclos acelerados. | `electronics/battery/pruebas.md` | Alta | 12 | S20-04 |
-| S21-03 | Integrar componentes propios en DS-I y DS-D | Motor (si G5 aprueba), PCB, baterías y ESC; actualizar cableado y parámetros PX4. | `hardware/px4_params/` | Alta | 12 | S21-02 |
-| S21-04 | Vuelos de validación vs prototipo COTS | Autonomía, temperaturas y estabilidad; no peor que el COTS en más de 5 %. | `docs/evidencias/vuelos/componentes_propios.md` | Alta | 10 | S21-03 |
-| S21-05 | Gate G6: componentes propios validados | Acta con comparación COTS vs propio y decisión por componente. | `docs/revisiones/G6_componentes.md` | Alta | 3 | S21-04 |
+| S20-01 | E0 · Requisitos eléctricos de las placas | Corrientes, tensiones, eRPM, frecuencia de conmutación, interfaces y conectores desde los motores y el dron. | `electronics/requisitos/` | Alta | 4 | S18-01 |
+| S20-02 | E1 · ESC: GaN vs silicio y selección de piezas | Pérdidas de conducción, conmutación y tiempo muerto; rizado en nuestros motores; costo. Elegir transistor, driver y MCU (AM32). | `electronics/informes/E1_esc_gan_vs_si.md` | Alta | 8 | S20-01 |
+| S20-03 | E2 · Esquema del ESC GaN del DS-D (SKIDL → KiCad) | Medio puente GaN ×3, driver, STM32G071 (AM32), medición de corriente/tensión, protecciones; netlist con ERC limpio. | `electronics/skidl/esc_ds_d.py` | Alta | 12 | S20-02 |
+| S20-04 | E3 · ESC del DS-I (4 en 1): decisión de costo y esquema | GaN de 40-100 V vs silicio vs comercial; si conviene, esquema 4 en 1. | `electronics/skidl/esc_ds_i.py` | Alta | 10 | S20-02 |
+| S20-05 | E4 · Controladora de vuelo FMU (STM32H743) y port de PX4 | Esquema según el estándar abierto FMUv6 (2 IMU, baro, FRAM, microSD, CAN, DShot); target de PX4. | `electronics/skidl/fc.py` | Alta | 20 | S20-01 |
+| S20-06 | E5 · GNSS RTK propio | LG290P vs UM980 vs ZED-F9P (precisión, soporte PX4, costo); esquema con antena multibanda y magnetómetro. | `electronics/skidl/gnss.py` | Alta | 10 | S20-01 |
+| S20-07 | Packs de batería propios 21700 + BMS | 6S (DS-I) y 12S (DS-D); BMS con balanceo y protección; proceso de soldadura por puntos. | `electronics/battery/` | Media | 12 | S16-05 |
 
-### S22 · Calidad y regulación
+### S21 · Electrónica propia: placas KiCad, fabricación, banco e integración
 
-**Fase:** F10 - Calidad y regulación · **Objetivo:** Sistema de calidad básico y expediente regulatorio listos para vender.
+**Fase:** F9 - Electrónica y baterías propias · **Objetivo:** Placas propias ruteadas, fabricadas, probadas en banco e integradas en los drones.
 
 | ID | Tarea | Detalle / criterio de aceptación | Entregable | Prio | h | Depende de |
 |---|---|---|---|---|---|---|
-| S22-01 | FMEA de diseño y de proceso | Modos de falla, severidad, ocurrencia, detección; acciones para RPN altos. | `docs/calidad/fmea.md` | Alta | 8 | S21-05 |
-| S22-02 | Plan de control de calidad | Inspección de entrada, puntos de control en proceso y registros por número de serie. | `manufacturing/calidad/plan_control.md` | Alta | 6 | S22-01 |
-| S22-03 | Ensayo de protección IP54 | Prueba de polvo y salpicadura (interna o laboratorio) sobre unidad de producto. | `docs/calidad/ensayo_ip54.md` | Alta | 6 | S21-05 |
-| S22-04 | Marco regulatorio MTC/DGAC | Registro, categorías por peso, BVLOS, operación de varios drones a la vez; requisitos para comercializar. | `docs/requisitos/regulacion.md` | Alta | 8 | - |
-| S22-05 | Requisitos de seguridad de las minas cliente | Normas internas, permisos, seguros exigidos, homologación de equipos. | `docs/requisitos/seguridad_minera.md` | Alta | 4 | S22-04 |
-| S22-06 | Expediente regulatorio y seguros | Documentación para registro, seguro de responsabilidad civil y manual de operación conforme. | `docs/requisitos/expediente_regulatorio.md` | Alta | 6 | S22-05 |
+| S21-01 | E6 · Placas en KiCad y archivos de fabricación | Ruteo (potencia GaN con lazo mínimo), DRC limpio, Gerbers, BOM y posiciones para montaje por servicio. | `electronics/kicad/` | Alta | 24 | S20-06 |
+| S21-02 | E7 · Presupuesto de la electrónica propia | Costo por placa y por dron vs comercial (Excel), por escala. | `electronics/bom/` | Alta | 4 | S21-01 |
+| S21-03 | E8 · Fabricar y montar las placas | Fabricación y montaje SMD por servicio; inspección y pruebas eléctricas de cada placa. | `electronics/pruebas/fabricacion.md` | Alta | 8 | S21-02 |
+| S21-04 | E8 · Banco del ESC GaN | Eficiencia y temperatura vs ESC comercial con el mismo motor (banco S10); 10 h sin desincronización. | `electronics/pruebas/esc.md` | Alta | 12 | S21-03 |
+| S21-05 | E8 · Puesta en marcha de la controladora (PX4) y HITL | Bootloader, PX4, sensores, HITL y tests de S13 sin regresiones. | `electronics/pruebas/fc.md` | Alta | 12 | S21-03 |
+| S21-06 | E8 · Prueba de precisión del GNSS RTK | RTK fijo, error estático y dinámico con la base del proyecto. | `electronics/pruebas/gnss.md` | Alta | 6 | S21-03 |
+| S21-07 | Integrar componentes propios en DS-I y DS-D | Motor (si G5 aprueba), ESC, controladora, GNSS y baterías; cableado y parámetros PX4. | `hardware/px4_params/` | Alta | 12 | S21-06 |
+
+### S22 · Validación de componentes propios (G6), calidad y regulación · Gate G6
+
+**Fase:** F10 - Calidad y regulación · **Objetivo:** Componentes propios validados en vuelo (G6); sistema de calidad básico y expediente regulatorio listos para vender.
+
+| ID | Tarea | Detalle / criterio de aceptación | Entregable | Prio | h | Depende de |
+|---|---|---|---|---|---|---|
+| S22-01 | Vuelos de validación vs prototipo COTS | Autonomía, temperaturas y estabilidad; no peor que el COTS en más de 5 %. | `docs/evidencias/vuelos/componentes_propios.md` | Alta | 10 | S21-07 |
+| S22-02 | Gate G6: electrónica propia validada | Acta con comparación COTS vs propio y decisión por placa (criterios de electronics/PLAN.md §4). | `docs/revisiones/G6_componentes.md` | Alta | 3 | S22-01 |
+| S22-03 | FMEA de diseño y de proceso | Modos de falla, severidad, ocurrencia, detección; acciones para RPN altos. | `docs/calidad/fmea.md` | Alta | 8 | S21-07 |
+| S22-04 | Plan de control de calidad | Inspección de entrada, puntos de control en proceso y registros por número de serie. | `manufacturing/calidad/plan_control.md` | Alta | 6 | S22-03 |
+| S22-05 | Ensayo de protección IP54 | Prueba de polvo y salpicadura (interna o laboratorio) sobre unidad de producto. | `docs/calidad/ensayo_ip54.md` | Alta | 6 | S21-07 |
+| S22-06 | Marco regulatorio MTC/DGAC | Registro, categorías por peso, BVLOS, operación de varios drones a la vez; requisitos para comercializar. | `docs/requisitos/regulacion.md` | Alta | 8 | - |
+| S22-07 | Requisitos de seguridad de las minas cliente | Normas internas, permisos, seguros exigidos, homologación de equipos. | `docs/requisitos/seguridad_minera.md` | Alta | 4 | S22-06 |
+| S22-08 | Expediente regulatorio y seguros | Documentación para registro, seguro de responsabilidad civil y manual de operación conforme. | `docs/requisitos/expediente_regulatorio.md` | Alta | 6 | S22-07 |
 
 ### S23 · Planos y manuales de fabricación y ensamble
 
@@ -405,7 +410,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 
 | ID | Tarea | Detalle / criterio de aceptación | Entregable | Prio | h | Depende de |
 |---|---|---|---|---|---|---|
-| S23-01 | Planos definitivos Rev A | FreeCAD TechDraw desde los sólidos de OpenSCAD: tolerancias, materiales, acabados; control de revisiones. | `manufacturing/planos/` | Alta | 24 | S22-02 |
+| S23-01 | Planos definitivos Rev A | FreeCAD TechDraw desde los sólidos de OpenSCAD: tolerancias, materiales, acabados; control de revisiones. | `manufacturing/planos/` | Alta | 24 | S22-04 |
 | S23-02 | Plano de ensamble general y explosionados | Desde los ensambles FreeCAD: vistas explosionadas con globos y lista de partes por modelo. | `manufacturing/planos/ensamble/` | Alta | 12 | S23-01 |
 | S23-03 | Manual de fabricación | Piezas impresas, corte de carbono, motor (si aplica), packs de batería y PCB. | `manufacturing/manuales/fabricacion.md` | Alta | 14 | S23-01 |
 | S23-04 | Manual de ensamble paso a paso | Fotos, torques, fijador de roscas y tiempos estándar por paso. | `manufacturing/manuales/ensamble.md` | Alta | 14 | S23-02 |
@@ -451,10 +456,10 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 - **Diseño del motor propio (cálculo, reductores, FEM)** (Informe) → `motor/informes/` · tarea S18-01
 - **Archivos de fabricación, lista de compras y guía del motor** (Plano) → `motor/fabricacion/, motor/bom/, motor/docs/` · tarea S18-05
 - **Informe de pruebas del motor propio y decisión make-vs-buy** (Informe) → `motor/pruebas/` · tarea S19-05
-- **PCB de distribución de potencia** (Electrónica) → `electronics/kicad/pdb/` · tarea S20-03
-- **Packs de batería propios** (Electrónica) → `electronics/battery/` · tarea S21-02
-- **FMEA** (Informe) → `docs/calidad/fmea.md` · tarea S22-01
-- **Expediente regulatorio** (Informe) → `docs/requisitos/expediente_regulatorio.md` · tarea S22-06
+- **ESC GaN, controladora y GNSS RTK propios (SKIDL + KiCad)** (Electrónica) → `electronics/kicad/` · tarea S21-01
+- **Packs de batería propios** (Electrónica) → `electronics/battery/` · tarea S20-07
+- **FMEA** (Informe) → `docs/calidad/fmea.md` · tarea S22-03
+- **Expediente regulatorio** (Informe) → `docs/requisitos/expediente_regulatorio.md` · tarea S22-08
 - **Planos definitivos Rev A** (Plano) → `manufacturing/planos/` · tarea S23-01
 - **Planos de ensamble y explosionados** (Plano) → `manufacturing/planos/ensamble/` · tarea S23-02
 - **Manual de fabricación** (Manual) → `manufacturing/manuales/fabricacion.md` · tarea S23-03
