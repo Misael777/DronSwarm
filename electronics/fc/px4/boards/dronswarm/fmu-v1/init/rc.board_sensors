@@ -1,0 +1,19 @@
+#!/bin/sh
+#
+# DronSwarm FMU v1: sensores de la placa
+#------------------------------------------------------------------------------
+board_adc start
+
+# IMU 1: BMI088 (SPI1)
+bmi088 -A -R 4 -s start
+bmi088 -G -R 4 -s start
+
+# IMU 2: IIM-42652 industrial (SPI1)
+iim42652 -R 6 -s start
+
+# Barómetro y magnetómetro internos en I2C4 (marcados como externos igual que en v6c)
+ms5611 -X -b 4 -a 0x77 start
+ist8310 -X -b 4 -a 0xc start
+
+# Magnetómetro del GNSS DronSwarm (IST8310) en el puerto GPS1 (I2C1)
+ist8310 -X -b 1 -R 10 start

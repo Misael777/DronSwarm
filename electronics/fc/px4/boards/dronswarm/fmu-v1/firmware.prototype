@@ -1,0 +1,13 @@
+{
+    "board_id": 6110,
+    "magic": "PX4FWv1",
+    "description": "Firmware for the DronSwarm FMU v1 board (FMUv6C pinout, no PX4IO)",
+    "image": "",
+    "build_time": 0,
+    "summary": "DRONSWARMFMUv1",
+    "version": "0.1",
+    "image_size": 0,
+    "image_maxsize": 1966080,
+    "git_identity": "",
+    "board_revision": 0
+}
