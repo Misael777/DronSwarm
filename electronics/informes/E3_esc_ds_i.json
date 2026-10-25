@@ -1,0 +1,111 @@
+{
+ "opciones": {
+  "Si": {
+   "switch": "CSD18503Q5A (Si 40 V, SON 5×6)",
+   "f_khz": 24.0,
+   "costo_canal_usd": 7.25,
+   "costo_placa_usd": 42.8,
+   "perdida_w_por_motor": {
+    "hover": 0.48,
+    "maniobra": 0.96,
+    "pico": 1.59
+   },
+   "perdida_hover_dron_w": 1.91,
+   "eficiencia_hover": 0.9930815063331988,
+   "detalle_canal": [
+    [
+     "CSD18503Q5A ×6",
+     3.3000000000000003
+    ],
+    [
+     "DRV8300DPW (driver trifásico, bootstrap integrado)",
+     0.85
+    ],
+    [
+     "STM32G071KBU6N",
+     1.6
+    ],
+    [
+     "Shunt 1 mΩ 2512 + INA181A3",
+     0.6
+    ],
+    [
+     "Pasivos (divisores, desacople, filtros)",
+     0.9
+    ]
+   ]
+  },
+  "GaN": {
+   "switch": "EPC2302 (GaN 100 V, QFN 3×5)",
+   "f_khz": 48.0,
+   "costo_canal_usd": 36.4,
+   "costo_placa_usd": 159.4,
+   "perdida_w_por_motor": {
+    "hover": 0.21,
+    "maniobra": 0.4,
+    "pico": 0.64
+   },
+   "perdida_hover_dron_w": 0.83,
+   "eficiencia_hover": 0.9969934592385363,
+   "detalle_canal": [
+    [
+     "EPC2302 ×6",
+     24.0
+    ],
+    [
+     "LMG1210 ×3",
+     9.0
+    ],
+    [
+     "STM32G071KBU6N",
+     1.6
+    ],
+    [
+     "Shunt 1 mΩ 2512 + INA181A3",
+     0.6
+    ],
+    [
+     "Pasivos (divisores, desacople, bootstrap)",
+     1.2
+    ]
+   ]
+  }
+ },
+ "comercial_usd": 80.0,
+ "gan_vs_si": {
+  "ahorro_w": 1.08,
+  "ahorro_pct": 0.39,
+  "sobrecosto_usd": 116.6
+ },
+ "decision": "Silicio propio",
+ "detalle_placa": [
+  [
+   "LM5164 + inductor (12 V para los drivers)",
+   1.8499999999999999
+  ],
+  [
+   "MCP1703 3.3 V",
+   0.35
+  ],
+  [
+   "Condensadores del bus (2 × 470 µF 35 V + MLCC)",
+   1.3
+  ],
+  [
+   "TVS SMAJ26A + ESD de señales",
+   0.7
+  ],
+  [
+   "Conectores (JST-GH 6 pines, pads)",
+   0.6
+  ],
+  [
+   "PCB 4 capas 2 oz 50 × 50 mm",
+   3.0
+  ],
+  [
+   "Montaje SMD por servicio (por placa)",
+   6.0
+  ]
+ ]
+}

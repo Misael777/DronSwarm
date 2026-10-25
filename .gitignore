@@ -46,3 +46,4 @@ cad/exports/*/*_ensamble.stl
 # SKIDL: subproductos al generar netlists (la netlist va en electronics/kicad/)
 *.erc
 *_sklib.py
+electronics/kicad/_build/
