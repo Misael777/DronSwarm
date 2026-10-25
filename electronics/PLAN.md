@@ -41,10 +41,11 @@ lista de materiales y archivos de posición generados por KiCad.
 | **E0** | Requisitos eléctricos de cada placa desde los motores y el dron | `electronics/requisitos/` | corrientes, tensiones, eRPM y conectores definidos |
 | **E1** | ESC: GaN vs silicio (pérdidas, frecuencia, rizado en nuestros motores), selección de piezas | `electronics/informes/E1_*` | ganancia y costo cuantificados; piezas elegidas |
 | **E2** | ESC DS-D: esquema (SKIDL → netlist KiCad) | `electronics/skidl/esc_ds_d.py`, `electronics/kicad/esc_ds_d/` | netlist sin errores de ERC |
-| **E3** | ESC DS-I 4 en 1: decisión de costo y esquema | `electronics/skidl/esc_ds_i.py` | netlist o ADR de "comercial" |
+| **E3** | ESC DS-I 4 en 1: decisión de costo y esquema (**silicio propio**, ADR-016) | `electronics/skidl/esc_ds_i.py` | netlist o ADR de "comercial" |
 | **E4** | Controladora FMU: esquema + plan de port de PX4 | `electronics/skidl/fc.py`, `electronics/fc/px4_port.md` | netlist; target de PX4 compila |
 | **E5** | GNSS RTK: elección del módulo y esquema | `electronics/skidl/gnss.py` | netlist; soporte PX4 verificado |
 | **E6** | Placas en KiCad: ruteo, DRC, Gerbers, BOM y posiciones para montaje | `electronics/kicad/*` | DRC limpio, archivos de fabricación |
+| **S20-07** | Packs 21700 + BMS (BQ769x0, DroneCAN) + cargador de campo GaN 1 kW | `electronics/skidl/bms.py`, `charger.py`, `informes/S20-07_*` | netlists con ERC limpio |
 | **E7** | Lista de materiales y presupuesto de la electrónica por dron | `electronics/bom/*.xlsx` | costo por placa y por dron vs comercial |
 | **E8** | Fabricar, banco (ESC: eficiencia y temperatura vs comercial; FC: HITL; GNSS: precisión RTK), integrar y volar | `electronics/pruebas/` | Gate G6 |
 
@@ -67,8 +68,22 @@ lista de materiales y archivos de posición generados por KiCad.
 | Soporte de PX4 para el GNSS elegido | verificar antes de diseñar (E5); plan B: ZED-F9P en placa propia |
 | Montaje SMD de QFN/BGA | montaje por servicio (no a mano) |
 
-## 6. A futuro (fuera de este alcance)
+## 6. Estado (2026-10-25)
+
+| Placa | Esquema (SKIDL → netlist, ERC) | Firmware | Informe |
+|---|---|---|---|
+| ESC GaN DS-D | `skidl/esc_ds_d.py` ✅ | AM32 (G0_G) | `informes/E1_esc_gan_vs_si.md` |
+| ESC 4 en 1 DS-I (silicio) | `skidl/esc_ds_i.py` ✅ | AM32 (G0_G) | `informes/E3_esc_ds_i.md` |
+| Controladora FMU | `skidl/fc.py` ✅ | PX4 `dronswarm_fmu-v1` compila ✅ | `fc/px4_port.md` |
+| GNSS RTK LG290P | `skidl/gnss.py` ✅ | NMEA de PX4 | `informes/E5_gnss.md` |
+| BMS 6S / 12S | `skidl/bms.py` ✅ | por escribir (DroneCAN BatteryInfo) | `informes/S20-07_baterias.md` |
+| Cargador GaN 1 kW | `skidl/charger.py` ✅ | por escribir (CC/CV en HRTIM) | `informes/S20-07_cargador.md` |
+
+Regenerar todo: `bash electronics/build_netlists.sh` · pruebas: `.venv/bin/pytest -q electronics/tests`.
+
+## 7. A futuro (fuera de este alcance)
 
 - **Cámara de inspección propia** (sensor + gimbal + enlace de video): se planifica después del Gate G6, con datos de
   campo de la SIYI A8 mini.
-- **Placa de distribución de potencia** integrada al ESC del DS-D y **BMS** de los packs (S20, tarea aparte).
+- **Placa de distribución de potencia** integrada al ESC del DS-D.
+- Etapa AC-DC propia del cargador (PFC GaN): se compra hecha mientras el volumen no la justifique.

@@ -1,0 +1,153 @@
+{
+ "v_in": 48.0,
+ "etapas": {
+  "GaN": {
+   "f": 250000.0,
+   "L": 6.8e-06,
+   "dcr": 0.0045,
+   "core_w": 0.9,
+   "sw": "EPC2302 (GaN 100 V, QFN 3×5)",
+   "inductor": "XAL1510-682"
+  },
+  "Si": {
+   "f": 100000.0,
+   "L": 1.5e-05,
+   "dcr": 0.008,
+   "core_w": 0.6,
+   "sw": "MOSFET de silicio 100 V (clase de ESC 12S 120 A)",
+   "inductor": "XAL1510-153"
+  }
+ },
+ "puntos": {
+  "DS-I 6S a 3.9 V/celda": {
+   "GaN": {
+    "modo": "reductor D = 0.49",
+    "i_inductor_a": 12.0,
+    "rizado_a": 7.05,
+    "p_out_w": 280.8,
+    "p_conduccion_w": 0.72,
+    "p_conmutacion_w": 1.18,
+    "p_inductor_w": 1.57,
+    "p_shunts_w": 0.18,
+    "p_fija_w": 3.0,
+    "p_total_w": 6.64,
+    "eficiencia": 0.9768952480614528
+   },
+   "Si": {
+    "modo": "reductor D = 0.49",
+    "i_inductor_a": 12.0,
+    "rizado_a": 7.99,
+    "p_out_w": 280.8,
+    "p_conduccion_w": 1.67,
+    "p_conmutacion_w": 1.9,
+    "p_inductor_w": 1.79,
+    "p_shunts_w": 0.18,
+    "p_fija_w": 3.0,
+    "p_total_w": 8.54,
+    "eficiencia": 0.9704771598345683
+   }
+  },
+  "DS-I 6S fin (CV 4.2 V)": {
+   "GaN": {
+    "modo": "reductor D = 0.53",
+    "i_inductor_a": 12.0,
+    "rizado_a": 7.04,
+    "p_out_w": 302.4,
+    "p_conduccion_w": 0.72,
+    "p_conmutacion_w": 1.18,
+    "p_inductor_w": 1.57,
+    "p_shunts_w": 0.18,
+    "p_fija_w": 3.0,
+    "p_total_w": 6.65,
+    "eficiencia": 0.9784932713097866
+   },
+   "Si": {
+    "modo": "reductor D = 0.53",
+    "i_inductor_a": 12.0,
+    "rizado_a": 7.98,
+    "p_out_w": 302.4,
+    "p_conduccion_w": 1.67,
+    "p_conmutacion_w": 1.9,
+    "p_inductor_w": 1.79,
+    "p_shunts_w": 0.18,
+    "p_fija_w": 3.0,
+    "p_total_w": 8.55,
+    "eficiencia": 0.9725121007059375
+   }
+  },
+  "DS-D 12S a 3.9 V/celda": {
+   "GaN": {
+    "modo": "reductor D = 0.97",
+    "i_inductor_a": 20.0,
+    "rizado_a": 0.69,
+    "p_out_w": 936.0,
+    "p_conduccion_w": 1.94,
+    "p_conmutacion_w": 1.67,
+    "p_inductor_w": 2.7,
+    "p_shunts_w": 0.78,
+    "p_fija_w": 3.0,
+    "p_total_w": 10.1,
+    "eficiencia": 0.989327398721885
+   },
+   "Si": {
+    "modo": "reductor D = 0.97",
+    "i_inductor_a": 20.0,
+    "rizado_a": 0.78,
+    "p_out_w": 936.0,
+    "p_conduccion_w": 4.48,
+    "p_conmutacion_w": 2.82,
+    "p_inductor_w": 3.8,
+    "p_shunts_w": 0.78,
+    "p_fija_w": 3.0,
+    "p_total_w": 14.88,
+    "eficiencia": 0.9843465703662955
+   }
+  },
+  "DS-D 12S fin (CV 4.2 V)": {
+   "GaN": {
+    "modo": "elevador D = 0.05",
+    "i_inductor_a": 21.0,
+    "rizado_a": 1.34,
+    "p_out_w": 1008.0,
+    "p_conduccion_w": 2.14,
+    "p_conmutacion_w": 1.82,
+    "p_inductor_w": 2.89,
+    "p_shunts_w": 0.84,
+    "p_fija_w": 3.0,
+    "p_total_w": 10.69,
+    "eficiencia": 0.9895035290818331
+   },
+   "Si": {
+    "modo": "elevador D = 0.05",
+    "i_inductor_a": 21.0,
+    "rizado_a": 1.52,
+    "p_out_w": 1008.0,
+    "p_conduccion_w": 4.94,
+    "p_conmutacion_w": 3.04,
+    "p_inductor_w": 4.13,
+    "p_shunts_w": 0.84,
+    "p_fija_w": 3.0,
+    "p_total_w": 15.95,
+    "eficiencia": 0.984418944454673
+   }
+  }
+ },
+ "comercial": {
+  "precio_usd": 380.0,
+  "eficiencia": 0.88,
+  "nota": "cargador de hobby 1 kW 12S + 6S del BOM (T049); eficiencia típica de catálogo"
+ },
+ "cadena_ac": {
+  "fuente_ac_dc": 0.93,
+  "gan": 0.9201,
+  "si": 0.9154,
+  "comercial": 0.88
+ },
+ "costo": {
+  "placa_dc_dc_usd": 48.0,
+  "fuente_ac_dc_48v_1kw_usd": 190.0,
+  "caja_ventilador_conectores_usd": 25.0,
+  "nota": "materiales estimados a 10 unidades; la placa se detalla en E7",
+  "total_usd": 263.0
+ }
+}

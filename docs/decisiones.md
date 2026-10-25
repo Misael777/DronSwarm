@@ -280,3 +280,27 @@ controladora propia y GNSS RTK propio; la cámara queda para más adelante.
 ### Consecuencias
 - Los prototipos siguen volando con electrónica comercial hasta el G6.
 - El montaje SMD de las placas se hace por servicio (QFN, BGA): se presupuesta en E7.
+
+## ADR-016 · Diseños de S20: ESC del DS-I de silicio, GNSS LG290P, BMS sin corte en vuelo y cargador GaN
+- Estado: **Propuesta** (2026-10-25). Resultados de E3, E5 y S20-07; se confirma o se revierte en el Gate G6 (S22).
+
+### Contexto
+ADR-015 pidió GaN en los dos drones "si resulta más barato". Los cálculos de S20 dan números para decidir cada placa.
+
+### Decisión
+- **ESC del DS-I: 4 en 1 propio de silicio** (CSD18503Q5A + DRV8300, AM32), ~US$43 contra US$80 del comercial y
+  US$159 en GaN. El GaN ahorra 0.4 % de potencia en el DS-I y no paga su costo (`electronics/informes/E3_esc_ds_i.md`).
+  El DS-D sigue con GaN (E1/E2).
+- **GNSS: Quectel LG290P** con el driver NMEA de PX4 (RTK fijo y RTCM verificados en el código de v1.15); plan B
+  ZED-F9P (`electronics/informes/E5_gnss.md`).
+- **Controladora:** IIM-42652 (industrial) + BMI088 en lugar de ICM-42688-P; target `dronswarm_fmu-v1` derivado de
+  fmu-v6c, compila (`electronics/fc/px4_port.md`).
+- **Packs:** la salida de vuelo no tiene transistor de corte (fusible + aviso a PX4 por DroneCAN); solo se corta el
+  puerto de carga. Balanceo externo de ~100 mA (`electronics/informes/S20-07_baterias.md`).
+- **GaN en el cargador de campo, no en el BMS**: el BMS no conmuta; el cargador de 1 kW sí (98.9 % la etapa GaN,
+  ~US$263 con fuente AC-DC comercial, contra US$380) (`electronics/informes/S20-07_cargador.md`).
+
+### Consecuencias
+- Un solo firmware de ESC (AM32 en STM32G071) para los dos drones.
+- El pack del DS-D disipa ~195 W en hover por resistencia interna: requiere canales de aire (se verifica en el banco).
+- `board_id` 6110 es provisorio: hay que registrar un ID propio en PX4 antes de producir.

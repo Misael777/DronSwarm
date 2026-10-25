@@ -63,7 +63,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 ## Resumen del plan
 
 - 24 sprints de 14 días: 19/10/2026 → 19/09/2027.
-- 154 tareas técnicas, 1330 h estimadas (capacidad supuesta: 80 h/sprint).
+- 154 tareas técnicas, 1334 h estimadas (capacidad supuesta: 80 h/sprint).
 
 | Sprint | Fechas | Fase | Nombre | Horas | Gate |
 |---|---|---|---|---|---|
@@ -86,7 +86,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | S17 | 31/05–13/06/27 | F8 - Motor propio | Motor propio: requisitos, cálculo y reductores (motor/, ADR-013) | 42 |  |
 | S18 | 14/06–27/06/27 | F8 - Motor propio | Motor propio: simulación, CAD, fabricación y guía | 46 |  |
 | S19 | 28/06–11/07/27 | F8 - Motor propio | Motor propio: prototipos, pruebas y decisión | 51 | G5 |
-| S20 | 12/07–25/07/27 | F9 - Electrónica y baterías propias | Electrónica propia: ESC GaN, controladora y GNSS RTK (diseño, electronics/, ADR-015) | 76 |  |
+| S20 | 12/07–25/07/27 | F9 - Electrónica y baterías propias | Electrónica propia: ESC GaN, controladora y GNSS RTK (diseño, electronics/, ADR-015) | 80 |  |
 | S21 | 26/07–08/08/27 | F9 - Electrónica y baterías propias | Electrónica propia: placas KiCad, fabricación, banco e integración | 78 |  |
 | S22 | 09/08–22/08/27 | F10 - Calidad y regulación | Validación de componentes propios (G6), calidad y regulación | 51 | G6 |
 | S23 | 23/08–05/09/27 | F11 - Paquete de fabricación y comercial | Planos y manuales de fabricación y ensamble | 80 |  |
@@ -373,7 +373,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 | S20-04 | E3 · ESC del DS-I (4 en 1): decisión de costo y esquema | GaN de 40-100 V vs silicio vs comercial; si conviene, esquema 4 en 1. | `electronics/skidl/esc_ds_i.py` | Alta | 10 | S20-02 |
 | S20-05 | E4 · Controladora de vuelo FMU (STM32H743) y port de PX4 | Esquema según el estándar abierto FMUv6 (2 IMU, baro, FRAM, microSD, CAN, DShot); target de PX4. | `electronics/skidl/fc.py` | Alta | 20 | S20-01 |
 | S20-06 | E5 · GNSS RTK propio | LG290P vs UM980 vs ZED-F9P (precisión, soporte PX4, costo); esquema con antena multibanda y magnetómetro. | `electronics/skidl/gnss.py` | Alta | 10 | S20-01 |
-| S20-07 | Packs de batería propios 21700 + BMS | 6S (DS-I) y 12S (DS-D); BMS con balanceo y protección; proceso de soldadura por puntos. | `electronics/battery/` | Media | 12 | S16-05 |
+| S20-07 | Packs de batería propios 21700 + BMS + cargador GaN | 6S (DS-I) y 12S (DS-D); BMS BQ769x0 con balanceo externo y DroneCAN; cargador de campo GaN 1 kW; soldadura por puntos. | `electronics/informes/S20-07_baterias.md` | Media | 16 | S16-05 |
 
 ### S21 · Electrónica propia: placas KiCad, fabricación, banco e integración
 
@@ -457,7 +457,7 @@ Cotizaciones de referencia: Kit M4E (dron + 2 baterías + Terra 1 año + D-RTK 3
 - **Archivos de fabricación, lista de compras y guía del motor** (Plano) → `motor/fabricacion/, motor/bom/, motor/docs/` · tarea S18-05
 - **Informe de pruebas del motor propio y decisión make-vs-buy** (Informe) → `motor/pruebas/` · tarea S19-05
 - **ESC GaN, controladora y GNSS RTK propios (SKIDL + KiCad)** (Electrónica) → `electronics/kicad/` · tarea S21-01
-- **Packs de batería propios** (Electrónica) → `electronics/battery/` · tarea S20-07
+- **Packs de batería propios, BMS y cargador GaN** (Electrónica) → `electronics/informes/S20-07_baterias.md` · tarea S20-07
 - **FMEA** (Informe) → `docs/calidad/fmea.md` · tarea S22-03
 - **Expediente regulatorio** (Informe) → `docs/requisitos/expediente_regulatorio.md` · tarea S22-08
 - **Planos definitivos Rev A** (Plano) → `manufacturing/planos/` · tarea S23-01
