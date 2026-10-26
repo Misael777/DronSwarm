@@ -11,17 +11,19 @@ from skidl import SKIDL, TEMPLATE, Part, Pin
 
 PIN = Pin.types
 
-# EPC2302: GaN 100 V, 1.8 mΩ, QFN 3 × 5 mm con tapa expuesta (conectada a la fuente). Hoja de datos EPC2302 (2026).
+# EPC2302: GaN 100 V, 1.8 mΩ, QFN 3 × 5 mm. 7 terminales según la hoja de datos EPC2302 (2026), pág. 11:
+# 1 compuerta, 2/4/6 fuente, 3/5/7 drenador (la tapa expuesta va a la fuente internamente y no se usa como contacto).
 EPC2302 = Part(
     name="EPC2302", tool=SKIDL, dest=TEMPLATE, ref_prefix="Q", footprint="DronSwarm:EPC2302_QFN-3x5mm",
     description="eGaN FET 100 V 1.8 mOhm, Qg 23 nC, Qrr 0, compuerta máx. +6/-4 V",
-    pins=[Pin(num="1", name="G", func=PIN.INPUT), Pin(num="2", name="S", func=PIN.PASSIVE), Pin(num="3", name="D", func=PIN.PASSIVE)],
+    pins=[Pin(num="1", name="G", func=PIN.INPUT)] + [Pin(num=str(n), name="S" if n % 2 == 0 else "D", func=PIN.PASSIVE)
+                                                     for n in range(2, 8)],
 )
 
 # LMG1210 (TI): driver de medio puente para GaN, 200 V, LDO interno de 5 V, tiempo muerto ajustable. WQFN-19 (RVR).
 # Pines según la tabla "Pin Functions" de la hoja de datos SNOSD12D: los pines duplicados (VSS, HS, NC) se listan todos.
 LMG1210 = Part(
-    name="LMG1210", tool=SKIDL, dest=TEMPLATE, ref_prefix="U", footprint="DronSwarm:TI_WQFN-19_RVR_3.5x4.5mm",
+    name="LMG1210", tool=SKIDL, dest=TEMPLATE, ref_prefix="U", footprint="DronSwarm:TI_WQFN-19_RVR0019A_4x3mm",
     description="Driver de medio puente GaN 200 V, 5 V regulados, entradas independientes (IIM) o PWM",
     pins=[
         Pin(num="1", name="NC", func=PIN.NOCONNECT), Pin(num="2", name="VIN", func=PIN.PWRIN),

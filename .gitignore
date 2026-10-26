@@ -47,3 +47,9 @@ cad/exports/*/*_ensamble.stl
 *.erc
 *_sklib.py
 electronics/kicad/_build/
+# KiCad: archivos locales y del autorruteador
+*.kicad_prl
+*.dsn
+*.ses
+*-backups/
+electronics/kicad/*/fab/

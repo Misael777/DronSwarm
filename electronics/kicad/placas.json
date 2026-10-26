@@ -1,0 +1,97 @@
+[
+ {
+  "placa": "esc_ds_d",
+  "piezas": 115,
+  "nets": 60,
+  "faltan_huellas": {
+   "DronSwarm:TI_WQFN-19_RVR0019A_4x3mm": [
+    "U3",
+    "U4",
+    "U5"
+   ]
+  },
+  "contorno_mm": [
+   40,
+   70
+  ],
+  "alto_pedido_mm": 70,
+  "potencia": 6
+ },
+ {
+  "placa": "esc_ds_i",
+  "piezas": 335,
+  "nets": 192,
+  "faltan_huellas": {},
+  "contorno_mm": [
+   60,
+   87.6
+  ],
+  "alto_pedido_mm": 60,
+  "potencia": 18
+ },
+ {
+  "placa": "fc",
+  "piezas": 165,
+  "nets": 141,
+  "faltan_huellas": {},
+  "contorno_mm": [
+   55,
+   72.5
+  ],
+  "alto_pedido_mm": 45,
+  "potencia": 7
+ },
+ {
+  "placa": "gnss",
+  "piezas": 32,
+  "nets": 23,
+  "faltan_huellas": {},
+  "contorno_mm": [
+   40,
+   40
+  ],
+  "alto_pedido_mm": 40,
+  "potencia": 2
+ },
+ {
+  "placa": "bms_ds_i",
+  "piezas": 105,
+  "nets": 77,
+  "faltan_huellas": {},
+  "contorno_mm": [
+   60,
+   50.8
+  ],
+  "alto_pedido_mm": 40,
+  "potencia": 4
+ },
+ {
+  "placa": "bms_ds_d",
+  "piezas": 141,
+  "nets": 104,
+  "faltan_huellas": {},
+  "contorno_mm": [
+   80,
+   46.3
+  ],
+  "alto_pedido_mm": 45,
+  "potencia": 4
+ },
+ {
+  "placa": "charger",
+  "piezas": 131,
+  "nets": 76,
+  "faltan_huellas": {
+   "DronSwarm:TI_WQFN-19_RVR0019A_4x3mm": [
+    "U2",
+    "U3"
+   ]
+  },
+  "contorno_mm": [
+   100,
+   80
+  ],
+  "alto_pedido_mm": 80,
+  "potencia": 10
+ }
+]

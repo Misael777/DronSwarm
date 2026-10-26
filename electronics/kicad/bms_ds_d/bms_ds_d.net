@@ -2,121 +2,10 @@
   (version "D")
   (design
     (source "bms.py")
-    (date "10/25/2026 07:26 AM")
+    (date "10/25/2026 07:36 AM")
     (tool "SKiDL (3.0.0)")
     (sheet
       (number 1)
-      (name "/sense_and_charge1/")
-      (tstamps "/e2e7bab8-39b8-58a0-b62f-978ea6769337/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/bms.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 2)
-      (name "/")
-      (tstamps "/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/bms.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 3)
-      (name "/mcu_can1/lm5164_1/")
-      (tstamps "/9a876bdf-fee9-5a95-ae73-da84b8cb5341/d73293a2-f4d5-5335-af0f-aa5e80bef5d8/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/bms.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 4)
       (name "/afe1/")
       (tstamps "/8f9a1bea-7f13-53e6-8d9c-d6494abfff21/")
       (title_block
@@ -153,9 +42,120 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 5)
+      (number 2)
+      (name "/mcu_can1/lm5164_1/")
+      (tstamps "/9a876bdf-fee9-5a95-ae73-da84b8cb5341/d73293a2-f4d5-5335-af0f-aa5e80bef5d8/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/bms.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 3)
+      (name "/")
+      (tstamps "/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/bms.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 4)
       (name "/mcu_can1/")
       (tstamps "/9a876bdf-fee9-5a95-ae73-da84b8cb5341/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/bms.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 5)
+      (name "/sense_and_charge1/")
+      (tstamps "/e2e7bab8-39b8-58a0-b62f-978ea6769337/")
       (title_block
         (title)
         (company)

@@ -1,0 +1,41 @@
+{
+  "board": {
+    "design_settings": {
+      "rules": {
+        "min_clearance": 0.127,
+        "min_track_width": 0.127
+      }
+    }
+  },
+  "meta": {
+    "filename": "charger.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {
+    "classes": [
+      {
+        "name": "Default",
+        "clearance": 0.15,
+        "track_width": 0.2,
+        "via_diameter": 0.6,
+        "via_drill": 0.3
+      },
+      {
+        "name": "Potencia",
+        "clearance": 0.25,
+        "track_width": 1.0,
+        "via_diameter": 1.0,
+        "via_drill": 0.5
+      }
+    ],
+    "meta": {
+      "version": 3
+    },
+    "netclass_patterns": [
+      {
+        "netclass": "Potencia",
+        "pattern": "^(VIN_RAW|VIN|VOUT_INT|VOUT_D|VOUT|GND|IN_N|OUT_N|SW_A|SW_B)$"
+      }
+    ]
+  }
+}

@@ -2,12 +2,12 @@
   (version "D")
   (design
     (source "fc.py")
-    (date "10/25/2026 07:25 AM")
+    (date "10/25/2026 07:35 AM")
     (tool "SKiDL (3.0.0)")
     (sheet
       (number 1)
-      (name "/imus1/")
-      (tstamps "/4e6eca21-d94f-5c5c-ba56-5fecc574fe95/")
+      (name "/storage1/")
+      (tstamps "/cc101593-993e-56c8-9415-0d91f8dd2edd/")
       (title_block
         (title)
         (company)
@@ -80,8 +80,8 @@
           (value ""))))
     (sheet
       (number 3)
-      (name "/usb1/")
-      (tstamps "/10a0a898-a74e-574d-a65e-c847788aa0b3/")
+      (name "/power_port1/")
+      (tstamps "/efd6100d-05e6-5326-aa90-76416b29372b/")
       (title_block
         (title)
         (company)
@@ -117,191 +117,6 @@
           (value ""))))
     (sheet
       (number 4)
-      (name "/outputs1/")
-      (tstamps "/93fcbfbe-c951-53e1-9a66-4251fffdaf09/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/fc.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 5)
-      (name "/power_port2/")
-      (tstamps "/78f893ee-862d-56e8-864b-4a23631a0a5b/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/fc.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 6)
-      (name "/")
-      (tstamps "/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/fc.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 7)
-      (name "/mcu_core1/")
-      (tstamps "/b4f01aaf-c49c-52fe-bbb7-4c6969fe60ca/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/fc.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 8)
-      (name "/can2/")
-      (tstamps "/fd97e861-749c-5954-a514-4113a32bd575/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/fc.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 9)
       (name "/i2c_ext1/")
       (tstamps "/8301ecc5-d4fb-556b-ab7d-7ac821409313/")
       (title_block
@@ -338,9 +153,9 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 10)
-      (name "/can1/")
-      (tstamps "/803cf45a-a35f-5b91-a0f7-a390e371c8ee/")
+      (number 5)
+      (name "/")
+      (tstamps "/")
       (title_block
         (title)
         (company)
@@ -375,9 +190,9 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 11)
-      (name "/indicators1/")
-      (tstamps "/13184ca3-83ed-5d93-b825-44f06a0f8279/")
+      (number 6)
+      (name "/outputs1/")
+      (tstamps "/93fcbfbe-c951-53e1-9a66-4251fffdaf09/")
       (title_block
         (title)
         (company)
@@ -412,81 +227,7 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 12)
-      (name "/storage1/")
-      (tstamps "/cc101593-993e-56c8-9415-0d91f8dd2edd/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/fc.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 13)
-      (name "/i2c_ext2/")
-      (tstamps "/e90ad1de-0cc2-5f9a-818d-ab6d9ff47e43/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/fc.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 14)
+      (number 7)
       (name "/power1/")
       (tstamps "/1c71258b-4a63-53c3-96a6-ba5ec56f90dd/")
       (title_block
@@ -523,9 +264,268 @@
           (number "9")
           (value ""))))
     (sheet
+      (number 8)
+      (name "/usb1/")
+      (tstamps "/10a0a898-a74e-574d-a65e-c847788aa0b3/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/fc.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 9)
+      (name "/i2c_ext2/")
+      (tstamps "/e90ad1de-0cc2-5f9a-818d-ab6d9ff47e43/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/fc.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 10)
+      (name "/power_port2/")
+      (tstamps "/78f893ee-862d-56e8-864b-4a23631a0a5b/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/fc.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 11)
+      (name "/imus1/")
+      (tstamps "/4e6eca21-d94f-5c5c-ba56-5fecc574fe95/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/fc.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 12)
+      (name "/mcu_core1/")
+      (tstamps "/b4f01aaf-c49c-52fe-bbb7-4c6969fe60ca/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/fc.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 13)
+      (name "/can2/")
+      (tstamps "/fd97e861-749c-5954-a514-4113a32bd575/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/fc.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 14)
+      (name "/can1/")
+      (tstamps "/803cf45a-a35f-5b91-a0f7-a390e371c8ee/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/fc.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
       (number 15)
-      (name "/power_port1/")
-      (tstamps "/efd6100d-05e6-5326-aa90-76416b29372b/")
+      (name "/indicators1/")
+      (tstamps "/13184ca3-83ed-5d93-b825-44f06a0f8279/")
       (title_block
         (title)
         (company)

@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "DronSwarm")(type "KiCad")(uri "${KIPRJMOD}/../DronSwarm.pretty")(options "")(descr "Huellas propias"))
+)

@@ -2,7 +2,7 @@
   (version "D")
   (design
     (source "gnss.py")
-    (date "10/25/2026 07:25 AM")
+    (date "10/25/2026 07:35 AM")
     (tool "SKiDL (3.0.0)")
     (sheet
       (number 1)
@@ -43,8 +43,8 @@
           (value ""))))
     (sheet
       (number 2)
-      (name "/")
-      (tstamps "/")
+      (name "/antenna1/")
+      (tstamps "/c4cce8ad-0302-595a-aa4c-e60b9c3c57df/")
       (title_block
         (title)
         (company)
@@ -80,8 +80,8 @@
           (value ""))))
     (sheet
       (number 3)
-      (name "/antenna1/")
-      (tstamps "/c4cce8ad-0302-595a-aa4c-e60b9c3c57df/")
+      (name "/")
+      (tstamps "/")
       (title_block
         (title)
         (company)

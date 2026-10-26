@@ -1,0 +1,9 @@
+{
+ "placa": "gnss",
+ "pistas": 297,
+ "vias": 38,
+ "sin_rutear": 1,
+ "errores_drc": 0,
+ "tipos": {},
+ "intentos": 3
+}

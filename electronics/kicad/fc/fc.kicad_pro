@@ -1,0 +1,41 @@
+{
+  "board": {
+    "design_settings": {
+      "rules": {
+        "min_clearance": 0.127,
+        "min_track_width": 0.127
+      }
+    }
+  },
+  "meta": {
+    "filename": "fc.kicad_pro",
+    "version": 1
+  },
+  "net_settings": {
+    "classes": [
+      {
+        "name": "Default",
+        "clearance": 0.15,
+        "track_width": 0.2,
+        "via_diameter": 0.6,
+        "via_drill": 0.3
+      },
+      {
+        "name": "Potencia",
+        "clearance": 0.2,
+        "track_width": 1.0,
+        "via_diameter": 1.0,
+        "via_drill": 0.5
+      }
+    ],
+    "meta": {
+      "version": 3
+    },
+    "netclass_patterns": [
+      {
+        "netclass": "Potencia",
+        "pattern": "^(GND|5V|BRICK\\d_5V|USB_VBUS|5V_PERIPH|5V_HIPOWER)$"
+      }
+    ]
+  }
+}

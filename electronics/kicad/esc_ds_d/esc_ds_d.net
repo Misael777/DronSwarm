@@ -2,7 +2,7 @@
   (version "D")
   (design
     (source "esc_ds_d.py")
-    (date "10/25/2026 07:25 AM")
+    (date "10/25/2026 07:35 AM")
     (tool "SKiDL (3.0.0)")
     (sheet
       (number 1)
@@ -43,6 +43,80 @@
           (value ""))))
     (sheet
       (number 2)
+      (name "/lm5164_1/")
+      (tstamps "/d73293a2-f4d5-5335-af0f-aa5e80bef5d8/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_d.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 3)
+      (name "/current_sense1/")
+      (tstamps "/b52eb996-cc2c-581e-8b97-9deb43b079f3/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_d.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 4)
       (name "/gan_half_bridge3/")
       (tstamps "/ba768135-1840-5d4d-aa92-ae6bbf82a1c3/")
       (title_block
@@ -79,83 +153,9 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 3)
+      (number 5)
       (name "/signal_input2/")
       (tstamps "/880a3753-7707-5209-a382-c4b979650f24/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_d.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 4)
-      (name "/gan_half_bridge2/")
-      (tstamps "/3c3cdfcd-0ab7-594b-9c73-c44b081b51da/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_d.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 5)
-      (name "/gan_half_bridge1/")
-      (tstamps "/d223eaf9-ed48-5540-ac77-e5033c6c41b2/")
       (title_block
         (title)
         (company)
@@ -228,6 +228,43 @@
           (value ""))))
     (sheet
       (number 7)
+      (name "/gan_half_bridge2/")
+      (tstamps "/3c3cdfcd-0ab7-594b-9c73-c44b081b51da/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_d.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 8)
       (name "/ntc1/")
       (tstamps "/6bd41fbf-a416-5482-9ec7-f9e9b3e0f6af/")
       (title_block
@@ -264,46 +301,9 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 8)
-      (name "/current_sense1/")
-      (tstamps "/b52eb996-cc2c-581e-8b97-9deb43b079f3/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_d.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
       (number 9)
-      (name "/")
-      (tstamps "/")
+      (name "/gan_half_bridge1/")
+      (tstamps "/d223eaf9-ed48-5540-ac77-e5033c6c41b2/")
       (title_block
         (title)
         (company)
@@ -339,43 +339,6 @@
           (value ""))))
     (sheet
       (number 10)
-      (name "/bemf_sense1/")
-      (tstamps "/cefa1e69-a93f-58f5-9ead-fbdb06e9ae89/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_d.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 11)
       (name "/ldo_3v3_1/")
       (tstamps "/470f6a4f-cc1a-52d2-a76b-bd0b280a57d3/")
       (title_block
@@ -412,9 +375,46 @@
           (number "9")
           (value ""))))
     (sheet
+      (number 11)
+      (name "/bemf_sense1/")
+      (tstamps "/cefa1e69-a93f-58f5-9ead-fbdb06e9ae89/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_d.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
       (number 12)
-      (name "/lm5164_1/")
-      (tstamps "/d73293a2-f4d5-5335-af0f-aa5e80bef5d8/")
+      (name "/")
+      (tstamps "/")
       (title_block
         (title)
         (company)
@@ -3006,12 +3006,12 @@
       (ref "U3")
       (value "LMG1210")
       (description "Driver de medio puente GaN 200 V, 5 V regulados, entradas independientes (IIM) o PWM")
-      (footprint "DronSwarm:TI_WQFN-19_RVR_3.5x4.5mm")
+      (footprint "DronSwarm:TI_WQFN-19_RVR0019A_4x3mm")
       (fields
         (field
           (name "Description") "Driver de medio puente GaN 200 V, 5 V regulados, entradas independientes (IIM) o PWM")
         (field
-          (name "Footprint") "DronSwarm:TI_WQFN-19_RVR_3.5x4.5mm")
+          (name "Footprint") "DronSwarm:TI_WQFN-19_RVR0019A_4x3mm")
         (field
           (name "Datasheet"))
         (field
@@ -3029,12 +3029,12 @@
       (ref "U4")
       (value "LMG1210")
       (description "Driver de medio puente GaN 200 V, 5 V regulados, entradas independientes (IIM) o PWM")
-      (footprint "DronSwarm:TI_WQFN-19_RVR_3.5x4.5mm")
+      (footprint "DronSwarm:TI_WQFN-19_RVR0019A_4x3mm")
       (fields
         (field
           (name "Description") "Driver de medio puente GaN 200 V, 5 V regulados, entradas independientes (IIM) o PWM")
         (field
-          (name "Footprint") "DronSwarm:TI_WQFN-19_RVR_3.5x4.5mm")
+          (name "Footprint") "DronSwarm:TI_WQFN-19_RVR0019A_4x3mm")
         (field
           (name "Datasheet"))
         (field
@@ -3052,12 +3052,12 @@
       (ref "U5")
       (value "LMG1210")
       (description "Driver de medio puente GaN 200 V, 5 V regulados, entradas independientes (IIM) o PWM")
-      (footprint "DronSwarm:TI_WQFN-19_RVR_3.5x4.5mm")
+      (footprint "DronSwarm:TI_WQFN-19_RVR0019A_4x3mm")
       (fields
         (field
           (name "Description") "Driver de medio puente GaN 200 V, 5 V regulados, entradas independientes (IIM) o PWM")
         (field
-          (name "Footprint") "DronSwarm:TI_WQFN-19_RVR_3.5x4.5mm")
+          (name "Footprint") "DronSwarm:TI_WQFN-19_RVR0019A_4x3mm")
         (field
           (name "Datasheet"))
         (field
@@ -3725,12 +3725,36 @@
         (pin "2")
         (pintype "PASSIVE"))
       (node
+        (ref "Q2")
+        (pin "4")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q2")
+        (pin "6")
+        (pintype "PASSIVE"))
+      (node
         (ref "Q4")
         (pin "2")
         (pintype "PASSIVE"))
       (node
+        (ref "Q4")
+        (pin "4")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q4")
+        (pin "6")
+        (pintype "PASSIVE"))
+      (node
         (ref "Q6")
         (pin "2")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q6")
+        (pin "4")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q6")
+        (pin "6")
         (pintype "PASSIVE"))
       (node
         (ref "R10")
@@ -4201,8 +4225,24 @@
         (pin "2")
         (pintype "PASSIVE"))
       (node
+        (ref "Q1")
+        (pin "4")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q1")
+        (pin "6")
+        (pintype "PASSIVE"))
+      (node
         (ref "Q2")
         (pin "3")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q2")
+        (pin "5")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q2")
+        (pin "7")
         (pintype "PASSIVE"))
       (node
         (ref "R19")
@@ -4253,8 +4293,24 @@
         (pin "2")
         (pintype "PASSIVE"))
       (node
+        (ref "Q3")
+        (pin "4")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q3")
+        (pin "6")
+        (pintype "PASSIVE"))
+      (node
         (ref "Q4")
         (pin "3")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q4")
+        (pin "5")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q4")
+        (pin "7")
         (pintype "PASSIVE"))
       (node
         (ref "R13")
@@ -4305,8 +4361,24 @@
         (pin "2")
         (pintype "PASSIVE"))
       (node
+        (ref "Q5")
+        (pin "4")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q5")
+        (pin "6")
+        (pintype "PASSIVE"))
+      (node
         (ref "Q6")
         (pin "3")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q6")
+        (pin "5")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q6")
+        (pin "7")
         (pintype "PASSIVE"))
       (node
         (ref "R17")
@@ -4585,12 +4657,36 @@
         (pin "3")
         (pintype "PASSIVE"))
       (node
+        (ref "Q1")
+        (pin "5")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q1")
+        (pin "7")
+        (pintype "PASSIVE"))
+      (node
         (ref "Q3")
         (pin "3")
         (pintype "PASSIVE"))
       (node
+        (ref "Q3")
+        (pin "5")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q3")
+        (pin "7")
+        (pintype "PASSIVE"))
+      (node
         (ref "Q5")
         (pin "3")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q5")
+        (pin "5")
+        (pintype "PASSIVE"))
+      (node
+        (ref "Q5")
+        (pin "7")
         (pintype "PASSIVE"))
       (node
         (ref "R1")

@@ -1,0 +1,154 @@
+(footprint "Pad_Power_4x3mm"
+	(version 20240108)
+	(generator "pcbnew")
+	(generator_version "8.0")
+	(layer "F.Cu")
+	(descr "Pad de potencia 4 × 3 mm para soldar cable, sin pasta")
+	(property "Reference" "REF**"
+		(at 0 -2.5 0)
+		(layer "F.SilkS")
+		(uuid "214b3769-214e-4e9a-9716-97da9d6ad488")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "Pad_Power_4x3mm"
+		(at 0 2.5 0)
+		(layer "F.Fab")
+		(uuid "3882d40f-cc27-4dca-9c35-fade386294db")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Footprint" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "e3304bac-89a6-4fa7-9ceb-25ca33822501")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "acf460f2-538b-45be-9159-86f3b0e929f1")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "15559361-cbeb-473c-8068-4145bf48b874")
+		(effects
+			(font
+				(size 1.27 1.27)
+				(thickness 0.15)
+			)
+		)
+	)
+	(attr smd)
+	(fp_line
+		(start -2.25 -1.75)
+		(end 2.25 -1.75)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "b886dbae-028c-4989-b4ae-bf7f94cd1f18")
+	)
+	(fp_line
+		(start -2.25 1.75)
+		(end -2.25 -1.75)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "aa73229b-59ed-4976-b8e8-50ea51327c43")
+	)
+	(fp_line
+		(start 2.25 -1.75)
+		(end 2.25 1.75)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "7ccb1197-1f3e-458d-88a6-5fdfe0f7e7c0")
+	)
+	(fp_line
+		(start 2.25 1.75)
+		(end -2.25 1.75)
+		(stroke
+			(width 0.05)
+			(type default)
+		)
+		(layer "F.CrtYd")
+		(uuid "6f61a9a6-6987-4583-81c0-6aebbed281d8")
+	)
+	(fp_line
+		(start -2 -1.5)
+		(end 2 -1.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "e7fc9026-0877-4d76-b5b5-0270bb2423a1")
+	)
+	(fp_line
+		(start -2 1.5)
+		(end -2 -1.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "62123f5e-6091-464f-8afb-57374bf2ab91")
+	)
+	(fp_line
+		(start 2 -1.5)
+		(end 2 1.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "c7ef0225-9528-48fc-abea-3b57c5ebcb25")
+	)
+	(fp_line
+		(start 2 1.5)
+		(end -2 1.5)
+		(stroke
+			(width 0.1)
+			(type default)
+		)
+		(layer "F.Fab")
+		(uuid "6a5a98b4-ea92-4721-adde-fde84af69a0f")
+	)
+	(pad "1" smd roundrect
+		(at 0 0)
+		(size 4 3)
+		(layers "F.Cu" "F.Mask")
+		(roundrect_rratio 0.1)
+		(thermal_bridge_angle 45)
+		(uuid "e751d011-8fbd-44be-8d56-6d874dfa4177")
+	)
+)

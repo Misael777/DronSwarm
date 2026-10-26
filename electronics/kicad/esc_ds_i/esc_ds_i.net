@@ -2,10 +2,121 @@
   (version "D")
   (design
     (source "esc_ds_i.py")
-    (date "10/25/2026 07:25 AM")
+    (date "10/25/2026 07:35 AM")
     (tool "SKiDL (3.0.0)")
     (sheet
       (number 1)
+      (name "/channel2/current_sense1/")
+      (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/b52eb996-cc2c-581e-8b97-9deb43b079f3/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_i.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 2)
+      (name "/channel4/current_sense1/")
+      (tstamps "/cc68b1fa-d7a8-5dae-babc-47097b82ef6f/b52eb996-cc2c-581e-8b97-9deb43b079f3/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_i.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 3)
+      (name "/channel3/current_sense1/")
+      (tstamps "/46e2cbe2-01d0-5192-b71e-95304db8569b/b52eb996-cc2c-581e-8b97-9deb43b079f3/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_i.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 4)
       (name "/channel4/am32_mcu1/")
       (tstamps "/cc68b1fa-d7a8-5dae-babc-47097b82ef6f/d9828564-d493-5830-8d1e-2fde7e1fe1ea/")
       (title_block
@@ -42,7 +153,7 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 2)
+      (number 5)
       (name "/channel4/signal_input1/")
       (tstamps "/cc68b1fa-d7a8-5dae-babc-47097b82ef6f/83de70a9-af3b-5595-9830-2dd0426b2a2d/")
       (title_block
@@ -79,7 +190,7 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 3)
+      (number 6)
       (name "/channel2/am32_mcu1/")
       (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/d9828564-d493-5830-8d1e-2fde7e1fe1ea/")
       (title_block
@@ -116,44 +227,7 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 4)
-      (name "/channel2/ntc1/")
-      (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/6bd41fbf-a416-5482-9ec7-f9e9b3e0f6af/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_i.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 5)
+      (number 7)
       (name "/channel4/")
       (tstamps "/cc68b1fa-d7a8-5dae-babc-47097b82ef6f/")
       (title_block
@@ -190,7 +264,7 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 6)
+      (number 8)
       (name "/channel3/")
       (tstamps "/46e2cbe2-01d0-5192-b71e-95304db8569b/")
       (title_block
@@ -227,7 +301,7 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 7)
+      (number 9)
       (name "/channel1/current_sense1/")
       (tstamps "/6963319e-7747-5b13-bf16-69c58599855b/b52eb996-cc2c-581e-8b97-9deb43b079f3/")
       (title_block
@@ -264,44 +338,7 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 8)
-      (name "/channel2/power_stage1/")
-      (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/b41e9a40-21db-523a-b396-ae21413dd788/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_i.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 9)
+      (number 10)
       (name "/channel3/signal_input1/")
       (tstamps "/46e2cbe2-01d0-5192-b71e-95304db8569b/83de70a9-af3b-5595-9830-2dd0426b2a2d/")
       (title_block
@@ -338,7 +375,7 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 10)
+      (number 11)
       (name "/channel2/signal_input1/")
       (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/83de70a9-af3b-5595-9830-2dd0426b2a2d/")
       (title_block
@@ -375,118 +412,7 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 11)
-      (name "/channel1/signal_input1/")
-      (tstamps "/6963319e-7747-5b13-bf16-69c58599855b/83de70a9-af3b-5595-9830-2dd0426b2a2d/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_i.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
       (number 12)
-      (name "/channel1/")
-      (tstamps "/6963319e-7747-5b13-bf16-69c58599855b/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_i.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 13)
-      (name "/channel4/power_stage1/")
-      (tstamps "/cc68b1fa-d7a8-5dae-babc-47097b82ef6f/b41e9a40-21db-523a-b396-ae21413dd788/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_i.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 14)
       (name "/channel4/bemf_sense1/")
       (tstamps "/cc68b1fa-d7a8-5dae-babc-47097b82ef6f/cefa1e69-a93f-58f5-9ead-fbdb06e9ae89/")
       (title_block
@@ -523,9 +449,83 @@
           (number "9")
           (value ""))))
     (sheet
+      (number 13)
+      (name "/channel1/")
+      (tstamps "/6963319e-7747-5b13-bf16-69c58599855b/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_i.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 14)
+      (name "/channel4/power_stage1/")
+      (tstamps "/cc68b1fa-d7a8-5dae-babc-47097b82ef6f/b41e9a40-21db-523a-b396-ae21413dd788/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_i.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
       (number 15)
-      (name "/channel3/am32_mcu1/")
-      (tstamps "/46e2cbe2-01d0-5192-b71e-95304db8569b/d9828564-d493-5830-8d1e-2fde7e1fe1ea/")
+      (name "/channel1/signal_input1/")
+      (tstamps "/6963319e-7747-5b13-bf16-69c58599855b/83de70a9-af3b-5595-9830-2dd0426b2a2d/")
       (title_block
         (title)
         (company)
@@ -561,8 +561,8 @@
           (value ""))))
     (sheet
       (number 16)
-      (name "/channel3/power_stage1/")
-      (tstamps "/46e2cbe2-01d0-5192-b71e-95304db8569b/b41e9a40-21db-523a-b396-ae21413dd788/")
+      (name "/channel3/am32_mcu1/")
+      (tstamps "/46e2cbe2-01d0-5192-b71e-95304db8569b/d9828564-d493-5830-8d1e-2fde7e1fe1ea/")
       (title_block
         (title)
         (company)
@@ -635,8 +635,8 @@
           (value ""))))
     (sheet
       (number 18)
-      (name "/ldo_3v3_1/")
-      (tstamps "/470f6a4f-cc1a-52d2-a76b-bd0b280a57d3/")
+      (name "/channel2/")
+      (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/")
       (title_block
         (title)
         (company)
@@ -672,8 +672,8 @@
           (value ""))))
     (sheet
       (number 19)
-      (name "/channel2/")
-      (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/")
+      (name "/ldo_3v3_1/")
+      (tstamps "/470f6a4f-cc1a-52d2-a76b-bd0b280a57d3/")
       (title_block
         (title)
         (company)
@@ -783,43 +783,6 @@
           (value ""))))
     (sheet
       (number 22)
-      (name "/channel1/power_stage1/")
-      (tstamps "/6963319e-7747-5b13-bf16-69c58599855b/b41e9a40-21db-523a-b396-ae21413dd788/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_i.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 23)
       (name "/")
       (tstamps "/")
       (title_block
@@ -856,118 +819,7 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 24)
-      (name "/channel2/bemf_sense1/")
-      (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/cefa1e69-a93f-58f5-9ead-fbdb06e9ae89/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_i.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 25)
-      (name "/channel1/bemf_sense1/")
-      (tstamps "/6963319e-7747-5b13-bf16-69c58599855b/cefa1e69-a93f-58f5-9ead-fbdb06e9ae89/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_i.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 26)
-      (name "/channel3/ntc1/")
-      (tstamps "/46e2cbe2-01d0-5192-b71e-95304db8569b/6bd41fbf-a416-5482-9ec7-f9e9b3e0f6af/")
-      (title_block
-        (title)
-        (company)
-        (rev)
-        (date)
-        (source "../kicad/_build/esc_ds_i.py")
-        (comment
-          (number "1")
-          (value ""))
-        (comment
-          (number "2")
-          (value ""))
-        (comment
-          (number "3")
-          (value ""))
-        (comment
-          (number "4")
-          (value ""))
-        (comment
-          (number "5")
-          (value ""))
-        (comment
-          (number "6")
-          (value ""))
-        (comment
-          (number "7")
-          (value ""))
-        (comment
-          (number "8")
-          (value ""))
-        (comment
-          (number "9")
-          (value ""))))
-    (sheet
-      (number 27)
+      (number 23)
       (name "/channel4/ntc1/")
       (tstamps "/cc68b1fa-d7a8-5dae-babc-47097b82ef6f/6bd41fbf-a416-5482-9ec7-f9e9b3e0f6af/")
       (title_block
@@ -1004,7 +856,81 @@
           (number "9")
           (value ""))))
     (sheet
-      (number 28)
+      (number 24)
+      (name "/channel1/power_stage1/")
+      (tstamps "/6963319e-7747-5b13-bf16-69c58599855b/b41e9a40-21db-523a-b396-ae21413dd788/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_i.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 25)
+      (name "/channel2/power_stage1/")
+      (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/b41e9a40-21db-523a-b396-ae21413dd788/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_i.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 26)
       (name "/channel1/ntc1/")
       (tstamps "/6963319e-7747-5b13-bf16-69c58599855b/6bd41fbf-a416-5482-9ec7-f9e9b3e0f6af/")
       (title_block
@@ -1041,9 +967,83 @@
           (number "9")
           (value ""))))
     (sheet
+      (number 27)
+      (name "/channel3/power_stage1/")
+      (tstamps "/46e2cbe2-01d0-5192-b71e-95304db8569b/b41e9a40-21db-523a-b396-ae21413dd788/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_i.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
+      (number 28)
+      (name "/channel2/bemf_sense1/")
+      (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/cefa1e69-a93f-58f5-9ead-fbdb06e9ae89/")
+      (title_block
+        (title)
+        (company)
+        (rev)
+        (date)
+        (source "../kicad/_build/esc_ds_i.py")
+        (comment
+          (number "1")
+          (value ""))
+        (comment
+          (number "2")
+          (value ""))
+        (comment
+          (number "3")
+          (value ""))
+        (comment
+          (number "4")
+          (value ""))
+        (comment
+          (number "5")
+          (value ""))
+        (comment
+          (number "6")
+          (value ""))
+        (comment
+          (number "7")
+          (value ""))
+        (comment
+          (number "8")
+          (value ""))
+        (comment
+          (number "9")
+          (value ""))))
+    (sheet
       (number 29)
-      (name "/channel2/current_sense1/")
-      (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/b52eb996-cc2c-581e-8b97-9deb43b079f3/")
+      (name "/channel2/ntc1/")
+      (tstamps "/229683d0-ce4c-56ae-8cb5-27991288fad9/6bd41fbf-a416-5482-9ec7-f9e9b3e0f6af/")
       (title_block
         (title)
         (company)
@@ -1079,8 +1079,8 @@
           (value ""))))
     (sheet
       (number 30)
-      (name "/channel4/current_sense1/")
-      (tstamps "/cc68b1fa-d7a8-5dae-babc-47097b82ef6f/b52eb996-cc2c-581e-8b97-9deb43b079f3/")
+      (name "/channel3/ntc1/")
+      (tstamps "/46e2cbe2-01d0-5192-b71e-95304db8569b/6bd41fbf-a416-5482-9ec7-f9e9b3e0f6af/")
       (title_block
         (title)
         (company)
@@ -1116,8 +1116,8 @@
           (value ""))))
     (sheet
       (number 31)
-      (name "/channel3/current_sense1/")
-      (tstamps "/46e2cbe2-01d0-5192-b71e-95304db8569b/b52eb996-cc2c-581e-8b97-9deb43b079f3/")
+      (name "/channel1/bemf_sense1/")
+      (tstamps "/6963319e-7747-5b13-bf16-69c58599855b/cefa1e69-a93f-58f5-9ead-fbdb06e9ae89/")
       (title_block
         (title)
         (company)
